@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26308</versionUuid>
+    <rule>
+        <name>TestInterface</name>
+        <uuid>_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26299</uuid>
+        <description></description>
+        <parentUuid>SYSTEM_RULE_FOLDER_QUICK_APPS</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!departments: {"HR", "Marketing", "Sales", "IT"},
+  #"SYSTEM_SYSRULES_dashboardLayout_v1"(
+    contents: {
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        contents: {
+          #"SYSTEM_SYSRULES_billboardLayout"(
+            backgroundColor: "#619ed6",
+            overlayPositionBar: "BOTTOM",
+            overlayStyle: "DARK",
+            overlayContents: {
+              #"SYSTEM_SYSRULES_columnsLayout"(
+                columns: {
+                  #"SYSTEM_SYSRULES_columnLayout"(
+                    contents: {
+                      #"SYSTEM_SYSRULES_richTextDisplayField"(
+                        labelPosition: "COLLAPSED",
+                        value: {
+                          #"SYSTEM_SYSRULES_richTextItem"(
+                            text: "Finance Summary",
+                            style: "LARGE"
+                          )
+                        }
+                      )
+                    }
+                  ),
+                  #"SYSTEM_SYSRULES_columnLayout"(
+                    contents: {
+                      #"SYSTEM_SYSRULES_columnsLayout"(
+                        columns: {
+                          #"SYSTEM_SYSRULES_columnLayout"(
+                            contents: {
+                              #"SYSTEM_SYSRULES_richTextDisplayField"(
+                                label: "Total Spending",
+                                value: #"SYSTEM_SYSRULES_richTextItem"(
+                                  text: "$31,000.00",
+                                  style: "MEDIUM"
+                                )
+                              )
+                            }
+                          ),
+                          #"SYSTEM_SYSRULES_columnLayout"(
+                            contents: {
+                              #"SYSTEM_SYSRULES_richTextDisplayField"(
+                                label: "Remaining Budget",
+                                value: #"SYSTEM_SYSRULES_richTextItem"(
+                                  text: #"SYSTEM_SYSRULES_richTextItem"(
+                                    text: "79%",
+                                    style: "MEDIUM"
+                                  ),
+                                  style: "POSITIVE"
+                                )
+                              )
+                            }
+                          ),
+                          #"SYSTEM_SYSRULES_columnLayout"(
+                            contents: {
+                              #"SYSTEM_SYSRULES_richTextDisplayField"(
+                                label: "Open Requests",
+                                value: #"SYSTEM_SYSRULES_richTextItem"(
+                                  text: "36",
+                                  style: "MEDIUM"
+                                )
+                              )
+                            }
+                          )
+                        },
+                        alignVertical: "TOP"
+                      )
+                    }
+                  )
+                },
+                alignVertical: "MIDDLE"
+              )
+            },
+            height: "SHORT"
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        contents: {
+          #"SYSTEM_SYSRULES_columnsLayout"(
+            columns: {
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_columnChartField"(
+                    label: "Spending vs. Budget",
+                    labelPosition: "ABOVE",
+                    categories: local!departments,
+                    series: {
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Budget", data: {7000, 12000, 10000, 10000}),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Spent", data: {3500, 9000, 10500, 8000})
+                    },
+                    xAxisTitle: "Department",
+                    yAxisTitle: "Amount ($)",
+                    stacking: "NONE",
+                    showLegend: true,
+                    showTooltips: true
+                  ),
+                  #"SYSTEM_SYSRULES_linkField"(
+                    labelPosition: "COLLAPSED",
+                    links: #"SYSTEM_SYSRULES_dynamicLink"(
+                      label: "Show as Grid",
+                      /* The saveInto parameter must be configured in order to save a value */
+                      saveInto: {}
+                    ),
+                    align: "CENTER"
+                  ),
+                  #"SYSTEM_SYSRULES_pieChartField"(
+                    label: "Spending by Department",
+                    labelPosition: "ABOVE",
+                    series: {
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "HR", data: 3500),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Marketing", data: 9000),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Sales", data: 10500),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "IT", data: 8000)
+                    },
+                    showDataLabels: true,
+                    showAsPercentage: true
+                  ),
+                  #"SYSTEM_SYSRULES_linkField"(
+                    labelPosition: "COLLAPSED",
+                    links: #"SYSTEM_SYSRULES_dynamicLink"(
+                      label: "Show as Grid",
+                      saveInto: {}
+                    ),
+                    align: "CENTER"
+                  )
+                }
+              ),
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_columnChartField"(
+                    label: "Remaining",
+                    labelPosition: "ABOVE",
+                    categories: local!departments,
+                    series: {
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Remaining", data: {3500, 3000, -500, 2000})
+                    },
+                    xAxisTitle: "Department",
+                    yAxisTitle: "Amount ($)",
+                    stacking: "NONE",
+                    showLegend: false,
+                    showTooltips: true
+                  ),
+                  #"SYSTEM_SYSRULES_linkField"(
+                    labelPosition: "COLLAPSED",
+                    links: #"SYSTEM_SYSRULES_dynamicLink"(
+                      label: "Show as Grid",
+                      saveInto: {}
+                    ),
+                    align: "CENTER"
+                  ),
+                  #"SYSTEM_SYSRULES_columnChartField"(
+                    label: "Spending by Category",
+                    labelPosition: "ABOVE",
+                    categories: local!departments,
+                    series: {
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Hardware", data: {0, 2000, 2000, 6000}),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Software", data: {0, 1000, 500, 1500}),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Travel", data: {0, 3000, 4000, 0}),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Recruiting", data: {1000, 0, 0, 0}),
+                      #"SYSTEM_SYSRULES_chartSeries"(label: "Miscellaneous", data: {1500, 3000, 1500, 500})
+                    },
+                    xAxisTitle: "Department",
+                    yAxisTitle: "Total Purchase Requests",
+                    stacking: "NORMAL",
+                    showLegend: true,
+                    showTooltips: true
+                  ),
+                  #"SYSTEM_SYSRULES_linkField"(
+                    labelPosition: "COLLAPSED",
+                    links: #"SYSTEM_SYSRULES_dynamicLink"(
+                      label: "Show as Grid",
+                      saveInto: {}
+                    ),
+                    align: "CENTER"
+                  )
+                }
+              )
+            }
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Purchase Requests",
+        contents: {
+          #"SYSTEM_SYSRULES_columnsLayout"(
+            columns: {
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_textField"(
+                    labelPosition: "COLLAPSED",
+                    placeholder: "PR#",
+                    /* The saveInto parameter must be configured to save a value */
+                    saveInto: {},
+                    validations: {}
+                  )
+                }
+              ),
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_dropdownField"(
+                    labelPosition: "COLLAPSED",
+                    placeholderLabel: "All Departments",
+                    choiceLabels: local!departments,
+                    choiceValues: local!departments,
+                    /* The saveInto parameter must be configured to save a value */
+                    saveInto: {},
+                    validations: {}
+                  )
+                }
+              ),
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_dropdownField"(
+                    labelPosition: "COLLAPSED",
+                    placeholderLabel: "All Dates",
+                    choiceLabels: {"Last 7 Days", "Last 30 Days", "Last 365 Days"},
+                    choiceValues: {"Last 7 Days", "Last 30 Days", "Last 365 Days"},
+                    value: "Last 7 Days",
+                    saveInto: {},
+                    validations: {}
+                  )
+                }
+              ),
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_dropdownField"(
+                    labelPosition: "COLLAPSED",
+                    placeholderLabel: "Any Amount",
+                    choiceLabels: {"$0 - $100", "$101 - $200", "&gt; $200"},
+                    choiceValues: {"$0 - $100", "$101 - $200", "&gt; $200"},
+                    saveInto: {},
+                    validations: {}
+                  )
+                }
+              )
+            }
+          ),
+          /* This grid is not configured to page and sort */
+          #"SYSTEM_SYSRULES_gridField"(
+            labelPosition: "COLLAPSED",
+            totalCount: 20,
+            columns: {
+              #"SYSTEM_SYSRULES_gridTextColumn"(label: "PR #", data: {"123456789", "123456801", "123456795", "123456782", "123456790", "123456791", "123456779", "123456782", "123456784", "123456787"}),
+              #"SYSTEM_SYSRULES_gridTextColumn"(label: "Department", data: {"Sales", "Sales", "Marketing", "IT", "Sales", "Marketing", "IT", "Sales", "IT", "HR"}),
+              #"SYSTEM_SYSRULES_gridTextColumn"(label: "Requested By", data: {"Paul Smith", "Michael Johnson", "Daniel Lewis", "Stephen Edwards", "John Smith", "Scott Bailey", "Michael Johnson", "Michelle Foster", "Laura Bryant", "John Smith"}),
+              #"SYSTEM_SYSRULES_gridTextColumn"(label: "Requested On", data: {today()-7, today()-3, today()-5, today()-4, today()-4, today()-7, today()-2, today()-1, today()-6, today()}),
+              #"SYSTEM_SYSRULES_gridTextColumn"(label: "Total Amount", field: "total", data: {"$499.99", "$301.50", "$209.99", "$179.49", "$99.89", "$90.27", "$89.01", "$50.98", "$48.97", "$19.99"}, alignment: "RIGHT"),
+              #"SYSTEM_SYSRULES_gridImageColumn_v1"(label: "Approved", data: {
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_NOTDONE"), altText: "Rejected icon", caption: "Rejected"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_NOTDONE"), altText: "Rejected icon", caption: "Rejected"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved"),
+                #"SYSTEM_SYSRULES_documentImage"(document: #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), altText: "Approved icon", caption: "Approved")
+              }, size: "ICON", isThumbnail: false, style: "STANDARD")
+            },
+            value: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 10, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "total", ascending: false))
+          )
+        }
+      )
+    }
+  )
+)</definition>
+        <metadataExpr></metadataExpr>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26308"/>
+    </history>
+</contentHaul>
