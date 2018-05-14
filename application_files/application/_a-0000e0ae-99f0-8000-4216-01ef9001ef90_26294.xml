@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
+<?xml version="1.0" encoding="UTF-8"?><applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
     <versionUuid>_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26314</versionUuid>
     <application>
         <name>TestApp</name>
         <uuid>_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26294</uuid>
-        <description></description>
+        <description/>
         <parentUuid>SYSTEM_APPLICATIONS_ROOT</parentUuid>
         <visibility>
             <advertise>false</advertise>
@@ -45,6 +44,7 @@
                     <uuids>
                         <uuid>_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26299</uuid>
                         <uuid>_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26309</uuid>
+                    <uuid>8ca776d9-4a78-42b3-801d-5cee6fd66c1a</uuid>
                     </uuids>
                 </item>
                 <item>
@@ -93,7 +93,9 @@
                 </item>
                 <item>
                     <type>webApi</type>
-                    <uuids/>
+                    <uuids>
+                        <uuid>4851482f-fa7a-494f-bccc-7068472a7d8b</uuid>
+                    </uuids>
                 </item>
                 <item>
                     <type>site</type>
@@ -222,29 +224,29 @@
     </application>
     <roleMap>
         <contentRoleMap public="true">
-            <role inherit="false" allowForAll="false" name="readers">
+            <role allowForAll="false" inherit="false" name="readers">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="authors">
+            <role allowForAll="false" inherit="false" name="authors">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="administrators">
+            <role allowForAll="false" inherit="false" name="administrators">
                 <users>
                     <userUuid>Administrator</userUuid>
                 </users>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyReaders">
+            <role allowForAll="false" inherit="false" name="denyReaders">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyAuthors">
+            <role allowForAll="false" inherit="false" name="denyAuthors">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <role allowForAll="false" inherit="false" name="denyAdministrators">
                 <users/>
                 <groups/>
             </role>
@@ -253,4 +255,4 @@
     <history>
         <historyInfo versionUuid="_a-0000e0ae-99f0-8000-4216-01ef9001ef90_26314"/>
     </history>
-</applicationHaul>
+</applicationHaul><!--updated on 2018-05-14T14:33:24.179-->

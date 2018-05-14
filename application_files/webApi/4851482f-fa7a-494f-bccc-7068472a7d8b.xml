@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<webApiHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>83347a5e-00ea-4e21-bad7-d817ebab233e</versionUuid>
+    <webApi a:uuid="4851482f-fa7a-494f-bccc-7068472a7d8b" name="TestAPI">
+        <a:description></a:description>
+        <a:expression>#"SYSTEM_SYSRULES_httpResponse_v1"(
+  /*
+  * The 'statusCode' parameter is a number that represents the HTTP status code
+  * of the response. If no status code is specified, a default of '200' is used,
+  * meaning that the request was successful.
+  */
+  statusCode: 200,
+
+  /*
+  * The 'headers' parameter is a list of HTTP headers to include on the response.
+  * HTTP headers should be built with 'a!httpHeader()'.
+  */
+  headers: {},
+
+  /*
+  * The 'body' parameter is the text that will be included in the HTTP response's
+  * body.
+  */
+  body: "Hello World"
+)</a:expression>
+        <a:urlAlias>BILfDg</a:urlAlias>
+        <a:httpMethod>GET</a:httpMethod>
+        <a:system>false</a:system>
+    </webApi>
+    <roleMap/>
+    <typedValue>
+        <type>
+            <name>WebApiRequest?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:path/>
+                <a:body/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="83347a5e-00ea-4e21-bad7-d817ebab233e"/>
+    </history>
+</webApiHaul>
