@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24413</versionUuid>
+    <rule>
+        <name>CASE_APP_deleteProduct</name>
+        <uuid>2cdb4be1-7c23-45b3-83dd-81c22b8d7de3</uuid>
+        <description>Initial form to confirm the deletion of a customer in the CASE_APP</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_formLayout"(&#xD;
+  label: "Confirm deletion of customer: " &amp; ri!product.name,  &#xD;
+  firstColumnContents: {&#xD;
+  #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4332"(product:ri!product)  &#xD;
+  },&#xD;
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(&#xD;
+    primaryButtons: {&#xD;
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+        label: "Delete",&#xD;
+        style: "DESTRUCTIVE",&#xD;
+        value: "submit",&#xD;
+        confirmMessage:"Are you sure you want to delete this product?",&#xD;
+        saveInto: ri!button&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+        label: "Cancel",&#xD;
+        skipValidation: true,&#xD;
+        value: "cancel",&#xD;
+        saveInto: ri!button&#xD;
+      )&#xD;
+    } &#xD;
+  ) &#xD;
+)</definition>
+        <namedTypedValue>
+            <name>product</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>button</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24413"/>
+    </history>
+</contentHaul>

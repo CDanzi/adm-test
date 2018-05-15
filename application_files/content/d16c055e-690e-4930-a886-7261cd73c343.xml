@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24696</versionUuid>
+    <rule>
+        <name>CASE_APP_CustomerDetailsSection</name>
+        <uuid>d16c055e-690e-4930-a886-7261cd73c343</uuid>
+        <description>Customer details section for creating a customer.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!ispublic: if(isnull(ri!customerData.StockTicker), null, true),
+  {
+      #"SYSTEM_SYSRULES_sectionLayout" (
+      label: "Customer Details",
+      firstColumnContents: {
+        #"SYSTEM_SYSRULES_checkboxField"(
+          labelPosition: "COLLAPSED",
+          choiceLabels: {"Is public company"},
+          choiceValues: {true},
+          value: local!isPublic,
+          saveInto: {
+            local!isPublic,
+            a!save(ri!customerData.StockTicker, null),
+            a!save(ri!customerData.Name, null)
+          }
+        ),
+        if(
+          local!isPublic,
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Stock Ticker",
+            value: ri!customerData.StockTicker,
+            saveInto: {
+              a!save(ri!customerData.StockTicker, stripwith(save!value, " !@#$%^&amp;*()_+={}[]\|':?/&gt;&lt;,`~'")),
+              a!save(
+                ri!customerData.Name,
+                #"6a30f8cc-85b0-4204-b632-8c2bec70ea0a"(ri!customerData.StockTicker)
+              )
+            },
+            validations: {
+              if(
+                isnull(ri!customerData.Name),
+                "Company not found. Please ensure you added the right stock symbol",
+                null
+              )
+            }
+          ),
+          {}
+        ),
+        #"SYSTEM_SYSRULES_textField"(
+          label: "Customer Name",
+          value: ri!customerData.Name,
+          saveInto: ri!customerData.Name,
+          required: true()
+        ),
+        #"SYSTEM_SYSRULES_pickerFieldUsers"(
+          label: "Account Owner",
+  	      maxSelections:1,
+          value: ri!customerData.AccountOwner,
+          saveInto: ri!customerData.AccountOwner,
+          required: true()
+        ),
+        #"SYSTEM_SYSRULES_dropdownField"(
+          label: "Industry",
+          placeholderLabel: "Please select an industry.",
+          choiceLabels:#"_a-0000d9a9-eb56-8000-9e06-010000010000_759",
+          choiceValues: #"_a-0000d9a9-eb56-8000-9e06-010000010000_759",
+  	      value: ri!customerData.Industry,
+          saveInto: ri!customerData.Industry
+        )
+      },
+      secondColumnContents: {
+        #"SYSTEM_SYSRULES_paragraphField"(
+          label: "Description",
+          value: ri!customerData.Description,
+          saveInto: ri!customerData.Description,
+          required: false(),
+  	      validations: if(
+  	        len(ri!customerData.Description) &gt; 1000,
+  	        "You may not exceed 1000 characters",
+  	        null 
+  	       )
+        ),
+        #"SYSTEM_SYSRULES_textField"(
+          label: "Website",
+          value: ri!customerData.Website,
+          saveInto: ri!customerData.Website,
+          refreshAfter: "KEYPRESS",
+          validations:  if(
+  	        len(ri!customerData.Website) &gt; 100,
+  	        "Website may not exceed 100 characters",
+  	        null 
+  	       )
+        ),
+  		  if(ri!isCreate,
+  		    {},
+    		  #"SYSTEM_SYSRULES_imageField"(
+    			  label:"Current Logo",
+            labelPosition: "ABOVE",
+            images: {if(
+              #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(ri!customerData.LogoID),
+              #"SYSTEM_SYSRULES_documentImage"(document:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3836"),
+              #"SYSTEM_SYSRULES_documentImage"(document:ri!customerData.LogoID)
+            )},
+            size: "THUMBNAIL"
+  		    )
+  		  ),
+        #"SYSTEM_SYSRULES_fileUploadField"(
+          label: if(ri!isCreate,"Logo","New Logo"),
+          target:#"_a-0000d9b8-41a7-8000-9e06-010000010000_491",
+          helpTooltip: "You may only upload supported image files types (png, jpg, jpeg, gif, bpm)",
+          value: ri!logo,
+          saveInto: {
+            ri!logo
+          },
+          required: ri!isCreate,
+          validations: {
+            if(
+              #"_a-0000dd4c-8d82-8000-c35b-01ef9001ef90_4521"(
+                fileExtension: #"SYSTEM_SYSRULES_fileUploadField"(value: ri!logo).contents.extension
+              ),
+              null,
+              "You must upload a valid image file."
+            )
+          }
+        )
+      }
+    )
+  }
+  )</definition>
+        <namedTypedValue>
+            <name>customerData</name>
+            <type>
+                <name>CASE_APP_Customer</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>logo</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isCreate</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <metadataExpr></metadataExpr>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24696"/>
+    </history>
+</contentHaul>

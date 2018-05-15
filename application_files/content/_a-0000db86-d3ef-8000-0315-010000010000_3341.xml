@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32226</versionUuid>
+    <rule>
+        <name>CASE_APP_SR_uiFormNewBasicServiceRequest</name>
+        <uuid>_a-0000db86-d3ef-8000-0315-010000010000_3341</uuid>
+        <description>Captures the required data to kick off a basic service request. (Offline-enabled)</description>
+        <parentUuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2618</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_formLayout"(
+  label: "Start Basic Service Request",
+  instructions: "Complete this form to create a new service request for a customer",
+  firstColumnContents: {
+    #"SYSTEM_SYSRULES_dropdownField"(
+      label: "Select a customer",
+      placeholderLabel: "---Select a customer---",
+      choiceLabels: ri!customerList.Name,
+      choiceValues: ri!customerList.id,
+      value: ri!serviceReq.relatedCustomerId,
+      saveInto: {
+        ri!serviceReq.relatedCustomerId,
+        a!save(
+          target: ri!serviceReq.requesterName,
+          value: ri!customerList[wherecontains(save!value, ri!customerList.id)].ContactName
+        ),
+        a!save(
+          target: ri!serviceReq.requesterEmail,
+          value: ri!customerList[wherecontains(save!value, ri!customerList.id)].Email
+        )
+      },
+      required: true
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout"(
+      label: "How may we help you?",
+      firstColumnContents:{
+        #"SYSTEM_SYSRULES_paragraphField"(
+          label:"Please describe your request",
+          instructions:"Describe your request and how we can help you.",
+          value:ri!serviceReq.comment,
+          saveInto:ri!serviceReq.comment,
+          required:true
+        ),
+        #"SYSTEM_SYSRULES_fileUploadField"(
+          label: "Upload Supporting Document",
+          target: #"_a-0000da5f-caaa-8000-9ba2-011c48011c48_2780",
+          value: ri!newDoc,
+          saveInto: ri!newDoc
+        )
+      },
+      secondColumnContents: {
+        #"SYSTEM_SYSRULES_textField"(
+          label: "Requester's Name",
+          labelPosition: "ABOVE",
+          instructions: "Name of the person any follow up should be addressed to.",
+          value: ri!serviceReq.requesterName,
+          saveInto: ri!serviceReq.requesterName,
+          refreshAfter: "UNFOCUS",
+          validations: {},
+          align: "LEFT"
+        ),
+        #"SYSTEM_SYSRULES_textField"(
+          label: "Requester's Email",
+          labelPosition: "ABOVE",
+          instructions: "The email where notifications and updates on this case should go to.",
+          value: ri!serviceReq.requesterEmail,
+          saveInto: ri!serviceReq.requesterEmail,
+          refreshAfter: "UNFOCUS",
+          validations: {},
+          align: "LEFT"
+        )
+      },
+      iscollapsible: true
+    )
+  },
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+    primaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+        label: "Submit Request",
+        style: "PRIMARY",
+        saveInto: {
+          a!save(target:ri!serviceReq.status, value: #"_a-0000da5f-caaa-8000-9ba2-011c48011c48_2630"[1]),
+          a!save(target:ri!serviceReq.priority, #"_a-0000db86-d3ef-8000-0315-010000010000_3399"[2]),
+          a!save(ri!serviceReq.createdBy, fn!loggedInUser()),
+          a!save(ri!serviceReq.createdOn, now()),
+          a!save(ri!serviceReq.updatedBy, fn!loggedInUser()),
+          a!save(ri!serviceReq.updatedOn, now()),
+          a!save(ri!serviceReq.requesterUser, fn!loggedInUser()),
+          a!save(ri!serviceReq.requestDateTime, now())
+        }
+      )
+    },
+    secondaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+        label: "Cancel",
+        style: "NORMAL",
+        value: true,
+        saveInto: ri!cancel,
+        skipValidation: true
+      )
+    }
+  ),
+  validations: {}
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>serviceReq</name>
+            <type>
+                <name>CASE_APP_ServiceRequest</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerList</name>
+            <type>
+                <name>CASE_APP_Customer?list</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>newDoc</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>true</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>cancel</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types:CASE_APP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:CASE_APP_ServiceRequest"/>
+                    <a:nameRef>serviceReq</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">=#"SYSTEM_SYSRULES_queryEntity"(  #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2099",  #"SYSTEM_SYSRULES_query"(    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,100,#"SYSTEM_SYSRULES_sortInfo"("Name", true))  )).data</a:value>
+                    <a:nameRef>customerList</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                    <a:nameRef>newDoc</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32226"/>
+    </history>
+</contentHaul>

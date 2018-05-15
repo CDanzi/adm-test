@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tempoFeedHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>c4b1b44c-00a3-457d-953f-37e69af332fa</versionUuid>
+    <tempoFeed>
+        <uuid>a394611c-16ae-4bf0-b032-f66cb6b09b6a</uuid>
+        <name>CMF Service Request Feed</name>
+        <description>Service Request feed</description>
+        <showInCatalog>true</showInCatalog>
+        <systemFeed>false</systemFeed>
+    </tempoFeed>
+    <roleMap>
+        <role name="administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9c4-bcae-8000-9aee-01075c01075c_17</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="c4b1b44c-00a3-457d-953f-37e69af332fa"/>
+    </history>
+</tempoFeedHaul>

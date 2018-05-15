@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24376</versionUuid>
+    <rule>
+        <name>CASE_APP_createUpdateProductFields</name>
+        <uuid>8af7ef67-8654-48e5-bab2-825cea2dae0f</uuid>
+        <description>Section layouts for forms to create or update a product</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{&#xD;
+  #"SYSTEM_SYSRULES_sectionLayout" (&#xD;
+    label: "Product Details",&#xD;
+    firstColumnContents: {&#xD;
+      #"SYSTEM_SYSRULES_textField"(&#xD;
+        label: "Product Name",&#xD;
+        value: ri!product.name,&#xD;
+        saveInto: ri!product.name,&#xD;
+        required: true()&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_paragraphField"(&#xD;
+        label: "Description",&#xD;
+        value: ri!product.description,&#xD;
+        saveInto: ri!product.description,&#xD;
+        required: true,&#xD;
+        validations: if(len(ri!product.description)&gt;255,"Please limit the character count: "&amp;len(ri!product.description)&amp;"/255",null)&#xD;
+      ),		  &#xD;
+      #"SYSTEM_SYSRULES_textField"(&#xD;
+        label: "SKU",&#xD;
+        helptooltip: if(&#xD;
+          ri!isCreate,&#xD;
+          "We support either EIN_8 (Europe) or EIN_13 (US) barcodes. If you're copying this value from an existing barcode, note that the last digit is automatically calculated.",&#xD;
+          null&#xD;
+        ),&#xD;
+        placeholder: "Enter a 7 or 12 digit value",&#xD;
+        value: ri!product.sku,&#xD;
+        saveInto: a!save(ri!product.sku, cleanwith(save!value, "0123456789")),&#xD;
+        required: ri!isCreate,&#xD;
+        readOnly: not(ri!isCreate),&#xD;
+        validations: {&#xD;
+          if(&#xD;
+            or(len(ri!product.sku) = 7, len(ri!product.sku) = 12),&#xD;
+            null,&#xD;
+            "You must enter either 7 or 12 digits"&#xD;
+          ),&#xD;
+          if(&#xD;
+            ri!isCreate,&#xD;
+            if(&#xD;
+              #"_a-0000dd7a-9e3c-8000-3428-01ef9001ef90_4511"(ri!product.sku),&#xD;
+              null,&#xD;
+              "Product SKU already in use. Choose another."&#xD;
+            ),&#xD;
+            null&#xD;
+          )&#xD;
+        }&#xD;
+      ),		  &#xD;
+      #"SYSTEM_SYSRULES_dropdownField"(&#xD;
+        label: "Category",&#xD;
+        placeholderLabel: "--Please select a category--",&#xD;
+        choiceLabels:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808",&#xD;
+        choiceValues: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808",&#xD;
+        value: ri!product.productCategory,&#xD;
+        saveInto: ri!product.productCategory,&#xD;
+        required: true&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_textField"(&#xD;
+        label: "Manufacturer",&#xD;
+        value: ri!product.manufacturer,&#xD;
+        saveInto: ri!product.manufacturer,&#xD;
+        required: true&#xD;
+      )		  &#xD;
+    },  &#xD;
+    secondColumnContents: {&#xD;
+      if(ri!isCreate, &#xD;
+        {},&#xD;
+	      if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(ri!product.productImageDocId),&#xD;
+      		{},&#xD;
+      		#"db22a1b1-edcb-4c87-a893-14880b22e957"(&#xD;
+      		documents: todocument(ri!product.productImageDocId), &#xD;
+      		gridLabel: "Current Product Image",&#xD;
+      		gridSelectable: false(),&#xD;
+      		showDocImageType: "THUMBNAIL",&#xD;
+      		showColumns: {"IMAGE","NAME"}  /*,"DATECREATED", "LASTUSERTOMODIFY"*/&#xD;
+      		)&#xD;
+    		)          &#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_fileUploadField"(&#xD;
+        label:"Upload Product Image",&#xD;
+        target:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3827",&#xD;
+        value:ri!productImage,&#xD;
+        saveInto:ri!productImage,&#xD;
+        required:#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(ri!product.productImageDocId)&#xD;
+      ),        &#xD;
+      #"SYSTEM_SYSRULES_dateField"(&#xD;
+        label: "Release Date",&#xD;
+        value: ri!product.releaseDate,&#xD;
+        saveInto: ri!product.releaseDate,&#xD;
+        required: false&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_floatingPointField"(&#xD;
+        label: "Price",&#xD;
+        value: ri!product.price,&#xD;
+        saveInto: ri!product.price,&#xD;
+        required: true&#xD;
+      ),		&#xD;
+      #"SYSTEM_SYSRULES_integerField"(&#xD;
+        label: "Quantity",&#xD;
+        value: ri!product.quantity,&#xD;
+        saveInto: ri!product.quantity,&#xD;
+        required: true&#xD;
+      )		  &#xD;
+    },&#xD;
+    iscollapsible: true&#xD;
+  ),&#xD;
+  #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+    label: "Shipping Details",&#xD;
+    firstColumnContents: {&#xD;
+      #"SYSTEM_SYSRULES_integerField"(&#xD;
+        label: "Shipping Weight (lbs)",&#xD;
+        instructions: "Please round to the nearest integer.",&#xD;
+        value: ri!product.shippingDetails.weight,&#xD;
+        saveInto: ri!product.shippingDetails.weight&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_integerField"(&#xD;
+        label: "Shipping Height (inches)",&#xD;
+        instructions: "Please round to the nearest integer.",&#xD;
+        value: ri!product.shippingDetails.height,&#xD;
+        saveInto: ri!product.shippingDetails.height&#xD;
+      )&#xD;
+    },&#xD;
+    secondColumnContents: {&#xD;
+      #"SYSTEM_SYSRULES_integerField"(&#xD;
+        label: "Shipping Width (inches)",&#xD;
+        instructions: "Please round to the nearest integer.",&#xD;
+        value: ri!product.shippingDetails.width,&#xD;
+        saveInto: ri!product.shippingDetails.width&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_integerField"(&#xD;
+        label: "Shipping Depth (inches)",&#xD;
+        instructions: "Please round to the nearest integer.",&#xD;
+        value: ri!product.shippingDetails.depth,&#xD;
+        saveInto: ri!product.shippingDetails.depth&#xD;
+      )&#xD;
+    },&#xD;
+    iscollapsible: true&#xD;
+  )&#xD;
+}&#xD;
+</definition>
+        <namedTypedValue>
+            <name>product</name>
+            <type>
+                <name>CASE_APP_Product</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>productImage</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isCreate</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24376"/>
+    </history>
+</contentHaul>

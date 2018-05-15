@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24653</versionUuid>
+    <rule>
+        <name>CASE_APP_getCompanyNameFromStockSymbol</name>
+        <uuid>6a30f8cc-85b0-4204-b632-8c2bec70ea0a</uuid>
+        <description>Uses a Yahoo API to retrieve a company name from a stock symbol. If stock symbol was not valid, it will return null.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5841</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>/*xpathsnippet(*/
+/*  "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22" */
+/*    &amp; ri!customerData.StockTicker*/
+/*    &amp; "%22)&amp;env=store://datatables.org/alltableswithkeys", "/query/results/quote/Name/text()"*/
+/*)*/
+
+with(
+  local!responseXml: #"SYSTEM_SYSRULES_httpQuery"(
+    url: "http://query.yahooapis.com/v1/public/yql",
+    method: "GET",
+    queryParameters: {
+      #"SYSTEM_SYSRULES_httpQueryParameter"(
+        "q",
+        "select * from yahoo.finance.quotes where symbol in (""" &amp; ri!stockSymbol &amp; """)"
+      ),
+      #"SYSTEM_SYSRULES_httpQueryParameter"(
+        "env",
+        "store://datatables.org/alltableswithkeys"
+      )
+    }
+  ).result.body,
+  local!companyName: xpathsnippet(local!responseXml, "/query/results/quote/Name/text()"),
+  if(
+    #"SYSTEM_SYSRULES_isNullOrEmpty"(local!companyName),
+    null,
+    local!companyName[1]
+  )
+)</definition>
+        <namedTypedValue>
+            <name>stockSymbol</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24653"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24592</versionUuid>
+    <constant>
+        <name>CASE_APP_BrazilStates</name>
+        <uuid>_a-0000d9b5-6c6c-8000-9e06-010000010000_768</uuid>
+        <description>A list of states in Brazil</description>
+        <parentUuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_781</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Acre</el>
+                <el>Alagoas</el>
+                <el>Amapá</el>
+                <el>Amazonas</el>
+                <el>Bahía</el>
+                <el>Ceará</el>
+                <el>Distrito Federal</el>
+                <el>Espirito Santo</el>
+                <el>Goiás</el>
+                <el>Maranhão</el>
+                <el>Mato Grosso</el>
+                <el>Mato Grosso do Sul</el>
+                <el>Minas Geraís</el>
+                <el>Paraná</el>
+                <el>Paraíba</el>
+                <el>Pará</el>
+                <el>Pernambuco</el>
+                <el>Piauí</el>
+                <el>Rio Grande do Norte</el>
+                <el>Rio Grande do Sul</el>
+                <el>Rio de Janeiro</el>
+                <el>Rondônia</el>
+                <el>Roraima</el>
+                <el>Santa Catarina</el>
+                <el>Sergipe</el>
+                <el>São Paulo</el>
+                <el>Tocantins</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24592"/>
+    </history>
+</contentHaul>

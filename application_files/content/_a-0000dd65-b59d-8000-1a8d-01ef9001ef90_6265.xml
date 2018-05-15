@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_25209</versionUuid>
+    <rule>
+        <name>CASE_APP_isApprovedDocExtension</name>
+        <uuid>_a-0000dd65-b59d-8000-1a8d-01ef9001ef90_6265</uuid>
+        <description>Returns true if the file extension is of an approved type (based on its extension)</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_1981</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!Reversed_fileName: concat(char(reverse(code(ri!fileName)))),
+  local!Reversed_Extension: lower(
+    left(
+      local!Reversed_fileName,
+      find(".", local!Reversed_fileName, 1) - 1
+    )
+  ),
+  local!Extension: concat(char(reverse(code(local!Reversed_Extension)))),
+  if(
+    #"SYSTEM_SYSRULES_isNullOrEmpty"(ri!allowedFileExtensions),
+    true,
+    contains(
+      ri!allowedFileExtensions,
+      local!Extension
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>fileName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>allowedFileExtensions</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_25209"/>
+    </history>
+</contentHaul>

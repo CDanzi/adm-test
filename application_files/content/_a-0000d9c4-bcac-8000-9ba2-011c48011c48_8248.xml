@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31388</versionUuid>
+    <rule>
+        <name>CASE_APP_getallOrderFieldsbyOrderNum</name>
+        <uuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_8248</uuid>
+        <description>Returns all fields for an order given the Order Number</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5996</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition> #"SYSTEM_SYSRULES_queryEntity"(
+  entity: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_6305",
+  query: #"SYSTEM_SYSRULES_query"(
+    selection: #"SYSTEM_SYSRULES_querySelection"(
+      columns: {
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "id"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "OrderNum"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "OrderDate"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "PurchaserName"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "PurchaserEmail"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "PurchaserPhone"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "CustomerOrderRefNumb"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "TaxRate"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "ShippingCost"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Total"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Status"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Customer"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "ShippingAddress"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "BillingAddress"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "OrderItems"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "OrderDateTime"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "TrackingNumber"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "processId"
+        )				
+      }
+    ),
+    filter: #"SYSTEM_SYSRULES_queryFilter"(
+      field: "OrderNum",
+      operator: "=",
+      value: ri!orderNum
+    ),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: 500
+    )
+  )
+).data[1]</definition>
+        <namedTypedValue>
+            <name>orderNum</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31388"/>
+    </history>
+</contentHaul>

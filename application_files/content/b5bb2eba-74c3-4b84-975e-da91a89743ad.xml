@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32780</versionUuid>
+    <queryRule>
+        <name>AH_getAuditHistoryById</name>
+        <uuid>b5bb2eba-74c3-4b84-975e-da91a89743ad</uuid>
+        <description>Given the audit history ID (NOT recordId), return the audit history entry assocaited with it</description>
+        <folderUuid>_a-0000daa1-9d78-8000-6ee0-010000010000_1053</folderUuid>
+        <dataStoreEntityCompositeUuid>55626a3c-8784-4d2c-abd3-8fe49316421c@_a-0000daa1-9d78-8000-6ee0-010000010000_1019</dataStoreEntityCompositeUuid>
+        <params>
+            <param>
+                <description>Audit history id</description>
+                <name>id</name>
+                <type>{http://www.w3.org/2001/XMLSchema}int</type>
+            </param>
+        </params>
+        <filters>
+            <filter>
+                <field>
+                    <name>id</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}int</type>
+                </field>
+                <op>=</op>
+                <value>id</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+        </filters>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32780"/>
+    </history>
+</contentHaul>

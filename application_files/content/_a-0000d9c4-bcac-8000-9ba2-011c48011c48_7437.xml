@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30727</versionUuid>
+    <rule>
+        <name>CASE_APP_getAllOrderItemsbyOrderNum</name>
+        <uuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_7437</uuid>
+        <description>Retrieves all Order Items for an order given the Order Number - the UUID for the Order, not the incremented id</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5996</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #"SYSTEM_SYSRULES_queryEntity"(
+  entity: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_7425",
+  query: #"SYSTEM_SYSRULES_query"(
+    selection: #"SYSTEM_SYSRULES_querySelection"(
+      columns: {
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "id"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Quantity"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Status"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "OrderItemNumber"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "OrderItemUnitPrice"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Taxed"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Product"
+        )
+      }
+    ),
+    filter: #"SYSTEM_SYSRULES_queryFilter"(
+      field: "OrderItemNumber",
+      operator: "=",
+      value: ri!orderNum
+    ),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: 500
+    )
+  )
+).data</definition>
+        <namedTypedValue>
+            <name>orderNum</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30727"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27138</versionUuid>
+    <rule>
+        <name>CASE_APP_uiGridTopSalesReps</name>
+        <uuid>af1f9e57-2d3e-4dd0-9cce-fbed12aa3a98</uuid>
+        <description>Displays a grid with details on top sales representatives by total sales $</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5995</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: 10,
+    sort: #"SYSTEM_SYSRULES_sortInfo"(
+      field: "Total"
+    )
+  ),
+  with(
+    local!datasubset: #"SYSTEM_SYSRULES_queryEntity"(
+      entity: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_6305",
+      query: #"SYSTEM_SYSRULES_query"(
+        selection: #"SYSTEM_SYSRULES_querySelection"(columns: {
+          #"SYSTEM_SYSRULES_queryColumn"(field: "id"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "Customer.AccountOwner", alias:"AccountOwner"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "Total"),
+        }),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridField"(
+      label:"Top Sales Reps by Total Sales",
+      totalCount: local!datasubset.totalCount,
+      columns: {
+        #"SYSTEM_SYSRULES_gridTextColumn"(
+          label: "Account Owner",
+          field: "AccountOwner",
+          data: apply(
+            #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1983",
+            index(local!datasubset.data, "AccountOwner", {})
+          ),
+          links:apply(
+            #"SYSTEM_SYSRULES_userRecordLink"(user:_),
+            index(local!datasubset.data, "AccountOwner", {})
+          )
+        ),
+        #"SYSTEM_SYSRULES_gridTextColumn"(
+          label: "Total",
+          field: "Total",
+          alignment:"RIGHT",
+          data: apply(
+            #"_a-0000dc96-9a5e-8000-6a17-01ef9001ef90_4707",
+            index(local!datasubset.data, "Total", {})
+          )
+        )
+      },
+      value: local!pagingInfo,
+      saveInto: local!pagingInfo
+    )
+  )
+)
+</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27138"/>
+    </history>
+</contentHaul>

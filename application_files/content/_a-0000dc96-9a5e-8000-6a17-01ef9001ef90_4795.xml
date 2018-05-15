@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30329</versionUuid>
+    <rule>
+        <name>CASE_APP_createAuthCCMessage</name>
+        <uuid>_a-0000dc96-9a5e-8000-6a17-01ef9001ef90_4795</uuid>
+        <description>Formats message to authrozie a credit card via Authorize.net</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5996</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>"{
+    ""createTransactionRequest"": {
+        ""merchantAuthentication"": {
+            ""name"": """ &amp; #"_a-0000dc96-9a5e-8000-6a17-01ef9001ef90_4797" &amp; """,
+            ""transactionKey"": """ &amp; #"_a-0000dc96-9a5e-8000-6a17-01ef9001ef90_4798" &amp; """
+        },
+         ""refId"": """ &amp; ri!refId &amp; """,
+        ""transactionRequest"": {
+            ""transactionType"": ""authOnlyTransaction"",
+            ""amount"": """ &amp; ri!totalAmount &amp; """,
+            ""payment"": {
+                ""creditCard"": {
+                    ""cardNumber"": """ &amp; ri!ccNumber &amp; """,
+                    ""expirationDate"": """ &amp; ri!ccExpDate &amp; """,
+                    ""cardCode"": """ &amp; ri!ccCode &amp; """
+                }
+            }
+    }
+}"</definition>
+        <namedTypedValue>
+            <name>refId</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccNumber</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccExpDate</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>totalAmount</name>
+            <type>
+                <name>double</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30329"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31944</versionUuid>
+    <rule>
+        <name>CASE_APP_ucMultiFileUploadResizeArray</name>
+        <uuid>96e0d627-3c44-424e-8ecf-64f1c07c933d</uuid>
+        <description>Show a dynamic number of file upload components. After a file is uploaded, add a new file upload component for another file to be uploaded should it be necessary. If an uploaded file is removed, remove its component so the set of components always has exactly one empty spot.</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_1672</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=if(                                /* Do we need to add?                               */&#xD;
+  and(&#xD;
+    not(isnull(ri!value)),          /* Yes, if the value isn't null                     */&#xD;
+    ri!index = 1 + length(ri!array) /* and we're at the end of the list                 */&#xD;
+  ),&#xD;
+  append(&#xD;
+    ri!array,&#xD;
+    ri!value                        /* Add: Append the new value to the end of the list */&#xD;
+  ),&#xD;
+  if(                               /* Do we need to remove?                            */&#xD;
+    isnull(ri!value),               /* Only if value is now null (value was removed)    */&#xD;
+    remove(ri!array, ri!index),     /* Remove: remove the list item for this field      */&#xD;
+    insert(                         /* Neither add nor remove, so insert at index       */&#xD;
+      ri!array,&#xD;
+      ri!value,&#xD;
+      ri!index&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>array</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>value</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31944"/>
+    </history>
+</contentHaul>

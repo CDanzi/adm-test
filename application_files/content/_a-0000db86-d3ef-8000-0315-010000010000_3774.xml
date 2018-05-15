@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27119</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiSectionReadOnlyDetails</name>
+        <uuid>_a-0000db86-d3ef-8000-0315-010000010000_3774</uuid>
+        <description>Shows the Investigation status indicator and details section. Read-only.</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  #"SYSTEM_SYSRULES_milestoneField"(
+    label: "Investigation Stage",
+    steps:  #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908" ,
+    active: wherecontains(ri!icmData.status,#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908" )
+  ),
+  #"SYSTEM_SYSRULES_sectionLayout"(
+    label:"Investigation Case Details",
+    firstColumnContents: {
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Investigation Name",
+        value:ri!icmData.name,
+        readOnly:true
+      ),
+      #"SYSTEM_SYSRULES_paragraphField"(
+        label: "Description",
+        value:ri!icmData.descriptionLong,
+        readOnly:true
+      )
+    },
+    secondColumnContents: {
+      #"SYSTEM_SYSRULES_textField"(
+        label:"Investigation Category",
+        value:ri!icmData.category,
+        readOnly:true
+      ),
+      if(ri!icmData.category="Other",
+        #"SYSTEM_SYSRULES_textField"(
+          label: "Desired Category",
+          value:ri!icmData.categoryOther,
+          readOnly: true
+        ),
+        {}
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label:"Investigation Status",
+        value:ri!icmData.status,
+        readOnly:true
+      ),
+      #"SYSTEM_SYSRULES_imageField"(
+        label:"Is Active?",
+        images:#"SYSTEM_SYSRULES_documentImage"(
+          document: if(ri!icmData.isActive, #"SYSTEM_SYSRULES_iconIndicator"("STATUS_OK"), #"SYSTEM_SYSRULES_iconIndicator"("STATUS_NOTDONE"))
+        ),
+        size:"ICON"
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label:"Priority",
+        value:ri!icmData.priority,
+        readOnly:true
+      )
+    },
+    isCollapsible: true
+  )
+}</definition>
+        <namedTypedValue>
+            <name>icmData</name>
+            <type>
+                <name>CASE_APP_ICM_Data</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27119"/>
+    </history>
+</contentHaul>

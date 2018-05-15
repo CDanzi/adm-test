@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24321</versionUuid>
+    <rule>
+        <name>CASE_APP_productSummaryDashboard</name>
+        <uuid>1f91132e-3675-45d6-ad5e-3a0c635e71a7</uuid>
+        <description>Summary dashboard for Product record type</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  local!product: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4326"(id:ri!id),&#xD;
+  #"SYSTEM_SYSRULES_dashboardLayout"(&#xD;
+    firstColumnContents: {&#xD;
+      #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4332"(product:local!product),&#xD;
+      #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+        label:"Shipping Details",&#xD;
+        firstColumnContents:{&#xD;
+          #"SYSTEM_SYSRULES_textField"(&#xD;
+            label:"Shipping Weight (lbs)",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            value:if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(rf!shippingDetails.weight),"N/A",rf!shippingDetails.weight),&#xD;
+            readOnly:true&#xD;
+          ),&#xD;
+          #"SYSTEM_SYSRULES_textField"(&#xD;
+            label:"Shipping Height (inches)",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            value:if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(rf!shippingDetails.weight),"N/A",rf!shippingDetails.height),&#xD;
+            readOnly:true&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents:{&#xD;
+          #"SYSTEM_SYSRULES_textField"(&#xD;
+            label:"Shipping Width (lbs)",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            value:if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(rf!shippingDetails.weight),"N/A",rf!shippingDetails.width),&#xD;
+            readOnly:true&#xD;
+          ),&#xD;
+          #"SYSTEM_SYSRULES_textField"(&#xD;
+            label:"Shipping Depth (inches)",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            value:if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(rf!shippingDetails.weight),"N/A",rf!shippingDetails.depth),&#xD;
+            readOnly:true&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #"29674194-7ed2-4a6b-a994-5cb57a7a5b30"(&#xD;
+        productIds:{rf!id},&#xD;
+        productName:{rf!name},&#xD;
+        showAddToOrder:false&#xD;
+        &#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>id</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24321"/>
+    </history>
+</contentHaul>

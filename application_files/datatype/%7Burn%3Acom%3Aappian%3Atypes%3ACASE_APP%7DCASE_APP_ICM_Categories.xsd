@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:CASE_APP"
+  xmlns:tns="urn:com:appian:types:CASE_APP" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ACASE_APP%7DCASE_APP_ICM_Milestones.xsd"/>
+  <xsd:complexType name="CASE_APP_ICM_Categories">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CMF_ICM_Categories")</xsd:appinfo>
+      <xsd:documentation><![CDATA[Contains all investigation categories that can be used with CMF Investigations.]]></xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0015e0b7-c0f0-8000-10c8-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0015e0b7-c0f0-8000-10c8-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(nullable=false) @Id @GeneratedValue</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="order" type="xsd:int"/>
+      <xsd:element name="isActive" type="xsd:boolean"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="presetMilestones" type="tns:CASE_APP_ICM_Milestones">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@OneToMany(indexed=false, cascade=CascadeType.ALL) @JoinColumn(name="categoryId", table="CMF_ICM_Milestones")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

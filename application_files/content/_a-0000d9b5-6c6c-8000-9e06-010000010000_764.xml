@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24556</versionUuid>
+    <constant>
+        <name>CASE_APP_ItalyProvinces</name>
+        <uuid>_a-0000d9b5-6c6c-8000-9e06-010000010000_764</uuid>
+        <description>A list of all provinces in Italy</description>
+        <parentUuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_781</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Agrigento</el>
+                <el>Alessandria</el>
+                <el>Ancona</el>
+                <el>Aosta / Aoste</el>
+                <el>Arezzo</el>
+                <el>Ascoli Piceno</el>
+                <el>Asti</el>
+                <el>Avellino</el>
+                <el>Bari</el>
+                <el>Belluno</el>
+                <el>Benevento</el>
+                <el>Bergamo</el>
+                <el>Biella</el>
+                <el>Bologna</el>
+                <el>Bolzano / Bolzen</el>
+                <el>Brescia</el>
+                <el>Brindisi</el>
+                <el>Cagliari</el>
+                <el>Caltanisetta</el>
+                <el>Campobasso</el>
+                <el>Caserta</el>
+                <el>Catania</el>
+                <el>Catanzaro</el>
+                <el>Chieti</el>
+                <el>Como</el>
+                <el>Cosenza</el>
+                <el>Cremona</el>
+                <el>Crotone</el>
+                <el>Cuneo</el>
+                <el>Enna</el>
+                <el>Ferrara</el>
+                <el>Firenze</el>
+                <el>Foggia</el>
+                <el>Forlì</el>
+                <el>Frosinone</el>
+                <el>Genova</el>
+                <el>Gorizia</el>
+                <el>Grosseto</el>
+                <el>Imperia</el>
+                <el>Isernia</el>
+                <el>L'Aquila</el>
+                <el>La Spezia</el>
+                <el>Latina</el>
+                <el>Lecce</el>
+                <el>Lecco</el>
+                <el>Livorno</el>
+                <el>Lodi</el>
+                <el>Lucca</el>
+                <el>Macerata</el>
+                <el>Mantova</el>
+                <el>Massa-Carrara</el>
+                <el>Matera</el>
+                <el>Messina</el>
+                <el>Milano</el>
+                <el>Modena</el>
+                <el>Napoli</el>
+                <el>Novara</el>
+                <el>Nuoro</el>
+                <el>Oristano</el>
+                <el>Padova</el>
+                <el>Palermo</el>
+                <el>Parma</el>
+                <el>Pavia</el>
+                <el>Perugia</el>
+                <el>Pesaro-Urbino</el>
+                <el>Pescara</el>
+                <el>Piacenza</el>
+                <el>Pisa</el>
+                <el>Pistoia</el>
+                <el>Pordenone</el>
+                <el>Potenza</el>
+                <el>Prato</el>
+                <el>Ragusa</el>
+                <el>Ravenna</el>
+                <el>Reggio di Calabria</el>
+                <el>Reggio nell'Emilia</el>
+                <el>Rieti</el>
+                <el>Rimini</el>
+                <el>Roma</el>
+                <el>Rovigo</el>
+                <el>Salerno</el>
+                <el>Sassari</el>
+                <el>Savona</el>
+                <el>Siena</el>
+                <el>Siracusa</el>
+                <el>Sondrio</el>
+                <el>Taranto</el>
+                <el>Teramo</el>
+                <el>Terni</el>
+                <el>Torino</el>
+                <el>Trapani</el>
+                <el>Trento</el>
+                <el>Treviso</el>
+                <el>Trieste</el>
+                <el>Udine</el>
+                <el>Varese</el>
+                <el>Venezia</el>
+                <el>Verbania</el>
+                <el>Vercelli</el>
+                <el>Verona</el>
+                <el>Vibo Valentia</el>
+                <el>Vicenza</el>
+                <el>Viterbo</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24556"/>
+    </history>
+</contentHaul>

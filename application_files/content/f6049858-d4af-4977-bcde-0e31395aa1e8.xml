@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32812</versionUuid>
+    <rule>
+        <name>CASE_APP_MostPopularProductCategories</name>
+        <uuid>f6049858-d4af-4977-bcde-0e31395aa1e8</uuid>
+        <description>Analyzes all order items and identifies the most popular product categories purchased in orders</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5995</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!categorySelect,
+  local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: 5,
+    sort: #"SYSTEM_SYSRULES_sortInfo"(
+      field: "Count"
+    )
+  ),
+  with(
+    local!datasubset: #"SYSTEM_SYSRULES_queryEntity"(
+      entity: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_7425",
+      query: if(
+        isnull(local!categorySelect),
+        #"SYSTEM_SYSRULES_query"(
+          aggregation: #"SYSTEM_SYSRULES_queryAggregation"(aggregationColumns: {
+            #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "Product.productCategory", alias:"productCategory", isGrouping: true),
+            #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "id", alias: "Count", aggregationFunction: "COUNT"),
+          }),
+          pagingInfo: local!pagingInfo
+        ),
+        #"SYSTEM_SYSRULES_query"(
+          filter: #"SYSTEM_SYSRULES_queryFilter"(
+            field: "Product.productCategory",
+            operator: "=",
+            value: local!categorySelect
+          ),
+          aggregation: #"SYSTEM_SYSRULES_queryAggregation"(aggregationColumns: {
+            #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "Product.name", isGrouping: true),
+            #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "Product.id", isGrouping: true),
+            #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "id", alias: "Count", aggregationFunction: "COUNT"),
+          }),
+          pagingInfo: local!pagingInfo
+        )
+      )
+    ),
+    if(
+      isnull(local!categorySelect),
+      {
+        #"SYSTEM_SYSRULES_columnChartField"(
+          label: "Product Category Popularity",
+          categories: index(local!datasubset.data, "productCategory", {}),
+          series: #"SYSTEM_SYSRULES_chartSeries"(
+            label: "Orders per Category",
+            data: index(local!datasubset.data, "Count", {}),
+            links: apply(
+              #"SYSTEM_SYSRULES_dynamicLink"(value: _, saveInto: local!categorySelect),
+              index(local!datasubset.data, "productCategory", {})
+            ),
+            color: "PURPLE"
+          ),
+          showdatalabels: false,
+          showtooltips: true
+        )
+      },
+      {
+        #"SYSTEM_SYSRULES_ButtonLayout"(
+          secondaryButtons: #"SYSTEM_SYSRULES_ButtonWidget"(
+            label: "Go back",
+            value: null,
+            saveInto: local!categorySelect
+          )
+        ),
+        #"SYSTEM_SYSRULES_gridField"(
+          label: local!categorySelect,
+          totalCount: local!datasubset.totalCount,
+          columns: {
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label: "Product Name",
+              field: "Product.name",
+              data: index(local!datasubset.data, "Product", null).name,
+              links: apply(
+                #"SYSTEM_SYSRULES_recordLink"(
+                  label: "Go to record dashboard",
+                  recordType: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3830",
+                  identifier: _,
+                  dashboard: "summary"
+                ),
+                index(local!datasubset.data, "Product", null).id
+              )
+            ),
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label: "Num Orders",
+              field: "Count",
+              data: index(local!datasubset.data, "Count", null),
+              alignment: "RIGHT"
+            )
+          },
+          value: local!pagingInfo,
+          saveInto: local!pagingInfo
+        )
+      }
+    )
+  )
+)
+</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32812"/>
+    </history>
+</contentHaul>

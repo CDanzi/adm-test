@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:audit"
+  xmlns:tns="urn:com:appian:types:audit" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="AH_AuditHistory">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+        @Table(name="ah_audithistory")
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[Complex data type to store the data used for the Audit History application for News Usage.]]></xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0002e0b7-c0f0-8000-10c8-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0002e0b7-c0f0-8000-10c8-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+					@Id
+					@GeneratedValue
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="recordId" nillable="true" type="xsd:int"/>
+      <xsd:element name="recordType" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+					@Column(columnDefinition="VARCHAR(4000)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="initiatorName" nillable="true" type="xsd:string"/>
+      <xsd:element name="eventTimestamp" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="entryId" nillable="true" type="xsd:string"/>
+      <xsd:element name="actionType" nillable="true" type="xsd:string"/>
+      <xsd:element name="actionDescription" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+					@Column(columnDefinition="VARCHAR(4000)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="notes" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+					@Column(columnDefinition="VARCHAR(4000)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

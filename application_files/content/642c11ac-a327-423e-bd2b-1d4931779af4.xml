@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_29993</versionUuid>
+    <rule>
+        <name>CASE_APP_uiReportTopCustomersByOrders</name>
+        <uuid>642c11ac-a327-423e-bd2b-1d4931779af4</uuid>
+        <description>Displays a chart or grid showing top 10 customers by orders.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!chartPI:#"SYSTEM_SYSRULES_pagingInfo"(1,10,#"SYSTEM_SYSRULES_sortInfo"("numOrders",false)),
+  local!viewAsGrid:true,
+  with(
+    local!data:#"SYSTEM_SYSRULES_queryEntity"(
+      #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_6305",
+      #"SYSTEM_SYSRULES_query"(
+        aggregation:#"SYSTEM_SYSRULES_queryAggregation"(
+          {
+            #"SYSTEM_SYSRULES_queryAggregationColumn"(
+              field:"Customer.Name",
+              alias:"customerName",
+              isGrouping:true
+            ),
+            #"SYSTEM_SYSRULES_queryAggregationColumn"(
+              field:"id",
+              alias:"numOrders",
+              aggregationFunction:"COUNT"
+            )
+          }
+        ),
+        pagingInfo:local!chartPI
+      )
+    ),
+    if(local!viewAsGrid,
+      {
+        #"SYSTEM_SYSRULES_linkField"(
+          labelPosition:"COLLAPSED",
+          links: #"SYSTEM_SYSRULES_dynamicLink"(label:"View as chart", value:false, saveInto:local!viewAsGrid)
+        ),
+        #"SYSTEM_SYSRULES_gridField"(
+          label:"Top Customers by number of Orders",
+          totalCount:local!data.totalCount,
+          columns:{
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label:"Customer",
+              data:index(local!data.data,"customerName",{})
+            ),
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label:"Num Orders",
+              data:index(local!data.data,"numOrders",{})
+            )
+          },
+          value:local!chartPI,
+          saveInto:local!chartPI
+        )
+      },
+      {
+        #"SYSTEM_SYSRULES_linkField"(
+          labelPosition:"COLLAPSED",
+          links: #"SYSTEM_SYSRULES_dynamicLink"(label:"View as grid", value:true, saveInto:local!viewAsGrid)
+        ),
+        #"SYSTEM_SYSRULES_barChartField"(
+          label:"Top Customers by number of Orders",
+          categories:index(local!data.data,"customerName",{}),
+          series:#"SYSTEM_SYSRULES_chartSeries"(
+            label:"Number of Orders",
+            data:index(local!data.data,"numOrders",{})
+          )
+        )
+      }
+    )
+  )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_29993"/>
+    </history>
+</contentHaul>

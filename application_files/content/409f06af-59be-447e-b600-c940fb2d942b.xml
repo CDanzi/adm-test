@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_28214</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiFormUpdateCollaborators</name>
+        <uuid>409f06af-59be-447e-b600-c940fb2d942b</uuid>
+        <description>Allows an Admin to update the Investigation's collaborators</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  local!originalOwner: ri!adminUser,&#xD;
+  #"SYSTEM_SYSRULES_formLayout"(&#xD;
+    label: "Update Investigation Collaborators",&#xD;
+    instructions:"All Collaborators defined here will have access to the investigation details and will be able to complete tasks and upload artifacts.",&#xD;
+    firstColumnContents: {&#xD;
+      #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+        label:"Investigation Collaborators",&#xD;
+        firstColumnContents:{&#xD;
+          #"SYSTEM_SYSRULES_pickerFieldUsers"(&#xD;
+            label: "Select Investigation Administrator",&#xD;
+            instructions: "Selected user will have full control and visibility of the investigation.",&#xD;
+            maxSelections: 1,&#xD;
+            groupFilter: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3843",&#xD;
+            value: ri!adminUser,&#xD;
+            saveInto: ri!adminUser,&#xD;
+            required: true,&#xD;
+            disabled: loggedInUser() &lt;&gt; local!originalOwner&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          #"SYSTEM_SYSRULES_pickerFieldUsers"(&#xD;
+            label:"Select Investigation Collaborators",&#xD;
+            instructions: "Selected users will have visibility for the Investigation and the ability to upload/modify artifacts and complete tasks.",&#xD;
+            groupFilter:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3843",&#xD;
+            value:ri!collaboratorUserList,&#xD;
+            saveInto:ri!collaboratorUserList,&#xD;
+            required:true,&#xD;
+            validations: {&#xD;
+              if(contains(ri!collaboratorUserList, ri!adminUser), "Please remove the Investigation Administrator from the list of collaborators.", null)&#xD;
+            }&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_paragraphField"(&#xD;
+        label:"Update Comments",&#xD;
+        instructions:len(ri!updateComments)&amp;" of 100 chars. Comments here will be captured into the case history log.",&#xD;
+        value:ri!updateComments,&#xD;
+        saveInto:ri!updateComments,&#xD;
+        refreshAfter:"KEYPRESS",&#xD;
+        validations:if(len(ri!updateComments)&gt;100,"Comments cannot exceed 100 characters.", null)&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(&#xD;
+      primaryButtons: #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+        label: "Update Collaborators"&#xD;
+      )&#xD;
+    )&#xD;
+  )&#xD;
+)&#xD;
+</definition>
+        <namedTypedValue>
+            <name>adminUser</name>
+            <type>
+                <name>User</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>collaboratorUserList</name>
+            <type>
+                <name>User?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>updateComments</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_28214"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30045</versionUuid>
+    <rule>
+        <name>CASE_APP_ProductQuantitiesByCategory</name>
+        <uuid>aca869b8-a362-4c23-9c9b-3b8eba71b1a0</uuid>
+        <description>Shows the total number of products by category</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: 7,
+    sort: #"SYSTEM_SYSRULES_sortInfo"(
+      field: "quantity",
+      ascending: false
+    )
+  ),
+  local!selectedCategory,
+  local!gridPagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: 5,
+    sort: #"SYSTEM_SYSRULES_sortInfo"(
+      field: "quantity",
+      ascending: false
+    )
+  ),
+  with(
+    local!datasubset: queryrecord(
+      #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3830",
+      #"SYSTEM_SYSRULES_query"(
+        aggregation: #"SYSTEM_SYSRULES_queryAggregation"(aggregationColumns: {
+          #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "productCategory", isGrouping: true),
+          #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "quantity", aggregationFunction: "SUM"),
+        }),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    if(
+      isnull(local!selectedCategory),
+      #"SYSTEM_SYSRULES_columnChartField"(
+        label: "Total Quantity of Products by Category",
+        categories: index(local!datasubset.data, "productCategory", {}),
+        series: #"SYSTEM_SYSRULES_chartSeries"(
+          label: "Product Category",
+          data: index(local!datasubset.data, "quantity", {}),
+          links: apply(
+            #"SYSTEM_SYSRULES_dynamicLink"(value:_,saveInto:local!selectedCategory),
+            index(local!datasubset.data,"productCategory",null)
+          ),
+          color: "GREEN"
+        ),
+        showdatalabels: false,
+        showtooltips: true
+      ),
+      with(
+        local!gridDatasubset:queryrecord(
+          #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3830",
+          #"SYSTEM_SYSRULES_query"(
+            selection:#"SYSTEM_SYSRULES_querySelection"(
+              columns:{
+                #"SYSTEM_SYSRULES_queryColumn"(field:"name"),
+                #"SYSTEM_SYSRULES_queryColumn"(field:"sku"),
+                #"SYSTEM_SYSRULES_queryColumn"(field:"quantity")
+              }
+            ),
+            filter:#"SYSTEM_SYSRULES_queryFilter"("productCategory","=",local!selectedCategory),
+            pagingInfo: local!gridPagingInfo
+          )
+        ),
+        {
+          #"SYSTEM_SYSRULES_ButtonLayout"(
+            secondaryButtons: #"SYSTEM_SYSRULES_ButtonWidget"(
+              label: "Go back",
+              value: null,
+              saveInto: local!selectedCategory
+            )
+          ),
+          #"SYSTEM_SYSRULES_gridField"(
+            label:"Products in "&amp;local!selectedCategory,
+            totalCount:local!gridDatasubset.totalCount,
+            columns:{
+              #"SYSTEM_SYSRULES_gridTextColumn"(
+                label:"Name",
+                field:"name",
+                data:index(local!gridDatasubset.data,"name",null),
+                links:apply(
+                  #"SYSTEM_SYSRULES_recordLink"(recordType:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3830",identifier:_),
+                  local!gridDatasubset.identifiers
+                )
+              ),
+              #"SYSTEM_SYSRULES_gridTextColumn"(
+                label:"SKU",
+                field:"sku",
+                data:index(local!gridDatasubset.data,"sku",null)
+                
+              ),
+              #"SYSTEM_SYSRULES_gridTextColumn"(
+                label:"Quantity Available",
+                field:"quantity",
+                data:index(local!gridDatasubset.data,"quantity",null),
+                alignment:"RIGHT"
+                
+              )
+            },
+            value:local!gridPagingInfo,
+            saveInto:local!gridPagingInfo
+          )
+        }
+      )
+    )
+  )
+)
+</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30045"/>
+    </history>
+</contentHaul>

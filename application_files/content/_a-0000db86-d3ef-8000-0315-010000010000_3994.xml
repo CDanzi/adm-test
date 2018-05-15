@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26729</versionUuid>
+    <rule>
+        <name>CASE_APP_uiUserDashboardViewOrgChart</name>
+        <uuid>_a-0000db86-d3ef-8000-0315-010000010000_3994</uuid>
+        <description>Shows basic details about the user and the org chart</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_1981</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!username: rf!username,&#xD;
+  #"SYSTEM_SYSRULES_dashboardLayout"(&#xD;
+    firstColumnContents: {&#xD;
+      #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+        /*label:user(rf!username, "firstName")&amp; " "&amp;user(rf!username, "lastName") ,*/&#xD;
+        firstColumnContents:{&#xD;
+          #"SYSTEM_SYSRULES_linkField"(&#xD;
+            label:"Email",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            links: #"SYSTEM_SYSRULES_safeLink"(label:#"_a-0000db86-d3ef-8000-0315-010000010000_3996"(user(rf!username, "email"), "Not Specified"), uri:"mailto:"&amp;user(rf!username, "email"))&#xD;
+          ),&#xD;
+          #"SYSTEM_SYSRULES_textField"(&#xD;
+            label:"Office Phone",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            value: #"_a-0000db86-d3ef-8000-0315-010000010000_3996"(user(rf!username, "phoneOffice"), "Not Specified"),&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #"SYSTEM_SYSRULES_textField"(&#xD;
+            label:"Mobile Phone",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            value: #"_a-0000db86-d3ef-8000-0315-010000010000_3996"(user(rf!username, "phoneMobile"), "Not Specified"),&#xD;
+            readOnly: true&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents:{&#xD;
+          #"SYSTEM_SYSRULES_textField"(&#xD;
+            label:"Department",&#xD;
+            labelPosition:"ADJACENT",&#xD;
+            value: #"_a-0000db86-d3ef-8000-0315-010000010000_3996"(user(rf!username, "customField3"), "Not Specified"),&#xD;
+            readOnly: true&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      /*the below section is here to add extra space*/&#xD;
+      #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+        label: "",&#xD;
+        firstColumnContents:{}&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_orgChartField"(&#xD;
+        value: local!username,&#xD;
+        saveInto: local!username,&#xD;
+        showAllAncestors: false&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26729"/>
+    </history>
+</contentHaul>

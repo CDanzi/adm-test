@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24568</versionUuid>
+    <constant>
+        <name>CASE_APP_ChinaProvinces</name>
+        <uuid>_a-0000d9b5-6c6c-8000-9e06-010000010000_770</uuid>
+        <description>A list of provinces in the People's Republic of China</description>
+        <parentUuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_781</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Anhui</el>
+                <el>Jilin</el>
+                <el>Beijing</el>
+                <el>Liaoning</el>
+                <el>Fujian</el>
+                <el>Nei Mongol</el>
+                <el>Gansu</el>
+                <el>Ningxia Hui</el>
+                <el>Guangdong</el>
+                <el>Qinghai</el>
+                <el>Guangxi Zhuang</el>
+                <el>Shaanxi</el>
+                <el>Guizhou</el>
+                <el>Shandong</el>
+                <el>Hainan</el>
+                <el>Shanghai</el>
+                <el>Hebei</el>
+                <el>Shanxi</el>
+                <el>Heilongjiang</el>
+                <el>Sichuan</el>
+                <el>Henan</el>
+                <el>Tianjin</el>
+                <el>Hubei</el>
+                <el>Xinjiang Uygur</el>
+                <el>Hunan</el>
+                <el>Xizang</el>
+                <el>Jiangsu</el>
+                <el>Yunnan</el>
+                <el>Jiangxi</el>
+                <el>Zhejiang</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24568"/>
+    </history>
+</contentHaul>

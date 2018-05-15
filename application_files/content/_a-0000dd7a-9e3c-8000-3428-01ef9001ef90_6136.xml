@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32127</versionUuid>
+    <rule>
+        <name>CMF_SR_getProductsWithMostCSRs</name>
+        <uuid>_a-0000dd7a-9e3c-8000-3428-01ef9001ef90_6136</uuid>
+        <description>Returns a dataset containing CSR counts for each product, ordered by most</description>
+        <parentUuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2617</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!orderItemData: #"SYSTEM_SYSRULES_queryEntity"(
+    entity: #"_a-0000dd7a-9e3c-8000-3428-01ef9001ef90_4959",
+    query: #"SYSTEM_SYSRULES_query"(
+      aggregation: #"SYSTEM_SYSRULES_queryAggregation"({
+        #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "relatedOrderItemId", alias: "orderItemId", isGrouping: true),
+        #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "id", alias: "count", aggregationFunction: "COUNT"),
+      }),
+      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+        operator: "AND",
+        filters: {
+          #"SYSTEM_SYSRULES_queryFilter"("type", "=", "I need help with an Order"),
+          #"SYSTEM_SYSRULES_queryFilter"("relatedOrderItemId", "not null")
+        }
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 10, #"SYSTEM_SYSRULES_sortInfo"(field: "count"))
+    )
+  ),
+  local!productsForOrderItems: if(
+    local!orderItemData.totalCount = 0,
+    null,
+    #"SYSTEM_SYSRULES_queryEntity"(
+      #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_7425",
+      #"SYSTEM_SYSRULES_query"(
+        selection: #"SYSTEM_SYSRULES_querySelection"({
+          #"SYSTEM_SYSRULES_queryColumn"(field: "id"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "Product.id", alias: "productId"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "Product.name", alias: "productName"),
+        }),
+        filter: #"SYSTEM_SYSRULES_queryFilter"("id", "in", tointeger(local!orderItemData.data.orderItemId)),
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 10, null)
+      )
+    )
+  ),
+  todatasubset(apply(
+    'type!{urn:com:appian:types:CASE_APP}CMF_ProductCsrCount'(
+      orderItemId: _,
+      csrCount: _,
+      productId: _,
+      productName: _
+    ),
+    merge(
+      if(
+        local!orderItemData.totalCount = 0,
+        {},
+        local!orderItemData.data.orderItemId
+      ),
+      if(
+        local!orderItemData.totalCount = 0,
+        {},
+        local!orderItemData.data.count
+      ),
+      if(
+        isnull(local!productsForOrderItems),
+        {},
+        local!productsForOrderItems.data[
+          wherecontains(local!orderItemData.data.orderItemId, local!productsForOrderItems.data.id)
+        ].productId
+      ),
+      if(
+        isnull(local!productsForOrderItems),
+        {},
+        local!productsForOrderItems.data[
+          wherecontains(local!orderItemData.data.orderItemId, local!productsForOrderItems.data.id)
+        ].productName
+      )
+    )
+  ))
+)</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32127"/>
+    </history>
+</contentHaul>

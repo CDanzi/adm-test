@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31857</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiFormUpdateMilestones</name>
+        <uuid>e6f09b2f-b62b-44b4-a4b4-f21a0e5b3353</uuid>
+        <description>For to update milestones for an investigation.</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  local!pagingInfo:#"SYSTEM_SYSRULES_pagingInfo"(&#xD;
+    startIndex:1,&#xD;
+    batchSize:10,&#xD;
+    sort: #"SYSTEM_SYSRULES_sortInfo"(field:"order", ascending:true)&#xD;
+  ),&#xD;
+  local!currentMilestoneTasks: ri!milestoneTasksData[where(apply(&#xD;
+    #"_a-0000d9a9-eb56-8000-9e06-010000010000_751",&#xD;
+    ri!milestoneTasksData.completed&#xD;
+  ))],&#xD;
+  local!currentMilestones: ri!milestonesData[wherecontains(local!currentMilestoneTasks.taskName, ri!milestonesData.name)],&#xD;
+  local!completedMilestoneTasks: difference(ri!milestoneTasksData,local!currentMilestoneTasks),&#xD;
+  local!completedMilestones: difference(ri!milestonesData, local!currentMilestones),&#xD;
+  local!itemsToken,&#xD;
+  #"SYSTEM_SYSRULES_formLayout"(&#xD;
+    label: "Manage Investigation Milestones/Objectives",&#xD;
+    instructions:"Use this form to ADD, EDIT or DELETE the Investigation's Milestones",&#xD;
+    firstColumnContents: {&#xD;
+      if(count(local!completedMilestoneTasks)&gt;0,&#xD;
+        #"1abcd8e4-e0ed-4c19-9cb1-305b5e04a07b"(&#xD;
+          milestoneTasksData: local!completedMilestoneTasks,&#xD;
+          sectionName: "Completed Investigation Milestones"&#xD;
+        ),&#xD;
+        {}&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+        label:"Active Investigation's Milestones/Objectives",&#xD;
+        firstColumnContents: {&#xD;
+          with(&#xD;
+            local!test,&#xD;
+            {&#xD;
+              #"SYSTEM_SYSRULES_gridLayout"(&#xD;
+                instructions: "Only pending milestones can be modified.",&#xD;
+                headerCells: {&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Milestone Name"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Description"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Due Date"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: ""),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: ""),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "")&#xD;
+                },&#xD;
+                columnConfigs: {&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "DISTRIBUTE"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "DISTRIBUTE"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "DISTRIBUTE"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "NARROW"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "NARROW"),&#xD;
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "NARROW")&#xD;
+                },&#xD;
+                rows: #"SYSTEM_SYSRULES_applyComponents"(&#xD;
+                  function: #"804a1f16-1d44-4826-a9cc-b45de60a7c83"(&#xD;
+                    items: local!currentMilestones,&#xD;
+                    index: _,&#xD;
+                    itemsToken: local!itemsToken&#xD;
+                  ),&#xD;
+                  array: if(or(isnull(local!currentMilestones), count(local!currentMilestones) &lt; 1), {}, 1+enumerate(count(local!currentMilestones))),&#xD;
+                  arrayVariable: local!itemsToken&#xD;
+                ),&#xD;
+                validations:if(count(local!currentMilestones)+count(local!completedMilestones)&lt;2,"There must be at least 2 Milestones/Objectives",null)&#xD;
+              ),&#xD;
+              #"SYSTEM_SYSRULES_linkField"(&#xD;
+                label: "Add Link",&#xD;
+                labelPosition: "COLLAPSED",&#xD;
+                links: #"SYSTEM_SYSRULES_dynamicLink"(&#xD;
+                  label: "+Add Milestone",&#xD;
+                  value: 'type!{urn:com:appian:types:CASE_APP}CASE_APP_ICM_Milestones'(order:count(local!currentMilestones)+1, isActive:true),&#xD;
+                  saveInto: {&#xD;
+                    local!currentMilestones &lt;&lt; fn!append(local!currentMilestones, _),&#xD;
+                    local!itemsToken &lt;&lt; fn!append(local!itemsToken, _)&#xD;
+                  }&#xD;
+                )&#xD;
+              ),&#xD;
+              #"SYSTEM_SYSRULES_paragraphField"(&#xD;
+                label:"Update Comments",&#xD;
+                instructions:len(ri!updateComments)&amp;" of 100 chars. Comments here will be captured into the case history log.",&#xD;
+                value:ri!updateComments,&#xD;
+                saveInto:ri!updateComments,&#xD;
+                refreshAfter:"KEYPRESS",&#xD;
+                validations:if(len(ri!updateComments)&gt;100,"Comments cannot exceed 100 characters.", null)&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      if(count(local!currentMilestones)+count(local!completedMilestones)&gt;1,&#xD;
+        #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+          label:"Preview Milestones",&#xD;
+          firstColumnContents:{&#xD;
+            #"SYSTEM_SYSRULES_milestoneField"(steps:append(local!completedMilestones.name, local!currentMilestones.name), active:ri!activeMilestone)&#xD;
+          }&#xD;
+        ),&#xD;
+        {}&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(&#xD;
+      primaryButtons: #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+        label: "Confirm Changes",&#xD;
+        confirmMessage: "Updating the Milestones will stop currently active tasks and launch new ones. Continue?",&#xD;
+        saveInto: {&#xD;
+          a!save(target: ri!milestonesData, value: append(local!completedMilestones, local!currentMilestones))&#xD;
+        }&#xD;
+      )&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>milestonesData</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>activeMilestone</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>updateComments</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>milestoneTasksData</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31857"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27125</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiFormCloseInvestigation</name>
+        <uuid>_a-0000db86-d3ef-8000-0315-010000010000_3773</uuid>
+        <description>Form definition used to close an investigation</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!icmCategories: #"SYSTEM_SYSRULES_queryEntity"(
+    entity: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2297",
+    query: #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"(columns: {
+        #"SYSTEM_SYSRULES_queryColumn"(field: "name"),
+        #"SYSTEM_SYSRULES_queryColumn"(field: "order"),
+      }),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,10,#"SYSTEM_SYSRULES_sortInfo"(field: "order"))
+    )
+  ),
+  #"SYSTEM_SYSRULES_formLayout"(
+    label: "Close Investigation",
+    instructions: "All milestones have been completed. Please review the investigation details and close it if ready.",
+    firstColumnContents: {
+      #"_a-0000db86-d3ef-8000-0315-010000010000_3774"(ri!icmData),
+      #"1abcd8e4-e0ed-4c19-9cb1-305b5e04a07b"(milestoneTasksData: ri!milestoneTasksData),
+      #"SYSTEM_SYSRULES_paragraphField"(
+        label:"Closing Comments",
+        value:ri!closingComments,
+        saveInto:ri!closingComments,
+        required: true
+      )
+    },
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+      primaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+          label: "Close Case",
+          style: "PRIMARY",
+          confirmMessage: "Closing Action will be logged. Confirm closing case?",
+          value:"Submit",
+          saveInto: {
+            a!save(ri!icmData.status, "Closed")
+          }
+        )
+      },
+      secondaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+          label: "Cancel",
+          value: true,
+          saveInto: ri!cancel,
+          skipValidation: true
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>icmData</name>
+            <type>
+                <name>CASE_APP_ICM_Data</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>closingComments</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>milestoneTasksData</name>
+            <type>
+                <name>CASE_APP_AdHocTasking?list</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27125"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31067</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiFormUpdateInvestigationDetails</name>
+        <uuid>e00d763d-1574-4acc-9402-ab12a9789875</uuid>
+        <description>Allows users to update the ongoing investigation details. </description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!icmCategories: #"SYSTEM_SYSRULES_queryEntity"(
+    entity: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2297",
+    query: #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"(columns: {
+        #"SYSTEM_SYSRULES_queryColumn"(field: "name"),
+        #"SYSTEM_SYSRULES_queryColumn"(field: "order"),
+      }),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,10,#"SYSTEM_SYSRULES_sortInfo"(field: "order"))
+    )
+  ),
+  #"SYSTEM_SYSRULES_formLayout"(
+    label: "Update Investigation Details",
+    instructions: "In here you may update the Investigation Details. Action will be logged.",
+    firstColumnContents: {
+      #"SYSTEM_SYSRULES_milestoneField"(
+        steps: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908",
+        active: wherecontains(ri!icmData.status, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908")
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout"(
+        label: "Investigation Details",
+        firstColumnContents: {
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Investigation Name",
+            value:ri!icmData.name,
+            saveInto:ri!icmData.name,
+            required:true
+          ),
+          #"SYSTEM_SYSRULES_paragraphField"(
+            label: "Description",
+            value:ri!icmData.descriptionLong,
+            saveInto:ri!icmData.descriptionLong,
+            required:true
+          )
+        },
+        secondColumnContents: {
+          #"SYSTEM_SYSRULES_dropdownField"(
+            label:"Investigation Category",
+            choiceLabels:append(local!icmCategories.data.name,"Other"),
+            placeholderLabel:"---Select a category---",
+            choiceValues:append(local!icmCategories.data.name,"Other"),
+            value:ri!icmData.category,
+            saveInto:ri!icmData.category,
+            required:true
+          ),
+          if(ri!icmData.category="Other",
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Desired Category",
+              value:ri!icmData.categoryOther,
+              saveInto:ri!icmData.categoryOther,
+              required:ri!icmData.category="Other"
+            ),
+            {}
+          ),
+          #"SYSTEM_SYSRULES_dropdownField"(
+            label:"Investigation Status",
+            choiceLabels:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908",
+            placeholderLabel:"---Select a Status---",
+            choiceValues:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908",
+            value:ri!icmData.status,
+            saveInto:ri!icmData.status,
+            required:true
+          ),
+          #"SYSTEM_SYSRULES_textField"(
+            label:"Is Active",
+            value:"Yes",
+            readOnly:true
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_paragraphField"(
+        label:"Update Comments",
+        instructions:len(ri!updateComments)&amp;" of 100 chars. Comments here will be captured into the case history log.",
+        value:ri!updateComments,
+        saveInto:ri!updateComments,
+        refreshAfter:"KEYPRESS",
+        validations:if(len(ri!updateComments)&gt;100,"Comments cannot exceed 100 characters.", null)
+      )
+    },
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+      primaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+          label: "Update Details",
+          style: "PRIMARY",
+          confirmMessage:"Update Action will be logged. Confirm Update?",
+          value:"Submit"
+        )
+      },
+      secondaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+          label: "Cancel",
+          value: true,
+          saveInto: ri!cancel,
+          skipValidation: true
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>icmData</name>
+            <type>
+                <name>CASE_APP_ICM_Data</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>updateComments</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>cancel</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types:CASE_APP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:CASE_APP_ICM_Data"/>
+                    <a:nameRef>icmData</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>updateComments</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31067"/>
+    </history>
+</contentHaul>

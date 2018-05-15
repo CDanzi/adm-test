@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <versionUuid>7dbf6796-38cb-4ab0-becf-aa584831788b</versionUuid>
+  <recordType a:uuid="d1ea2edd-4da3-4f0f-a2db-236913478100" name="Products">
+    <a:pluralName>Products</a:pluralName>
+    <a:description>Shows active and inactive products.</a:description>
+    <a:urlStub>case-app-product</a:urlStub>
+    <a:source
+      a:uuid="7e5e6f09-0639-4a8d-8785-40ac8d2c314a@_a-0000da5f-b0b8-8000-9ba2-011c48011c48_12642" xsi:type="a:DataStoreEntity"/>
+    <a:listViewTemplateExpr>#"SYSTEM_SYSRULES_recordGridLayoutColumns"(
+  columns: {
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Image",
+      width: "DISTRIBUTE",
+      weight: 1,
+      field: "id",
+      component: #"SYSTEM_SYSRULES_recordGrid_imageField"(
+        images: {
+          #"SYSTEM_SYSRULES_documentImage"(
+            document: if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(rf!productImageDocId),
+	            #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3849",
+	            todocument(rf!productImageDocId)
+            ) )
+        },
+        size: "THUMBNAIL"
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Name",
+      weight: 5,
+      field: "name",
+      component: #"SYSTEM_SYSRULES_recordGrid_linkField"(
+        links: #"SYSTEM_SYSRULES_recordLink"(   
+          label: rf!name,
+          recordType: rp!type,
+          identifier: rp!id
+        )
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Category",
+      weight: 2,
+      field: "category",
+      component: #"SYSTEM_SYSRULES_recordGrid_textField"(
+        displayvalue: rf!productCategory
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Price",
+      weight: 1,
+      field: "price",
+      align: "RIGHT",
+      component: #"SYSTEM_SYSRULES_recordGrid_textField"(
+        displayvalue: fn!dollar(rf!price),
+        align: "RIGHT"
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Inventory",
+      weight: 1,
+      field: "quantity",
+      align: "RIGHT",
+      component: #"SYSTEM_SYSRULES_recordGrid_integerField"(
+        displayValue: rf!quantity,
+        align: "RIGHT"
+      )
+    )
+  },
+  pageSize: 50,
+  defaultSort: #"SYSTEM_SYSRULES_sortInfo"(
+    field: "name",
+    ascending: true
+  )
+)</a:listViewTemplateExpr>
+    <a:fieldCfg name="Active">
+      <a:description/>
+      <a:sourceRef>isActive</a:sourceRef>
+      <a:isSortable>false</a:isSortable>
+      <a:isSearchable>false</a:isSearchable>
+      <a:isFacet>true</a:isFacet>
+      <a:facetType>CUSTOM_BUCKETS_CLOSED</a:facetType>
+      <a:isExclusiveFacet>true</a:isExclusiveFacet>
+      <a:facetLabelExpr>"Active"</a:facetLabelExpr>
+      <a:facetOption>
+        <a:labelExpr>"Active"</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>true</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>"Inactive"</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>false</a:values>
+      </a:facetOption>
+      <a:sortOrderIndex>0</a:sortOrderIndex>
+      <a:facetOrderIndex>0</a:facetOrderIndex>
+      <a:visibilityExpr/>
+      <a:defaultOptionExpr>"Active"</a:defaultOptionExpr>
+      <a:allowMultipleSelections>false</a:allowMultipleSelections>
+    </a:fieldCfg>
+    <a:fieldCfg name="Category">
+      <a:description/>
+      <a:sourceRef>productCategory</a:sourceRef>
+      <a:isSortable>false</a:isSortable>
+      <a:isSearchable>false</a:isSearchable>
+      <a:isFacet>true</a:isFacet>
+      <a:facetType>CUSTOM_BUCKETS_CLOSED</a:facetType>
+      <a:isExclusiveFacet>true</a:isExclusiveFacet>
+      <a:facetLabelExpr>"Category"</a:facetLabelExpr>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=1, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[1], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=1, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[1], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=2, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[2], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=2, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[2], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=3, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[3], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=3, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[3], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=4, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[4], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=4, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[4], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=5, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[5], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=5, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[5], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=6, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[6], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=6, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[6], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=7, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[7], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=7, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[7], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=8, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[8], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=8, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[8], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=9, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[9], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=9, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[9], null)</a:values>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=10, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[10], null)</a:labelExpr>
+        <a:facetOperator>IN</a:facetOperator>
+        <a:lowerLimitExpr/>
+        <a:upperLimitExpr/>
+        <a:values>if(length(#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808")&gt;=10, #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3808"[10], null)</a:values>
+      </a:facetOption>
+      <a:sortOrderIndex>1</a:sortOrderIndex>
+      <a:facetOrderIndex>1</a:facetOrderIndex>
+      <a:visibilityExpr/>
+      <a:defaultOptionExpr/>
+      <a:allowMultipleSelections>false</a:allowMultipleSelections>
+    </a:fieldCfg>
+    <a:fieldCfg name="Price">
+      <a:description/>
+      <a:sourceRef>price</a:sourceRef>
+      <a:isSortable>false</a:isSortable>
+      <a:isSearchable>false</a:isSearchable>
+      <a:isFacet>true</a:isFacet>
+      <a:facetType>CUSTOM_BUCKETS_CLOSED</a:facetType>
+      <a:isExclusiveFacet>true</a:isExclusiveFacet>
+      <a:facetLabelExpr>"Price"</a:facetLabelExpr>
+      <a:facetOption>
+        <a:labelExpr>"Less than $10"</a:labelExpr>
+        <a:facetOperator>BETWEEN</a:facetOperator>
+        <a:lowerLimitExpr>0</a:lowerLimitExpr>
+        <a:upperLimitExpr>10</a:upperLimitExpr>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>"$10 to $25"</a:labelExpr>
+        <a:facetOperator>BETWEEN</a:facetOperator>
+        <a:lowerLimitExpr>10</a:lowerLimitExpr>
+        <a:upperLimitExpr>25</a:upperLimitExpr>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>"$25 to $50"</a:labelExpr>
+        <a:facetOperator>BETWEEN</a:facetOperator>
+        <a:lowerLimitExpr>25</a:lowerLimitExpr>
+        <a:upperLimitExpr>50</a:upperLimitExpr>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>"$50 to $100"</a:labelExpr>
+        <a:facetOperator>BETWEEN</a:facetOperator>
+        <a:lowerLimitExpr>50</a:lowerLimitExpr>
+        <a:upperLimitExpr>100</a:upperLimitExpr>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>"$100 to $200"</a:labelExpr>
+        <a:facetOperator>BETWEEN</a:facetOperator>
+        <a:lowerLimitExpr>100</a:lowerLimitExpr>
+        <a:upperLimitExpr>200</a:upperLimitExpr>
+      </a:facetOption>
+      <a:facetOption>
+        <a:labelExpr>"$200 and Above"</a:labelExpr>
+        <a:facetOperator>BETWEEN</a:facetOperator>
+        <a:lowerLimitExpr>200</a:lowerLimitExpr>
+        <a:upperLimitExpr>999999</a:upperLimitExpr>
+      </a:facetOption>
+      <a:sortOrderIndex>2</a:sortOrderIndex>
+      <a:facetOrderIndex>2</a:facetOrderIndex>
+      <a:visibilityExpr/>
+      <a:defaultOptionExpr/>
+      <a:allowMultipleSelections>false</a:allowMultipleSelections>
+    </a:fieldCfg>
+    <a:detailViewCfg>
+      <a:nameExpr>="Summary"</a:nameExpr>
+      <a:uiExpr> #"1f91132e-3675-45d6-ad5e-3a0c635e71a7" (rp!id)</a:uiExpr>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:urlStub>summary</a:urlStub>
+      <a:headerExpr/>
+      <a:relatedActionCfg>72dc703e-ca71-4f58-be22-72eafbb72625</a:relatedActionCfg>
+      <a:relatedActionCfg>d5584662-04b0-4206-b87d-5ec442d62462</a:relatedActionCfg>
+      <a:relatedActionCfg>e3a47be5-98d7-4177-8958-e312e6814b1c</a:relatedActionCfg>
+    </a:detailViewCfg>
+    <a:relatedActionCfg>
+      <a:target a:uuid="000ad9cb-ddef-8000-f92f-7f0000014e7a" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>=with(
+  local!productData:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4326"(rp!id),
+  {
+    product :local!productData,
+    preUpdateProductData: local!productData  }
+)</a:contextExpr>
+      <a:visibilityExpr>=rf!isActive=true</a:visibilityExpr>
+      <a:iconId>f0e7</a:iconId>
+      <a:refId>72dc703e-ca71-4f58-be22-72eafbb72625</a:refId>
+      <a:titleSource>DERIVED</a:titleSource>
+      <a:descriptionSource>DERIVED</a:descriptionSource>
+    </a:relatedActionCfg>
+    <a:relatedActionCfg>
+      <a:target a:uuid="0009d9e6-2dc4-8000-f92f-7f0000014e7a" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>={
+ProductSKU: rf!sku,
+RestockCount: null,
+button: null
+}</a:contextExpr>
+      <a:visibilityExpr>=rf!isActive=true</a:visibilityExpr>
+      <a:iconId>f0e7</a:iconId>
+      <a:refId>d5584662-04b0-4206-b87d-5ec442d62462</a:refId>
+      <a:titleSource>DERIVED</a:titleSource>
+      <a:descriptionSource>DERIVED</a:descriptionSource>
+    </a:relatedActionCfg>
+    <a:relatedActionCfg>
+      <a:target a:uuid="0009d9cb-f251-8000-f92f-7f0000014e7a" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>{&#xd;
+ product : #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4326"(rp!id)&#xd;
+}</a:contextExpr>
+      <a:visibilityExpr>=rf!isActive=true</a:visibilityExpr>
+      <a:iconId>f0e7</a:iconId>
+      <a:refId>e3a47be5-98d7-4177-8958-e312e6814b1c</a:refId>
+      <a:titleSource>DERIVED</a:titleSource>
+      <a:descriptionSource>DERIVED</a:descriptionSource>
+    </a:relatedActionCfg>
+    <a:isSystem>false</a:isSystem>
+    <a:dataSrcExpr/>
+    <a:facetsListExpr/>
+    <a:titleExpr>rf!name</a:titleExpr>
+    <a:defaultFiltersExpr/>
+    <a:layoutType>GRID</a:layoutType>
+    <a:security>32767</a:security>
+    <a:hideLatestNews>false</a:hideLatestNews>
+    <a:isExportable>true</a:isExportable>
+  </recordType>
+  <roleMap>
+    <role name="record_type_administrator">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000d9c4-bcae-8000-9aee-01075c01075c_17</groupUuid>
+      </groups>
+    </role>
+    <role name="record_type_editor">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000da5f-caa8-8000-9aee-01075c01075c_16</groupUuid>
+      </groups>
+    </role>
+  </roleMap>
+  <history>
+    <historyInfo versionUuid="7dbf6796-38cb-4ab0-becf-aa584831788b"/>
+  </history>
+  <migrationVersion>1</migrationVersion>
+</recordTypeHaul>

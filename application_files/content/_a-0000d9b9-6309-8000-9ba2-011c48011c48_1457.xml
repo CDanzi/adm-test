@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27282</versionUuid>
+    <rule>
+        <name>CASE_APP_fetchRecord</name>
+        <uuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_1457</uuid>
+        <description>Fetches a single record instance (as a Dictionary). If primaryKeyField is null, defaults to "id". Primary key must be an integer.
+
+If creating a process backed record, create a process variable called "processId" to store the pp!id value and use as a primary key
+
+record: a record type value, likely from a Constant of type Record Type
+primaryKeyField: the name of the field that has the @Id annotation in the entityType. If null, defaults to "id".
+primaryKeyValue: the integer primary key value to select.</description>
+        <parentUuid>_a-0000da20-55d5-8000-9ba2-011c48011c48_11112</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= with(
+  local!primaryKeyField: if(
+    isnull(ri!primaryKeyField),
+    "id",
+    ri!primaryKeyField
+  ),
+  local!datasubset: if(
+    ri!record.@attributes.uuid = "SYSTEM_RECORD_TYPE_USER",
+    todatasubset(
+      {
+        username: ri!primaryKeyValue
+      },
+      #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: 1
+      )
+    ),
+    queryrecord(
+      recordType: ri!record,
+      query: #"SYSTEM_SYSRULES_query"(
+        filter: #"SYSTEM_SYSRULES_queryFilter"(
+          field: local!primaryKeyField,
+          operator: "=",
+          value: if(
+            isnull(tointeger(ri!primaryKeyValue)),
+            ri!primaryKeyValue,
+            tointeger(ri!primaryKeyValue)
+          )
+        ),
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+          startIndex: 1,
+          batchSize: 1
+        )
+      )
+    )
+  ),
+  if(
+    local!datasubset.totalCount &gt; 0,
+    local!datasubset.data[1],
+    {}
+  )
+)</definition>
+        <namedTypedValue>
+            <name>record</name>
+            <type>
+                <name>RecordType</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>primaryKeyField</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>primaryKeyValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27282"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32786</versionUuid>
+    <rule>
+        <name>CASE_APP_uiChartMortPurchaseProductByCustomer</name>
+        <uuid>565d9914-d2af-4204-8954-b178f60c228e</uuid>
+        <description>Shows a column bar chart with the most purchased products by customer</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(ri!batchSize),3,ri!batchSize),
+    sort: #"SYSTEM_SYSRULES_sortInfo"(
+      field: "orderItemQty",
+      ascending: false
+    )
+  ),
+  with(
+    local!datasubset: #"SYSTEM_SYSRULES_queryEntity"(
+      entity: #"_a-0000da89-b5e9-8000-9ba2-011c48011c48_3190",
+      query: #"SYSTEM_SYSRULES_query"(
+        aggregation: #"SYSTEM_SYSRULES_queryAggregation"(aggregationColumns: {
+          #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "productId", isGrouping: true),
+          #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "productName", isGrouping: true),
+          #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "orderItemQty", aggregationFunction: "SUM"),
+        }),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    #"SYSTEM_SYSRULES_columnChartField"(
+      label:"Most Purchased Products",
+      categories: apply(
+        #"_a-0000da89-b5e9-8000-9ba2-011c48011c48_3580"(_,40),
+        index(local!datasubset.data, "productName", null)
+      ),
+      series: {
+        #"SYSTEM_SYSRULES_chartSeries"(
+          label: "Quantity",
+          data:index(local!datasubset.data, "orderItemQty", null),
+          links:apply(
+            #"SYSTEM_SYSRULES_recordLink"(
+              recordType:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3830",
+              identifier: _
+            ),
+            index(local!datasubset.data, "productId", null)
+          )
+          
+        )
+      },
+      yAxisTitle:"Quantity Purchased",
+      showdatalabels: false,
+      showtooltips: true
+    )
+  )
+)
+</definition>
+        <namedTypedValue>
+            <name>customerId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>batchSize</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32786"/>
+    </history>
+</contentHaul>

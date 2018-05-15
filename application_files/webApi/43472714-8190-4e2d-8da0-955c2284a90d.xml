@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<webApiHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>66569fa1-6553-42b2-9f4e-45e67cc389c1</versionUuid>
+    <webApi a:uuid="43472714-8190-4e2d-8da0-955c2284a90d" name="CMF_getCustomerServiceRequestData">
+        <a:description>*DEV INSTANCES ONLY* An API to retrieve generated investigation data for automated testing</a:description>
+        <a:expression>with(&#xD;
+ local!mockaroo: httppostwithresponse(&#xD;
+   endpoint: "http://mockaroo.com/fb166810/download?count=1&amp;key=83152f90",&#xD;
+   paramNames: {},&#xD;
+   paramValues: {},&#xD;
+   headerNames: {},&#xD;
+   headerValues: {},&#xD;
+   body: "noSpace.json"&#xD;
+ ),&#xD;
+ #"SYSTEM_SYSRULES_httpResponse"(&#xD;
+   headers: {&#xD;
+     #"SYSTEM_SYSRULES_httpHeader"(name: "content-type", value: "application/json")&#xD;
+   },&#xD;
+   statusCode: local!mockaroo.responseCode,&#xD;
+   body: local!mockaroo.responseBody&#xD;
+ )&#xD;
+)</a:expression>
+        <a:urlAlias>getCSRTestData</a:urlAlias>
+        <a:httpMethod>GET</a:httpMethod>
+        <a:system>false</a:system>
+    </webApi>
+    <roleMap>
+        <role name="web_api_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9c4-bcae-8000-9aee-01075c01075c_17</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>WebApiRequest?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:path/>
+                <a:body/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="66569fa1-6553-42b2-9f4e-45e67cc389c1"/>
+    </history>
+</webApiHaul>

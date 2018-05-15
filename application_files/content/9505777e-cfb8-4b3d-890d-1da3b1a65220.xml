@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_25845</versionUuid>
+    <rule>
+        <name>CASE_APP_SR_uiSectionCaseHistory</name>
+        <uuid>9505777e-cfb8-4b3d-890d-1da3b1a65220</uuid>
+        <description>Inserts a section showing the case history grid</description>
+        <parentUuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2618</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_sectionLayout"(
+  label:"Case History",
+  firstColumnContents:{
+    load(
+      local!gridPI:#"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex:1,
+        batchSize:ri!batchSize,
+        sort:#"SYSTEM_SYSRULES_sortInfo"(field:"timestamp")
+      ),
+      with(
+        local!gridData:todatasubset(ri!caseHistory, local!gridPI),
+        #"SYSTEM_SYSRULES_gridField"(
+          totalCount:local!gridData.totalCount,
+          columns:{
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label:"Date &amp; Time",
+              field:"timestamp",
+              data:apply(
+                datetext(_,"MMM dd, yyyy hh:mm a"),
+                index(local!gridData.data,"timestamp",{})
+              )
+            ),
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label:"User",
+              field:"user",
+              data:index(local!gridData.data,"user",{})
+            ),
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label:"User Title",
+              field:"userTitle",
+              data:index(local!gridData.data,"userTitle",{})
+            ),
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label:"Action",
+              field:"action",
+              data:index(local!gridData.data,"action",{})
+            ),
+            #"SYSTEM_SYSRULES_gridTextColumn"(
+              label:"Notes",
+              field:"notes",
+              data:index(local!gridData.data,"notes",{})
+            )
+          },
+          value:local!gridPI,
+          saveInto:local!gridPI
+        )
+      )
+      
+    )
+  },
+  isCollapsible: true
+)</definition>
+        <namedTypedValue>
+            <name>caseHistory</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>batchSize</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_25845"/>
+    </history>
+</contentHaul>

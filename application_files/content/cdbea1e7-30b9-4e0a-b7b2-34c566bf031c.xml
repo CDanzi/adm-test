@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31925</versionUuid>
+    <rule>
+        <name>CASE_APP_deleteCustomer</name>
+        <uuid>cdbea1e7-30b9-4e0a-b7b2-34c566bf031c</uuid>
+        <description>Initial form to confirm the deletion of a customer in the CASE_APP</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_formLayout"(&#xD;
+  label: "Confirm deletion of customer: " &amp; ri!customerData.Name,  &#xD;
+  firstColumnContents: {&#xD;
+  #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2134"(c:ri!customerData)  &#xD;
+  },&#xD;
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(&#xD;
+    primaryButtons: {&#xD;
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+        label: "Delete",&#xD;
+        style: "DESTRUCTIVE",&#xD;
+        value: "submit",&#xD;
+        confirmMessage:"Are you sure you want to delete this customer?",&#xD;
+        saveInto: ri!button&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+        label: "Cancel",&#xD;
+        skipValidation: true,&#xD;
+        value: "cancel",&#xD;
+        saveInto: ri!button&#xD;
+      )&#xD;
+    } &#xD;
+  ) &#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customerData</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>logo</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>button</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31925"/>
+    </history>
+</contentHaul>

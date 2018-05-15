@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32245</versionUuid>
+    <rule>
+        <name>CASE_APP_getBarcodeImagesForSkus</name>
+        <uuid>_a-0000dd65-b59d-8000-1a8d-01ef9001ef90_6857</uuid>
+        <description>Given a list of product SKUs, this rule returns the ids of the appropriate barcode image doc id</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5847</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!barcodeDocs: folder(#"_a-0000dd3c-86ec-8000-c35b-01ef9001ef90_5574", "documentChildren"),
+  local!barcodeDocNames: apply(
+    fn!document(_, "name"),
+    local!barcodeDocs
+  ),
+  local!docIndex: apply(
+    #"_a-0000dd65-b59d-8000-1a8d-01ef9001ef90_6859"(
+      local!barcodeDocNames,
+      _
+    ),
+    ri!productSkus
+  ),
+  local!barcodeDocs[local!docIndex]
+)</definition>
+        <namedTypedValue>
+            <name>productSkus</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name>Test Sample Products</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"SYSTEM_SYSRULES_queryEntity"(
+    #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4329",
+    #"SYSTEM_SYSRULES_query"(
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 164, #"SYSTEM_SYSRULES_sortInfo"("id", true))
+    )
+  ).data.sku</a:value>
+                    <a:nameRef>productSkus</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32245"/>
+    </history>
+</contentHaul>

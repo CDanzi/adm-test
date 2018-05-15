@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24229</versionUuid>
+    <rule>
+        <name>CASE_APP_uiGridLatestServiceReqsForCustomer</name>
+        <uuid>280a7d74-2109-4ef0-90c1-6bd1dddf0cf7</uuid>
+        <description>Shows a grid containing details for the latest service requests for a customer.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: 5,
+    sort: #"SYSTEM_SYSRULES_sortInfo"(
+      field: "requestDateTime",
+      ascending: false
+    )
+  ),
+  with(
+    local!datasubset: #"SYSTEM_SYSRULES_queryEntity"(
+      entity: #"_a-0000dd7a-9e3c-8000-3428-01ef9001ef90_4959",
+      query: #"SYSTEM_SYSRULES_query"(
+        selection: #"SYSTEM_SYSRULES_querySelection"(columns: {
+          #"SYSTEM_SYSRULES_queryColumn"(field: "id"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "requestNum",alias:"srNum"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "requestDateTime",alias:"requestDateTime"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "type",alias:"type"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "status",alias:"status"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "relatedCustomerId",alias:"customerId"),
+          
+        }),
+        filter:#"SYSTEM_SYSRULES_queryFilter"("relatedCustomerId","=",ri!customerId),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridField"(
+      label:"Most Recent Service Requests",
+      totalCount: local!datasubset.totalCount,
+      columns: {
+        #"SYSTEM_SYSRULES_gridTextColumn"(
+          label: "Request #",
+          field: "srNum",
+          data: index(local!datasubset.data, "srNum", {}),
+          links: apply(
+            #"SYSTEM_SYSRULES_recordLink"(recordType:#"_a-0000da5f-caaa-8000-9ba2-011c48011c48_2950", identifier:_),
+            index(local!datasubset.data, "id", {})
+          )
+        ),
+        #"SYSTEM_SYSRULES_gridTextColumn"(
+          label: "Requested on",
+          field: "requestDateTime",
+          data: apply(
+            fn!todate,
+            index(local!datasubset.data, "requestDateTime", {})
+          )
+        ),
+        #"SYSTEM_SYSRULES_gridTextColumn"(
+          label: "Request Type",
+          field: "type",
+          data: index(local!datasubset.data, "type", {})
+        ),
+        #"SYSTEM_SYSRULES_gridTextColumn"(
+          label: "Status",
+          field: "status",
+          data: index(local!datasubset.data, "status", {})
+        )
+      },
+      value: local!pagingInfo,
+      saveInto: local!pagingInfo
+    )
+  )
+)
+</definition>
+        <namedTypedValue>
+            <name>customerId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24229"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_25669</versionUuid>
+    <rule>
+        <name>CASE_APP_SR_uiGetRequestersDetails</name>
+        <uuid>8328117a-7d23-4f27-bcb8-306068f7a080</uuid>
+        <description>Displays a section that allows users to capture their request details</description>
+        <parentUuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2618</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  #"SYSTEM_SYSRULES_sectionLayout"(
+    label: "How may we help you?",
+    firstColumnContents:{
+      #"SYSTEM_SYSRULES_paragraphField"(
+        label:"Please describe your request",
+        instructions:"Describe your request and how we can help you.",
+        value:ri!serviceReq.comment,
+        saveInto:ri!serviceReq.comment,
+        required:true
+      )
+    },
+    secondColumnContents: {
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Requester's Name",
+        labelPosition: "ABOVE",
+        instructions: "Name of the person any follow up should be addressed to.",
+        value: ri!serviceReq.requesterName,
+        saveInto: ri!serviceReq.requesterName,
+        refreshAfter: "UNFOCUS",
+        validations: {},
+        align: "LEFT"
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Requester's Email",
+        labelPosition: "ABOVE",
+        instructions: "The email where notifications and updates on this case should go to.",
+        value: ri!serviceReq.requesterEmail,
+        saveInto: ri!serviceReq.requesterEmail,
+        refreshAfter: "UNFOCUS",
+        validations: {},
+        align: "LEFT"
+      )
+    },
+    iscollapsible: true
+  ),
+  #"_a-0000dd65-b59d-8000-1a8d-01ef9001ef90_6262"(
+    targetFolder: #"_a-0000da5f-caaa-8000-9ba2-011c48011c48_2780",
+    uploadedDocs:ri!uploadedDocs,
+    gridLabel:"Upload Supporting Document(s)",
+    isRequired: false
+  )
+}</definition>
+        <namedTypedValue>
+            <name>serviceReq</name>
+            <type>
+                <name>CASE_APP_ServiceRequest</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>uploadedDocs</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_25669"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31252</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiFormAddInvestigationDocuments</name>
+        <uuid>cd6ee20c-db21-4ba1-ad7b-1d65f07ad15b</uuid>
+        <description>Allows users to add additional investigation documents</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!currentDocs: folder(ri!targetFolder, "documentChildren"),&#xD;
+  #"SYSTEM_SYSRULES_formLayout"(&#xD;
+    label: "Add Additional Investigation Documents",&#xD;
+    firstColumnContents: {&#xD;
+      if(&#xD;
+        #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1982"(local!currentDocs),&#xD;
+        {},&#xD;
+        #"db22a1b1-edcb-4c87-a893-14880b22e957"(&#xD;
+          gridLabel: "Current Investigation Documents",&#xD;
+          documents: local!currentDocs,&#xD;
+          showDocImageType: "ICON",&#xD;
+          showColumns: {"NAME", "EXTENSION", "DATECREATED", "LASTUSERTOMODIFY"}&#xD;
+        )&#xD;
+      ),&#xD;
+      #"_a-0000dd65-b59d-8000-1a8d-01ef9001ef90_6262"(&#xD;
+        targetFolder: ri!targetFolder,&#xD;
+        gridLabel: "Upload Additional Document(s)",&#xD;
+        uploadedDocs: ri!newUploadedDocs,&#xD;
+        isRequired: true&#xD;
+      ),&#xD;
+      #"SYSTEM_SYSRULES_paragraphField"(&#xD;
+        label: "Upload Comments",&#xD;
+        labelPosition: "ABOVE",&#xD;
+        instructions: "Comments entered here will be logged in the case history.",&#xD;
+        value: ri!uploadComments,&#xD;
+        saveInto: {ri!uploadComments},&#xD;
+        refreshAfter: "UNFOCUS",&#xD;
+        validations: {}&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(&#xD;
+      primaryButtons: {&#xD;
+        #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+          label: "Submit",&#xD;
+          style: "PRIMARY",&#xD;
+          saveInto: {}&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    validations: {}&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>targetFolder</name>
+            <type>
+                <name>CollaborationFolder</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>newUploadedDocs</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>uploadComments</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:CollaborationFolder"/>
+                    <a:nameRef>targetFolder</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                    <a:nameRef>newUploadedDocs</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>uploadComments</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31252"/>
+    </history>
+</contentHaul>

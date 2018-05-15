@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27300</versionUuid>
+    <rule>
+        <name>CASE_APP_RecordSearchFields</name>
+        <uuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_1476</uuid>
+        <description>Returns a list of fields to be used for the Record Search.   Uses a choose function to set the index position of the search fields.  The index position value should match the index position of the desired record type in the CASE_APP_RecordTypes constant.
+Customers;Users;Products;Orders;Investigations;Service Requests</description>
+        <parentUuid>_a-0000d9f1-8353-8000-9ba2-011c48011c48_10349</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>choose(
+  ri!indexposition,
+  {
+    /*Corresponds to the User record */
+    "username"
+  },
+  /*{*/
+    /*Corresponds to Cases Record*/
+  /*  "name"*/
+  /*},*/
+  {
+    /*Corresponds to Customer Record*/
+    "Name"
+  },
+  {
+    /*Corresponds to the Product record */
+    "name"
+  },
+  {
+    /*Corresponds to the Orders record */
+    "OrderNum"
+  },
+  {
+    /*Corresponds to the Service Request record */
+    "requestNum"
+  },
+  {
+    /*Corresponds to the Investigation record */
+    "icmName"
+  }
+)</definition>
+        <namedTypedValue>
+            <name>indexposition</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27300"/>
+    </history>
+</contentHaul>

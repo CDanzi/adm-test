@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30368</versionUuid>
+    <rule>
+        <name>CASE_APP_SR_getMilestoneForStatus</name>
+        <uuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2852</uuid>
+        <description>Retrieves the proper Milestone step for the CSR process based on its status</description>
+        <parentUuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2617</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!statusIndex: if(
+    isnull(ri!status),
+    1,
+    wherecontains(
+      ri!status,
+      #"_a-0000da5f-caaa-8000-9ba2-011c48011c48_2630"
+    )
+  ),
+  choose(
+    local!statusIndex,
+    /* Status 1-3: Researching */
+    1,2,3,
+    /* Status 4: Pending Requester*/
+    4,
+    /* Status 5: Solution*/
+    5,
+    /* Status 6: Closed*/
+    6,
+    /* Status 7: Re-Opened*/
+    7
+  )
+)</definition>
+        <namedTypedValue>
+            <name>status</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30368"/>
+    </history>
+</contentHaul>

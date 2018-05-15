@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:CASE_APP"
+  xmlns:tns="urn:com:appian:types:CASE_APP" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CASE_APP_ProductShippingDetails">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CMF_ProdShippingDetails")</xsd:appinfo>
+      <xsd:documentation><![CDATA[Defines a business object designed to allow custom extensions to any existing CDT.For CASE_APP product shipping details]]></xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0023e0b7-c0f0-8000-10c8-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0023e0b7-c0f0-8000-10c8-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="weight" nillable="true" type="xsd:double"/>
+      <xsd:element name="width" nillable="true" type="xsd:double"/>
+      <xsd:element name="height" nillable="true" type="xsd:double"/>
+      <xsd:element name="depth" nillable="true" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

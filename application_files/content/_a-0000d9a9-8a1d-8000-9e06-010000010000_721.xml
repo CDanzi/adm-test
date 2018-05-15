@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24477</versionUuid>
+    <rule>
+        <name>CASE_APP_CustomerDashboard</name>
+        <uuid>_a-0000d9a9-8a1d-8000-9e06-010000010000_721</uuid>
+        <description>This is the SAIL for the Customer Dashboard for the CASE APP.  It contains basic customer information.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(
+  local!c: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2115"(cid: ri!cid),
+  local!shippingAddr: fn!stripwith(
+    fn!concat(
+      local!c.ShippingAddress.Address,
+      ", ",
+      local!c.ShippingAddress.City,
+      ", ",
+      local!c.ShippingAddress.State,
+      ", ",
+      local!c.ShippingAddress.ZIP,
+      ", ",
+      local!c.ShippingAddress.Country
+    ),
+    "'"
+  ),
+  local!billingAddr: fn!stripwith(
+    fn!concat(
+      local!c.BillingAddress.Address,
+      ", ",
+      local!c.BillingAddress.City,
+      ", ",
+      local!c.BillingAddress.State,
+      ", ",
+      local!c.BillingAddress.ZIP,
+      ", ",
+      local!c.BillingAddress.Country
+    ),
+    "'"
+  ),
+  #"SYSTEM_SYSRULES_dashboardLayout"(
+    firstColumnContents: {
+      #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2134"(c: local!c),
+      #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2142"(c: local!c),
+      #"SYSTEM_SYSRULES_sectionLayout"(
+        label: "Customer Locations",
+        firstColumnContents: {
+          #"SYSTEM_SYSRULES_richTextDisplayField"(
+            label: "Shipping Address",
+            labelPosition: "ADJACENT",
+            value: {
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.ShippingAddress.Address,
+                style: "EMPHASIS"
+              ),
+              char(10),
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.ShippingAddress.City,
+                style: "EMPHASIS"
+              ),
+              ", ",
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.ShippingAddress.State,
+                style: "EMPHASIS"
+              ),
+              " ",
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.ShippingAddress.ZIP,
+                style: "EMPHASIS"
+              ),
+              char(10),
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.ShippingAddress.Country,
+                style: "EMPHASIS"
+              )
+            }
+          ),
+          #"SYSTEM_SYSRULES_linkField"(
+            label: "Map",
+            labelPosition: "ADJACENT",
+            links: #"SYSTEM_SYSRULES_safeLink"(
+              label: "View address on map",
+              uri: #"_a-0000d513-8ab8-8000-3ca7-0a000064044c_20749"(local!shippingAddr)
+            )
+          )
+        },
+        secondColumnContents: {
+          #"SYSTEM_SYSRULES_richTextDisplayField"(
+            label: "Billing Address",
+            labelPosition: "ADJACENT",
+            value: {
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.BillingAddress.Address,
+                style: "EMPHASIS"
+              ),
+              char(10),
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.BillingAddress.City,
+                style: "EMPHASIS"
+              ),
+              ", ",
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.BillingAddress.State,
+                style: "EMPHASIS"
+              ),
+              " ",
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.BillingAddress.ZIP,
+                style: "EMPHASIS"
+              ),
+              char(10),
+              #"SYSTEM_SYSRULES_richTextItem"(
+                text: local!c.BillingAddress.Country,
+                style: "EMPHASIS"
+              )
+            }
+          ),
+          #"SYSTEM_SYSRULES_linkField"(
+            label: "Map",
+            labelPosition: "ADJACENT",
+            links: #"SYSTEM_SYSRULES_safeLink"(
+              label: "View address on map",
+              uri: #"_a-0000d513-8ab8-8000-3ca7-0a000064044c_20749"(
+                local!billingAddr
+              )
+            )
+          )
+        }
+      )
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>cid</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24477"/>
+    </history>
+</contentHaul>

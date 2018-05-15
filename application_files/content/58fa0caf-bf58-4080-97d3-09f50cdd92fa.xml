@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30305</versionUuid>
+    <rule>
+        <name>AH_discussAuditHistoryEventForm</name>
+        <uuid>58fa0caf-bf58-4080-97d3-09f50cdd92fa</uuid>
+        <description>Form for the related action to discuss an audit history event.</description>
+        <parentUuid>_a-0000daa1-9d78-8000-6ee0-010000010000_1005</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#"SYSTEM_SYSRULES_formLayout"(
+  label: "Discuss an Audit History Event",
+  firstColumnContents: {
+    #"3125583a-3639-4d2f-afd3-c600a5e07ca6"(
+      recordType: ri!recordType,
+      recordId: ri!recordId, 
+      isSelectable: true,
+      selectedId: ri!selectedId
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout"(
+      firstColumnContents: {
+        #"SYSTEM_SYSRULES_paragraphField"(
+          label: "Comments",
+          labelPosition: "ABOVE",
+          instructions: "Your comments will be posted to News so that you can discuss this event. Limit responses to " &amp; #"_a-0000daa1-9d78-8000-6ee0-010000010000_1235" &amp; " characters. " &amp; len(ri!comments) &amp; "/" &amp; #"_a-0000daa1-9d78-8000-6ee0-010000010000_1235",
+          value: ri!comments,
+          saveInto: ri!comments,
+          refreshAfter: "UNFOCUS",
+          required: true,
+          validations: if(len(ri!comments) &gt; #"_a-0000daa1-9d78-8000-6ee0-010000010000_1235", "Please limit your response to " &amp; #"_a-0000daa1-9d78-8000-6ee0-010000010000_1235" &amp; " characters.", null)
+        ),
+        #"SYSTEM_SYSRULES_pickerFieldUsersAndGroups"(
+          label: "Viewer(s)",
+          instructions: "Restrict who can participate in this discussion to just the selected users and groups.",
+          value: ri!viewerUsersAndGroups,
+          saveInto: ri!viewerUsersAndGroups
+        )
+      }
+    )
+  },
+  secondColumnContents: {},
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+    primaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+        label: "Post to News",
+        style: "PRIMARY",
+        saveInto: {}
+      )
+    },
+    secondaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+        label: "Cancel",
+        style: "NORMAL",
+        value: true,
+        saveInto: ri!cancel,
+        skipValidation: true
+      )
+    }
+  ),
+  validations: #"SYSTEM_SYSRULES_validationMessage"(if(isnull(ri!selectedId), "You must select an audit trail.", null), "SUBMIT")
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>recordType</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>recordId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>comments</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>viewerUsersAndGroups</name>
+            <type>
+                <name>UserOrGroup?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30305"/>
+    </history>
+</contentHaul>

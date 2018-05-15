@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24562</versionUuid>
+    <constant>
+        <name>CASE_APP_IrelandCounties</name>
+        <uuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_784</uuid>
+        <description>A list of all counties in Ireland</description>
+        <parentUuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_781</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Carlow</el>
+                <el>Cavan</el>
+                <el>Clare</el>
+                <el>Cork</el>
+                <el>Donegal</el>
+                <el>Dublin</el>
+                <el>Galway</el>
+                <el>Kerry</el>
+                <el>Kildare</el>
+                <el>Kilkenny</el>
+                <el>Laois</el>
+                <el>Leitrim</el>
+                <el>Limerick</el>
+                <el>Longford</el>
+                <el>Louth</el>
+                <el>Mayo</el>
+                <el>Meath</el>
+                <el>Monaghan</el>
+                <el>Offaly</el>
+                <el>Roscommon</el>
+                <el>Sligo</el>
+                <el>Tipperary</el>
+                <el>Waterford</el>
+                <el>Westmeath</el>
+                <el>Wexford</el>
+                <el>Wicklow</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24562"/>
+    </history>
+</contentHaul>

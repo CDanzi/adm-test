@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24507</versionUuid>
+    <rule>
+        <name>CASE_APP_stockQuoteGraph</name>
+        <uuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2196</uuid>
+        <description>Displays a stock quote graph with different display options. If choosing multiple symbols, the axis will just be percentage points. isSmall will render a smaller version appropriate for a single column.
+Needs to be in some kind of SAIL container / section.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!dr: 3,
+{
+  #"SYSTEM_SYSRULES_dropdownFieldByIndex"(
+    label: "Range",
+    choiceLabels: {
+      "1 Month","3 Months","6 Months","1 Year","2 Years"
+    },
+    value: local!dr,
+    saveInto: local!dr
+  ),
+#"SYSTEM_SYSRULES_externalImageField"(
+  label: "",
+  source: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2200"(symbols:ri!symbols,range:index(#"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2205",local!dr,"1y"),size:if(ri!isSmall,"s","l")),
+  altText: "Yahoo Stock Graph"
+)
+
+})</definition>
+        <namedTypedValue>
+            <name>symbols</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>issmall</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24507"/>
+    </history>
+</contentHaul>

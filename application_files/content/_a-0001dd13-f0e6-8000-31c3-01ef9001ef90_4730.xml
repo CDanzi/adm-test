@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31053</versionUuid>
+    <rule>
+        <name>CASE_APP_productBarcodeField</name>
+        <uuid>_a-0001dd13-f0e6-8000-31c3-01ef9001ef90_4730</uuid>
+        <description>Barcodefield to search products by SKU</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5995</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_barcodeField"(
+  label: ri!label,
+  value: ri!skuSearch,
+  acceptedTypes: "CODE39",
+  saveInto: {
+    ri!skuSearch,
+    if(
+      or(
+        len(ri!skuSearch) = 7, 
+        len(ri!skuSearch) = 12 
+      ),
+      {
+        with(
+          local!product: cast(
+            'type!{urn:com:appian:types:CASE_APP}CASE_APP_Product',
+            #"SYSTEM_SYSRULES_queryEntity"(
+              #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4329",
+              #"SYSTEM_SYSRULES_query"(
+                logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                  operator: "AND",
+                  filters: {
+                    if(
+                      isnull(ri!skuSearch),
+                      null,
+                      #"SYSTEM_SYSRULES_queryFilter"(
+                        field: "sku",
+                        operator: "includes",
+                        value: ri!skuSearch
+                      )
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "isActive",
+                      operator: "=",
+                      value: true
+                    )
+                  }
+                ),
+                pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,1,null)
+            )
+          ).data
+          ),
+          local!orderItem: if(
+            #"SYSTEM_SYSRULES_isNullOrEmpty"(local!product),
+            null,
+            'type!{urn:com:appian:types:CASE_APP}CASE_APP_OrderItem'(
+              OrderItemUnitPrice: local!product.price,
+              Product: local!product,
+              Quantity: 1,
+              Taxed: true()
+            )
+          ),
+          local!idx: if(
+            or(
+              #"SYSTEM_SYSRULES_isNullOrEmpty"(ri!OrderItems),
+              #"SYSTEM_SYSRULES_isNullOrEmpty"(ri!OrderItems.Product),
+              #"SYSTEM_SYSRULES_isNullOrEmpty"(local!product)
+            ),
+            null,
+            wherecontains(local!product.id, ri!OrderItems.Product.id)
+          ),
+          {
+            if(
+              isnull(local!product.id),
+              a!save(ri!skuSearch, null),
+              {
+                if(
+                  #"SYSTEM_SYSRULES_isNullOrEmpty"(local!idx),
+                  {
+                    a!save(
+                      ri!OrderItems,
+                      append(ri!OrderItems, local!orderItem)
+                    ),
+                    a!save(
+                      ri!itemsToken,
+                      append(ri!itemsToken, local!orderItem)
+                    )
+                  },
+                  a!save(
+                    target: ri!OrderItems[local!idx].Quantity,
+                    value: tointeger(ri!OrderItems[local!idx].Quantity) + 1
+                  )
+                ),
+                a!save(ri!skuSearch, null)
+              }
+            )
+          }
+        )
+      },
+      {}
+    )
+  },
+  refreshAfter: "KEYPRESS"
+)</definition>
+        <namedTypedValue>
+            <name>label</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>skuSearch</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>OrderItems</name>
+            <type>
+                <name>CASE_APP_OrderItem?list</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>label</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>skuSearch</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                    <a:nameRef>OrderItems</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>itemsToken</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31053"/>
+    </history>
+</contentHaul>

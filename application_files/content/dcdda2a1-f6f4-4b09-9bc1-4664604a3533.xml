@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24290</versionUuid>
+    <rule>
+        <name>CASE_APP_getOrdersWithProduct</name>
+        <uuid>dcdda2a1-f6f4-4b09-9bc1-4664604a3533</uuid>
+        <description>Retrieves a datasubset of all orders that have a specific product ids.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5847</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_queryEntity"(
+  entity: #"_a-0000da89-b5e9-8000-9ba2-011c48011c48_3190",
+  query: #"SYSTEM_SYSRULES_query"(
+    aggregation: #"SYSTEM_SYSRULES_queryAggregation"(aggregationColumns: {
+      #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "orderId", isGrouping: true),
+      #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "orderTotal", isGrouping: true)
+    }),
+    filter:#"SYSTEM_SYSRULES_queryFilter"("productId","in",ri!productIds),
+    pagingInfo:  #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: 20,
+      sort: #"SYSTEM_SYSRULES_sortInfo"(
+        field: "orderTotal",
+        ascending: false
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>productIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24290"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<webApiHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>06aa0052-caeb-415d-b7f7-d008c320dec3</versionUuid>
+    <webApi a:uuid="91d8f02a-8549-4c4c-b9fa-96910ac97c1c" name="CMF_getInvestigationData">
+        <a:description>*DEV INSTANCES ONLY*
+An API to retrieve generated investigation data for automated testing</a:description>
+        <a:expression>with(&#xD;
+ local!mockaroo: httppostwithresponse(&#xD;
+   endpoint: "http://www.mockaroo.com/87671e80/download?count=1&amp;key=a177cc90",&#xD;
+   paramNames: {},&#xD;
+   paramValues: {},&#xD;
+   headerNames: {},&#xD;
+   headerValues: {},&#xD;
+   body: "noSpace.json"&#xD;
+ ),&#xD;
+ #"SYSTEM_SYSRULES_httpResponse"(&#xD;
+   headers: {&#xD;
+     #"SYSTEM_SYSRULES_httpHeader"(name: "content-type", value: "application/json")&#xD;
+   },&#xD;
+   statusCode: local!mockaroo.responseCode,&#xD;
+   body: local!mockaroo.responseBody&#xD;
+ )&#xD;
+)</a:expression>
+        <a:urlAlias>getInvestigationTestData</a:urlAlias>
+        <a:httpMethod>GET</a:httpMethod>
+        <a:system>false</a:system>
+    </webApi>
+    <roleMap>
+        <role name="web_api_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9c4-bcae-8000-9aee-01075c01075c_17</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>WebApiRequest?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:path/>
+                <a:body/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="06aa0052-caeb-415d-b7f7-d008c320dec3"/>
+    </history>
+</webApiHaul>

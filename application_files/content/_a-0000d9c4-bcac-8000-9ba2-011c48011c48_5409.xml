@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24388</versionUuid>
+    <rule>
+        <name>CASE_APP_ProductDiffLabelValue</name>
+        <uuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5409</uuid>
+        <description>Returns an array of label values showing the difference between two product records</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5847</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!name: if(
+    ri!productOrig.name = ri!productUpdate.name,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Name",
+        value: "From: " &amp; ri!productOrig.name &amp; " / To: " &amp; ri!productUpdate.name
+      }
+    )
+  ),
+  local!sku: if(
+    ri!productOrig.sku = ri!productUpdate.sku,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "SKU",
+        value: "From: " &amp; ri!productOrig.sku &amp; " / To: " &amp; ri!productUpdate.sku
+      }
+    )
+  ),
+  local!description: if(
+    ri!productOrig.description = ri!productUpdate.description,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Description",
+        value: "From: " &amp; ri!productOrig.description &amp; " / To: " &amp; ri!productUpdate.description
+      }
+    )
+  ),
+  local!category: if(
+    ri!productOrig.category = ri!productUpdate.category,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Category",
+        value: "From: " &amp; ri!productOrig.category &amp; " / To: " &amp; ri!productUpdate.category
+      }
+    )
+  ),
+  local!manufacturer: if(
+    ri!productOrig.manufacturer = ri!productUpdate.manufacturer,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Manufacturer",
+        value: "From: " &amp; ri!productOrig.manufacturer &amp; " / To: " &amp; ri!productUpdate.manufacturer
+      }
+    )
+  ),
+  local!modelNumber: if(
+    ri!productOrig.modelNumber = ri!productUpdate.modelNumber,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Model Number",
+        value: "From: " &amp; ri!productOrig.modelNumber &amp; " / To: " &amp; ri!productUpdate.modelNumber
+      }
+    )
+  ),
+  local!releaseDate: if(
+    ri!productOrig.releaseDate = ri!productUpdate.releaseDate,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Release Date",
+        value: "From: " &amp; ri!productOrig.releaseDate &amp; " / To: " &amp; ri!productUpdate.releaseDate
+      }
+    )
+  ),
+  local!price: if(
+    ri!productOrig.price = ri!productUpdate.price,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Price",
+        value: "From: " &amp; ri!productOrig.price &amp; " / To: " &amp; ri!productUpdate.price
+      }
+    )
+  ),
+  local!quantity: if(
+    ri!productOrig.quantity = ri!productUpdate.quantity,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Quantity",
+        value: "From: " &amp; ri!productOrig.quantity &amp; " / To: " &amp; ri!productUpdate.quantity
+      }
+    )
+  ),
+  local!shippingDetails_weight: if(
+    ri!productOrig.shippingDetails.weight = ri!productUpdate.shippingDetails.weight,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Shipping Weight",
+        value: "From: " &amp; ri!productOrig.shippingDetails.weight &amp; " / To: " &amp; ri!productUpdate.shippingDetails.weight
+      }
+    )
+  ),
+  local!shippingDetails_width: if(
+    ri!productOrig.shippingDetails.width = ri!productUpdate.shippingDetails.width,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Shipping Width",
+        value: "From: " &amp; ri!productOrig.shippingDetails.width &amp; " / To: " &amp; ri!productUpdate.shippingDetails.width
+      }
+    )
+  ),
+  local!shippingDetails_height: if(
+    ri!productOrig.shippingDetails.height = ri!productUpdate.shippingDetails.height,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Shipping Height",
+        value: "From: " &amp; ri!productOrig.shippingDetails.height &amp; " / To: " &amp; ri!productUpdate.shippingDetails.height
+      }
+    )
+  ),
+  local!shippingDetails_depth: if(
+    ri!productOrig.shippingDetails.depth = ri!productUpdate.shippingDetails.depth,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Shipping Depth",
+        value: "From: " &amp; ri!productOrig.shippingDetails.depth &amp; " / To: " &amp; ri!productUpdate.shippingDetails.depth
+      }
+    )
+  ),
+  local!productCategory: if(
+    ri!productOrig.productCategory = ri!productUpdate.productCategory,
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "none",
+        value: "none"
+      }
+    ),
+    cast(
+      typeof(
+        'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+      ),
+      {
+        label: "Category",
+        value: "From: " &amp; ri!productOrig.productCategory &amp; " / To: " &amp; ri!productUpdate.productCategory
+      }
+    )
+  ),
+  remove(
+    append(
+      {
+        local!name
+      },
+      {
+        local!sku
+      },
+      {
+        local!description
+      },
+      {
+        local!category
+      },
+      {
+        local!manufacturer
+      },
+      {
+        local!modelNumber
+      },
+      {
+        local!releaseDate
+      },
+      {
+        local!price
+      },
+      {
+        local!quantity
+      },
+      {
+        local!shippingDetails_weight
+      },
+      {
+        local!shippingDetails_width
+      },
+      {
+        local!shippingDetails_height
+      },
+      {
+        local!shippingDetails_depth
+      },
+      {
+        local!productCategory
+      }
+    ),
+    wherecontains(
+      cast(
+        typeof(
+          'type!{http://www.appian.com/ae/types/2009}LabelValue'()
+        ),
+        {
+          label: "none",
+          value: "none"
+        }
+      ),
+      append(
+        {
+          local!name
+        },
+        {
+          local!sku
+        },
+        {
+          local!description
+        },
+        {
+          local!category
+        },
+        {
+          local!manufacturer
+        },
+        {
+          local!modelNumber
+        },
+        {
+          local!releaseDate
+        },
+        {
+          local!price
+        },
+        {
+          local!quantity
+        },
+        {
+          local!shippingDetails_weight
+        },
+        {
+          local!shippingDetails_width
+        },
+        {
+          local!shippingDetails_height
+        },
+        {
+          local!shippingDetails_depth
+        },
+        {
+          local!productCategory
+        }
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>productOrig</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>productUpdate</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24388"/>
+    </history>
+</contentHaul>

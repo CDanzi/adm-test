@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30160</versionUuid>
+    <rule>
+        <name>CASE_APP_GenerateUUIDSegment</name>
+        <uuid>_a-0000d9b9-57db-8000-9e06-010000010000_831</uuid>
+        <description>Generates a 4 character long UUID segment.  </description>
+        <parentUuid>_a-0000d9b9-57db-8000-9e06-010000010000_837</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= if(
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_833"(
+    int(
+      10 * rand()
+    )
+  ),
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_832"[int(
+    100 * rand()
+  ) + 1],
+  int(
+    10 * rand()
+  )
+) &amp; if(
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_833"(
+    int(
+      10 * rand()
+    )
+  ),
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_832"[int(
+    100 * rand()
+  ) + 1],
+  int(
+    10 * rand()
+  )
+) &amp; if(
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_833"(
+    int(
+      10 * rand()
+    )
+  ),
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_832"[int(
+    100 * rand()
+  ) + 1],
+  int(
+    10 * rand()
+  )
+) &amp; if(
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_833"(
+    int(
+      10 * rand()
+    )
+  ),
+  #"_a-0000d9b9-57db-8000-9e06-010000010000_832"[int(
+    100 * rand()
+  ) + 1],
+  int(
+    10 * rand()
+  )
+)</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30160"/>
+    </history>
+</contentHaul>

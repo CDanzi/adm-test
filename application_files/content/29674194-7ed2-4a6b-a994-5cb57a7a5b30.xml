@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24428</versionUuid>
+    <rule>
+        <name>CASE_APP_uiGetRelatedPopularProducts</name>
+        <uuid>29674194-7ed2-4a6b-a994-5cb57a7a5b30</uuid>
+        <description>Retrives a list of related products based on other orders where the specified product ids are present.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!orderDataForProduct: #"dcdda2a1-f6f4-4b09-9bc1-4664604a3533"(ri!productIds),
+  local!orderIdsWithProduct: if(local!orderDataForProduct.totalCount=0, null, local!orderDataForProduct.data.orderId),
+  local!relatedProducts: if(
+    isnull(local!orderIdsWithProduct),
+    null,
+    #"c3db9919-aac8-4cf1-bc26-258df97e9fd2"(local!orderIdsWithProduct,ri!productIds,5)
+    
+  ),
+  local!relatedProductIds: if(or(isnull(local!relatedProducts), local!relatedProducts.totalCount = 0), null, local!relatedProducts.data.productId),
+  local!relatedProductDetails: #"SYSTEM_SYSRULES_queryEntity"(
+    #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4329",
+    #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"({
+        #"SYSTEM_SYSRULES_queryColumn"(field:"id"),
+        #"SYSTEM_SYSRULES_queryColumn"(field:"name"),
+        #"SYSTEM_SYSRULES_queryColumn"(field:"sku"),
+        #"SYSTEM_SYSRULES_queryColumn"(field:"description"),
+        #"SYSTEM_SYSRULES_queryColumn"(field:"productCategory"),
+        #"SYSTEM_SYSRULES_queryColumn"(field:"productImageDocId")
+      }),
+      filter: #"SYSTEM_SYSRULES_queryFilter"("id", "in", if(isnull(local!relatedProductIds), {-1}, tointeger(local!relatedProductIds))),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,5,null)
+    )
+  ),
+  #"SYSTEM_SYSRULES_sectionLayout"(
+    label:"Customers who purchased ["&amp;#"_a-0000da89-b5e9-8000-9ba2-011c48011c48_3580"(ri!productName, 40) &amp; "] also purchased",
+    firstColumnContents:{
+      #"SYSTEM_SYSRULES_gridField"(
+        totalCount:local!relatedProductDetails.totalCount,
+        columns:{
+          #"SYSTEM_SYSRULES_gridImageColumn"(
+            label:"Image",
+            data:apply(
+              #"SYSTEM_SYSRULES_documentImage"(document:_,caption:_),
+              merge(
+                index(local!relatedProductDetails.data,"productImageDocId",{}),
+                index(local!relatedProductDetails.data,"name",{})
+              )
+            )
+          ),
+          #"SYSTEM_SYSRULES_gridTextColumn"(
+            label:"Product Name",
+            data: index(local!relatedProductDetails.data,"name",{}),
+            links:apply(
+              #"SYSTEM_SYSRULES_recordLink"(recordType:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_3830",identifier:_),
+              index(local!relatedProductDetails.data,"id",{})
+            )
+          ),
+          #"SYSTEM_SYSRULES_gridTextColumn"(
+            label:"Product Category",
+            data: index(local!relatedProductDetails.data,"productCategory",{})
+          ),
+          if(ri!showAddToOrder,
+            #"SYSTEM_SYSRULES_gridImageColumn"(
+              label:"Add?",
+              data: apply(
+                #"SYSTEM_SYSRULES_documentImage"(document:#"SYSTEM_SYSRULES_iconIndicator"("ADD"),link:_),
+                apply(
+                  #"SYSTEM_SYSRULES_dynamicLink"(value:_, saveInto:{ri!addedProductId}),
+                  index(local!relatedProductDetails.data,"id",{})
+                )
+              ),
+              size:"ICON"
+            ),
+            {}
+          )
+        },
+        value:#"SYSTEM_SYSRULES_pagingInfo"(1,5,null)
+      )
+      
+      
+    },
+    isCollapsible:true
+  )
+)</definition>
+        <namedTypedValue>
+            <name>productIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>productName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addedProductId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>showAddToOrder</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Integer?list"/>
+                    <a:nameRef>productIds</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>productName</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                    <a:nameRef>addedProductId</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>showAddToOrder</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24428"/>
+    </history>
+</contentHaul>

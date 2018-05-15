@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:CASE_APP"
+  xmlns:tns="urn:com:appian:types:CASE_APP" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ACASE_APP%7DCASE_APP_AddressType.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ACASE_APP%7DCASE_APP_Customer.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ACASE_APP%7DCASE_APP_OrderItem.xsd"/>
+  <xsd:complexType name="CASE_APP_Order">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CMF_Order")</xsd:appinfo>
+      <xsd:documentation><![CDATA[Defines a business object designed to allow custom extensions to any existing CDT.]]></xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>001be0b7-c0f0-8000-10c8-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="001be0b7-c0f0-8000-10c8-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(nullable=false) @Id @GeneratedValue</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="OrderNum" nillable="true" type="xsd:string"/>
+      <xsd:element name="OrderDate" nillable="true" type="xsd:date"/>
+      <xsd:element name="PurchaserName" nillable="true" type="xsd:string"/>
+      <xsd:element name="PurchaserEmail" nillable="true" type="xsd:string"/>
+      <xsd:element name="PurchaserPhone" nillable="true" type="xsd:string"/>
+      <xsd:element name="CustomerOrderRefNumb" nillable="true" type="xsd:string"/>
+      <xsd:element name="TaxRate" nillable="true" type="xsd:double"/>
+      <xsd:element name="ShippingCost" nillable="true" type="xsd:double"/>
+      <xsd:element name="Total" nillable="true" type="xsd:double"/>
+      <xsd:element name="Status" nillable="true" type="xsd:string"/>
+      <xsd:element name="Customer" nillable="true" type="tns:CASE_APP_Customer"/>
+      <xsd:element name="ShippingAddress" nillable="true" type="tns:CASE_APP_AddressType"/>
+      <xsd:element name="BillingAddress" nillable="true" type="tns:CASE_APP_AddressType"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="OrderItems" type="tns:CASE_APP_OrderItem"/>
+      <xsd:element name="OrderDateTime" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="TrackingNumber" nillable="true" type="xsd:string"/>
+      <xsd:element name="processId" nillable="true" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

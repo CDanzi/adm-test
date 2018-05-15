@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31060</versionUuid>
+    <rule>
+        <name>CASE_APP_OrdersGrid</name>
+        <uuid>f6ebce54-e12d-42ee-97b9-b37c3c001125</uuid>
+        <description>Grid control for managing the line items of an order</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5995</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!itemsToken,
+  local!selectedItems,
+  local!showGrid: true,
+  local!skuSearch,
+  {
+    if(
+      local!showGrid,
+      {
+        if(
+          ri!readOnly = false(),
+          #"_a-0001dd13-f0e6-8000-31c3-01ef9001ef90_4730"(
+            label: "Scan Product",
+            skuSearch: local!skuSearch,
+            OrderItems: ri!OrderItems,
+            itemsToken: local!itemsToken
+          ),
+          {}
+        ),
+        #"SYSTEM_SYSRULES_gridLayout"(
+          label: ri!gridLabel,
+          instructions: ri!gridInstructions,
+          headerCells:{
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Image"),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Product Details"),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Unit Price"),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Quantity"),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "")
+          },
+          columnConfigs:{
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(weight: 1),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(weight: 4),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "NARROW"),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "NARROW"),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "ICON")
+          },
+          rows: #"SYSTEM_SYSRULES_applyComponents"(
+            function: #"1ffac6f0-8bc9-46ee-b624-5a615fbaf482"(
+              OrderItems: ri!OrderItems,
+              index: _,
+              itemsToken: local!itemsToken,
+              readOnly: ri!readOnly
+            ),
+            array: if(or(#"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1982"(ri!OrderItems), count(ri!OrderItems) &lt; 1), {}, 1+enumerate(count(ri!OrderItems))),
+            arrayVariable: local!itemsToken
+          ),
+          addRowLink: if( 
+            ri!readOnly,
+            null,
+            #"SYSTEM_SYSRULES_dynamicLink"(
+              label: "Manually Add Item",
+              value: false,
+              saveInto: local!showGrid
+            )
+          ),
+          validations: {
+            if(
+              or(#"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1982"(ri!OrderItems), count(ri!OrderItems) &lt; 1),
+              "You must add at least 1 item to the order",
+              if(
+                contains(ri!OrderItems.Product.name, null),
+                "Select a product below to add to the order",
+                null
+              )
+            )
+          }
+        )
+      },
+      {}
+    ),
+    if(ri!readOnly, 
+      {}, 
+      if(
+        local!showGrid,
+        {},
+        #"3c080665-5d73-4dcc-b04a-2bec25d26b79"(
+          OrderItems: ri!OrderItems,
+          itemsToken: local!itemsToken,
+          showGrid: local!showGrid
+        )
+      )
+    )
+  }                
+)
+</definition>
+        <namedTypedValue>
+            <name>OrderItems</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>gridLabel</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>gridInstructions</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>readOnly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <metadataExpr></metadataExpr>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>OrderItems</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>gridLabel</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>gridInstructions</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:boolean">false</a:value>
+                    <a:nameRef>readOnly</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31060"/>
+    </history>
+</contentHaul>

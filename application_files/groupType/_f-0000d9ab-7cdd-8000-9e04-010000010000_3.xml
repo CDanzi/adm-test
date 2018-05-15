@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_f-0000e0b7-c132-8000-10c8-011e94011e94_8</versionUuid>
+    <groupType>
+        <name>CASE_APP Groups</name>
+        <uuid>_f-0000d9ab-7cdd-8000-9e04-010000010000_3</uuid>
+        <description>All Group Types that belong to the CASE_APP</description>
+        <attributes/>
+    </groupType>
+    <history>
+        <historyInfo versionUuid="_f-0000e0b7-c132-8000-10c8-011e94011e94_8"/>
+    </history>
+</groupTypeHaul>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30057</versionUuid>
+    <rule>
+        <name>CASE_APP_ProductDashboard</name>
+        <uuid>9f4012f6-8eab-4827-884e-0c0501db8244</uuid>
+        <description>Shows a dashboard of product reports</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#"SYSTEM_SYSRULES_dashboardLayout"(
+  firstColumnContents: {
+    #"SYSTEM_SYSRULES_sectionLayout"(
+      label: "Category Statistics",
+      firstColumnContents: {
+          #"8174497e-d081-4d34-91e1-e4e39007829c"()
+      },
+      secondColumnContents: {
+        #"aca869b8-a362-4c23-9c9b-3b8eba71b1a0"()
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout"(
+      label: "Manufacturer Statistics",
+      firstColumnContents: {
+        #"219c0ed6-2675-4fad-b8a3-d447d4c96cea"()
+      }
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30057"/>
+    </history>
+</contentHaul>

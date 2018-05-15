@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26103</versionUuid>
+    <rule>
+        <name>CASE_APP_uiFormManageCategories</name>
+        <uuid>1c27730f-ee90-4bcf-9231-4501c22efb03</uuid>
+        <description>Allows users to manage their investigation categories</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(
+  local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: - 1,
+    sort: #"SYSTEM_SYSRULES_sortInfo"(
+      field: "order",
+      ascending: true
+    )
+  ),
+  local!items: cast(
+    typeof(
+      {
+        'type!{urn:com:appian:types:CASE_APP}CASE_APP_ICM_Categories'()
+      }
+    ),
+    #"SYSTEM_SYSRULES_queryEntity"(
+      entity: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2297",
+      query: #"SYSTEM_SYSRULES_query"(
+        pagingInfo: local!pagingInfo
+      )
+    ).data
+  ),
+  local!itemsToken: local!items,
+  local!selectedCategory,
+  local!selectedCategoryTokens,
+  local!selectedCategoryIdx,
+  local!deletedCategoryIds,
+  #"SYSTEM_SYSRULES_formLayout"(
+    label: "Manage Investigation Categories",
+    instructions: "Use this form to ADD, EDIT or DELETE Investigation Categories.",
+    firstColumnContents: {
+      if(
+        #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+          local!selectedCategory
+        ),
+        #"SYSTEM_SYSRULES_gridLayout"(
+          instructions: local!selectedCategory,
+          headerCells: {
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+              label: "Category Name"
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+              label: "Active?",
+              align: "CENTER"
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+              label: "Setup Milestones?"
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+              label: ""
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+              label: ""
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+              label: ""
+            )
+          },
+          columnConfigs: {
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+              weight: 9
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+              width: "NARROW"
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+              weight: 1
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+              width: "ICON"
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+              width: "ICON"
+            ),
+            #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+              width: "ICON"
+            )
+          },
+          rows: #"SYSTEM_SYSRULES_applyComponents"(
+            function: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2274"(
+              items: local!items,
+              index: _,
+              itemsToken: local!itemsToken,
+              selectedCategory: local!selectedCategory,
+              selectedCategoryIdx: local!selectedCategoryIdx,
+              deletedCategoryIds: local!deletedCategoryIds
+            ),
+            array: if(
+              or(
+                isnull(
+                  local!items
+                ),
+                count(
+                  local!items
+                ) &lt; 1
+              ),
+              {},
+              1 + enumerate(
+                count(
+                  local!items
+                )
+              )
+            ),
+            arrayVariable: local!itemsToken
+          ),
+          addRowLink: #"SYSTEM_SYSRULES_dynamicLink"(
+            label: "Add Category",
+            value: 'type!{urn:com:appian:types:CASE_APP}CASE_APP_ICM_Categories'(
+              isActive: true,
+              order: count(
+                local!items
+              ) + 1
+            ),
+            saveInto: {
+              a!save(
+                local!items,
+                fn!append(
+                  local!items,
+                  save!value
+                )
+              ),
+              a!save(
+                local!itemsToken,
+                fn!append(
+                  local!itemsToken,
+                  save!value
+                )
+              )
+            }
+          ),
+          validations: {
+            with(
+              local!uniqueNames: union(
+                local!items.name,
+                local!items.name
+              ),
+              if(
+                count(
+                  local!uniqueNames
+                ) &lt;&gt; count(
+                  local!items.name
+                ),
+                "All categories must be unique",
+                null
+              )
+            )
+          }
+        ),
+        {}
+      ),
+      if(
+        #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+          local!selectedCategory
+        ),
+        {},
+        #"SYSTEM_SYSRULES_sectionLayout"(
+          label: "Associated Milestones for " &amp; local!selectedCategory.name,
+          firstColumnContents: {
+            #"SYSTEM_SYSRULES_gridLayout"(
+              headerCells: {
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+                  label: "Milestone Name"
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+                  label: "Description"
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+                  label: ""
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+                  label: ""
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(
+                  label: ""
+                )
+              },
+              columnConfigs: {
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+                  weight: 4
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+                  weight: 7
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+                  width: "ICON"
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+                  width: "ICON"
+                ),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+                  width: "ICON"
+                )
+              },
+              rows: #"SYSTEM_SYSRULES_applyComponents"(
+                function: #"3684e015-83a8-42bc-926c-aa5725e72322"(
+                  items: local!selectedCategory.presetMilestones,
+                  index: _,
+                  itemsToken: local!selectedCategoryTokens
+                ),
+                array: if(
+                  or(
+                    #"SYSTEM_SYSRULES_isNullOrEmpty"(
+                      local!selectedCategory.presetMilestones
+                    ),
+                    count(
+                      local!selectedCategory.presetMilestones
+                    ) &lt; 1
+                  ),
+                  {},
+                  1 + enumerate(
+                    count(
+                      local!selectedCategory.presetMilestones
+                    )
+                  )
+                ),
+                arrayVariable: local!selectedCategoryTokens
+              ),
+              addRowLink: #"SYSTEM_SYSRULES_dynamicLink"(
+                label: "Add Milestone",
+                value: 'type!{urn:com:appian:types:CASE_APP}CASE_APP_ICM_Milestones'(
+                  order: count(
+                    local!selectedCategory.presetMilestones
+                  ) + 1,
+                  isActive: true
+                ),
+                saveInto: {
+                  a!save(
+                    local!selectedCategory.presetMilestones,
+                    fn!append(
+                      local!selectedCategory.presetMilestones,
+                      save!value
+                    )
+                  ),
+                  a!save(
+                    local!itemsToken,
+                    fn!append(
+                      local!itemsToken,
+                      save!value
+                    )
+                  )
+                }
+              )
+            )
+          }
+        )
+      )
+    },
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+      primaryButtons: #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: if(
+          #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+            local!selectedCategory
+          ),
+          "Update Categories",
+          "Confirm Milestones"
+        ),
+        style: "PRIMARY",
+        submit: #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+          local!selectedCategory
+        ),
+        confirmMessage: if(
+          #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+            local!selectedCategory
+          ),
+          "Submitting this form will update the categories for all investigations. Continue?",
+          null
+        ),
+        saveInto: {
+          if(
+            #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+              local!selectedCategory
+            ),
+            {
+              a!save(
+                target: ri!categories,
+                value: local!items
+              ),
+              a!save(
+                target: ri!deletedCategoryIds,
+                value: local!deletedCategoryIds
+              ),
+              a!save(
+                target: ri!cancel,
+                value: false
+              )
+            },
+            {
+              a!save(
+                target: local!items[local!selectedCategoryIdx],
+                value: local!selectedCategory
+              ),
+              a!save(
+                local!selectedCategory,
+                null
+              ),
+              a!save(
+                local!selectedCategoryIdx,
+                null
+              )
+            }
+          )
+        }
+      ),
+      secondaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Back",
+          disabled: #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+            local!selectedCategory
+          ),
+          saveInto: {
+            a!save(
+              local!selectedCategory,
+              null
+            ),
+            a!save(
+              local!selectedCategoryIdx,
+              null
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+          label: "Cancel",
+          saveInto: {
+            a!save(
+              target: ri!cancel,
+              value: true
+            )
+          },
+          skipValidation: true
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>categories</name>
+            <type>
+                <name>CASE_APP_ICM_Categories?list</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedCategoryIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26103"/>
+    </history>
+</contentHaul>

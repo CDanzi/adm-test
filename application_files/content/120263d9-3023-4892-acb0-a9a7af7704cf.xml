@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32219</versionUuid>
+    <rule>
+        <name>CASE_APP_createNewProduct</name>
+        <uuid>120263d9-3023-4892-acb0-a9a7af7704cf</uuid>
+        <description>SAIL form for creating a new product for the CASE_APP.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_formLayout" (&#xD;
+  label: "Create New Product",&#xD;
+  firstColumnContents: {&#xD;
+    #"8af7ef67-8654-48e5-bab2-825cea2dae0f"(&#xD;
+      product:ri!product,&#xD;
+      productImage:ri!productImage,&#xD;
+      isCreate:true&#xD;
+    )&#xD;
+  },&#xD;
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(&#xD;
+    primaryButtons: {&#xD;
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+          label: "Submit",&#xD;
+          style: "PRIMARY",&#xD;
+          value: "submit",&#xD;
+          saveInto: {&#xD;
+            ri!button,&#xD;
+            a!save(ri!product.isActive, true),&#xD;
+            a!save(ri!product.createdBy, loggedInUser()),&#xD;
+            a!save(ri!product.createdOn, now()),&#xD;
+            a!save(ri!product.updatedBy, loggedInUser()),&#xD;
+            a!save(ri!product.updatedOn, now()),&#xD;
+          }&#xD;
+      )&#xD;
+  },&#xD;
+  secondaryButtons: {&#xD;
+      #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(&#xD;
+        label: "Cancel",&#xD;
+        value: "cancel",&#xD;
+        saveInto: ri!button,&#xD;
+        skipValidation: true&#xD;
+      )&#xD;
+    }&#xD;
+  ) &#xD;
+)&#xD;
+</definition>
+        <namedTypedValue>
+            <name>product</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>productImage</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>button</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>product</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                    <a:nameRef>productImage</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>button</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32219"/>
+    </history>
+</contentHaul>

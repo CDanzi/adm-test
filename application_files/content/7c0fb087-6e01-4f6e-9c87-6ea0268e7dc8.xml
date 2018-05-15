@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31641</versionUuid>
+    <rule>
+        <name>CASE_APP_uiFormCreateAdHocTask</name>
+        <uuid>7c0fb087-6e01-4f6e-9c87-6ea0268e7dc8</uuid>
+        <description>Form used to define a new AdHoc Task</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(
+  local!assignee,
+  #"SYSTEM_SYSRULES_formLayout"(
+    label: "Send New Ad-Hoc Task",
+    instructions: "Please complete the form below to send an Ad-Hoc Task",
+    firstColumnContents: {
+      #"SYSTEM_SYSRULES_sectionLayout"(
+        label: "Task Details",
+        firstColumnContents: {
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Task Name",
+            value: ri!adHocTaskData.taskName,
+            saveInto: ri!adHocTaskData.taskName,
+            required: true
+          ),
+          #"SYSTEM_SYSRULES_paragraphField"(
+            label: "Task Request",
+            instructions: "Enter instructions to send along with the task.",
+            value: ri!adHocTaskData.taskDescription,
+            saveInto: ri!adHocTaskData.taskDescription,
+            required: false
+          )
+        },
+        secondColumnContents: {
+          #"SYSTEM_SYSRULES_dropdownField"(
+            label: "Task Assignee",
+            instructions: "Only the Owner and Collaborators are allowed.",
+            required: true,
+            choiceLabels: apply(
+              #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1983",
+              ri!availableAssignees
+            ),
+            placeholderLabel: "--Please select assignee--",
+            choiceValues: ri!availableAssignees,
+            value: local!assignee,
+            saveInto: local!assignee
+          ),
+          #"SYSTEM_SYSRULES_dateTimeField"(
+            label: "Task Deadline",
+            required: true,
+            value: ri!adHocTaskData.deadline,
+            saveInto: ri!adHocTaskData.deadline
+          )
+        }
+      )
+    },
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+      primaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidgetSubmit"(
+          label: "Submit",
+          style: "PRIMARY",
+          saveInto: {
+            a!save(
+              target: ri!adHocTaskData.parentProcessId,
+              value: ri!parentProcessId
+            ),
+            a!save(
+              target: ri!adHocTaskData.requestUser,
+              value: loggedInUser()
+            ),
+            a!save(
+              target: ri!adHocTaskData.requestDate,
+              value: now()
+            ),
+            a!save(
+              target: ri!adHocTaskData.entryId,
+              value: ri!entryId
+            ),
+            a!save(
+              target: ri!adHocTaskData.status,
+              value: #"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5862"[1]
+            ),
+            a!save(
+              target: ri!adHocTaskData.assignees,
+              value: 'type!{urn:com:appian:types:CASE_APP}CASE_APP_Assignee'(username:local!assignee)
+            ),
+            a!save(
+              target: ri!adHocTaskData.parentCaseType,
+              value: "Investigation"
+            ),
+            a!save(
+              target: ri!adHocTaskData.parentCaseId,
+              value: ri!parentProcessId
+            )
+          }
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>adHocTaskData</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>availableAssignees</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>parentProcessId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entryId</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>adHocTaskData</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                    <a:nameRef>availableAssignees</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                    <a:nameRef>parentProcessId</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>entryId</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31641"/>
+    </history>
+</contentHaul>

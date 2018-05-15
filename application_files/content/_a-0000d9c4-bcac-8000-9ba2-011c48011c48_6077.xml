@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_28147</versionUuid>
+    <rule>
+        <name>CASE_APP_DynamicLinktoProduct</name>
+        <uuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_6077</uuid>
+        <description>Used in the order grid, find products feature to create a column of dynamic links that when selected will return a full Product detail</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5996</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #"SYSTEM_SYSRULES_dynamicLink"(
+  label: "Select Product",
+  value: 'type!{urn:com:appian:types:CASE_APP}CASE_APP_OrderItem'(
+    OrderItemUnitPrice: ri!product.price,
+    Product: ri!product,
+    Quantity: 1,
+    Taxed: true()
+  ),
+  saveInto: {
+    with(
+      local!idx: if(
+        #"SYSTEM_SYSRULES_isNullOrEmpty"(ri!OrderItems),
+        null,
+        wherecontains(ri!product.id, ri!OrderItems.Product.id)
+      ),
+      if(
+        #"SYSTEM_SYSRULES_isNullOrEmpty"(local!idx),
+        {
+          a!save(ri!OrderItems, append(ri!OrderItems, save!value)),
+          a!save(ri!itemsToken, append(ri!itemsToken, save!value))
+        },
+        {
+          a!save(
+            target: ri!OrderItems[local!idx].Quantity,
+            value: tointeger(ri!OrderItems[local!idx].Quantity) + 1
+          )
+        }
+      )
+    ),
+    a!save(ri!nameSearch, null),
+    a!save(ri!skuSearch, null),
+    a!save(ri!categoryFilter, null),
+    a!save(ri!showGrid, true)
+  }
+)</definition>
+        <namedTypedValue>
+            <name>product</name>
+            <type>
+                <name>CASE_APP_Product</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>OrderItems</name>
+            <type>
+                <name>CASE_APP_OrderItem?list</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nameSearch</name>
+            <type>
+                <name>Save</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>skuSearch</name>
+            <type>
+                <name>Save</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>categoryFilter</name>
+            <type>
+                <name>Save</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>showGrid</name>
+            <type>
+                <name>Save</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_28147"/>
+    </history>
+</contentHaul>

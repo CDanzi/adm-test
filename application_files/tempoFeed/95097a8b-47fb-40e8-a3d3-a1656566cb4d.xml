@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tempoFeedHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>19398ff2-cdd7-4732-a1fe-dbf86f229928</versionUuid>
+    <tempoFeed>
+        <uuid>95097a8b-47fb-40e8-a3d3-a1656566cb4d</uuid>
+        <name>CMF Order Updated</name>
+        <description>Feed for when orders are updated</description>
+        <showInCatalog>true</showInCatalog>
+        <systemFeed>false</systemFeed>
+    </tempoFeed>
+    <roleMap>
+        <role name="administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9c4-bcae-8000-9aee-01075c01075c_17</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="19398ff2-cdd7-4732-a1fe-dbf86f229928"/>
+    </history>
+</tempoFeedHaul>

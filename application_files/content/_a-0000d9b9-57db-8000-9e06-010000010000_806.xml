@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24574</versionUuid>
+    <constant>
+        <name>CASE_APP_IndiaStates</name>
+        <uuid>_a-0000d9b9-57db-8000-9e06-010000010000_806</uuid>
+        <description>A list of states and provinces of India</description>
+        <parentUuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_781</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Andaman and Nicobar Islands</el>
+                <el>Andhra Pradesh</el>
+                <el>Arunachal Pradesh</el>
+                <el>Assam</el>
+                <el>Bihar</el>
+                <el>Chandigarh</el>
+                <el>Chhattisgarh</el>
+                <el>Dadra and Nagar Haveli</el>
+                <el>Daman and Diu</el>
+                <el>Goa</el>
+                <el>Gujarat</el>
+                <el>Haryana</el>
+                <el>Himachal Pradesh</el>
+                <el>Jammu and Kashmir</el>
+                <el>Jharkhand</el>
+                <el>Karnataka</el>
+                <el>Kerala</el>
+                <el>Lakshadweep</el>
+                <el>Madhya Pradesh</el>
+                <el>Maharashtra</el>
+                <el>Manipur</el>
+                <el>Meghalaya</el>
+                <el>Mizoram</el>
+                <el>Nagaland</el>
+                <el>National Capital Territory of Delhi</el>
+                <el>Odisha</el>
+                <el>Puducherry</el>
+                <el>Punjab</el>
+                <el>Rajasthan</el>
+                <el>Sikkim</el>
+                <el>Tamil Nadu</el>
+                <el>Telangana</el>
+                <el>Tripura</el>
+                <el>Uttar Pradesh</el>
+                <el>Uttarakhand</el>
+                <el>West Bengal</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24574"/>
+    </history>
+</contentHaul>

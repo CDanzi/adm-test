@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30154</versionUuid>
+    <rule>
+        <name>CASE_APP_evencheck</name>
+        <uuid>_a-0000d9b9-57db-8000-9e06-010000010000_833</uuid>
+        <description>Used to generate a random UUID.  checks if a given number is event</description>
+        <parentUuid>_a-0000d9b9-57db-8000-9e06-010000010000_837</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=if(or(tointeger(tostring(ri!number)[len(tostring(ri!number))])=0, tointeger(tostring(ri!number)[len(tostring(ri!number))])=2, tointeger(tostring(ri!number)[len(tostring(ri!number))])=4, tointeger(tostring(ri!number)[len(tostring(ri!number))])=6, tointeger(tostring(ri!number)[len(tostring(ri!number))])=8), true, false)</definition>
+        <namedTypedValue>
+            <name>number</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_30154"/>
+    </history>
+</contentHaul>

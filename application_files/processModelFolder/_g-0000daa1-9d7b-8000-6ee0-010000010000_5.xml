@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<processModelFolderHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_g-0000e0b7-c13b-8000-10c8-014d98014d98_20</versionUuid>
+    <processModelFolder>
+        <name>AH Process Models</name>
+        <uuid>_g-0000daa1-9d7b-8000-6ee0-010000010000_5</uuid>
+        <description>Process models for the Audit History application</description>
+    </processModelFolder>
+    <roleMap>
+        <role name="ADMIN_OWNER">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000daa1-9d68-8000-6edf-010000010000_14</groupUuid>
+            </groups>
+        </role>
+        <role name="EDITOR">
+            <users/>
+            <groups/>
+        </role>
+        <role name="EXPLICIT_NONMEMBER">
+            <users/>
+            <groups/>
+        </role>
+        <role name="VIEWER">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000daa1-9d68-8000-6edf-010000010000_15</groupUuid>
+            </groups>
+        </role>
+        <role name="MANAGER">
+            <users/>
+            <groups/>
+        </role>
+        <role name="INITIATOR">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_g-0000e0b7-c13b-8000-10c8-014d98014d98_20"/>
+    </history>
+</processModelFolderHaul>

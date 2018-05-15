@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24702</versionUuid>
+    <rule>
+        <name>CASE_APP_createUpdateCustomerFields</name>
+        <uuid>d3b95f27-f45a-4d97-812f-ef8de3681197</uuid>
+        <description>Section layouts for forms to create or update a customer</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!adminUser: loggedInUser(),
+  local!collabUsrList,
+  {
+    if(
+      ri!isCreate,
+      {
+        #"SYSTEM_SYSRULES_milestoneField"(
+          steps: #"_a-0000dd65-b59d-8000-1a8d-01ef9001ef90_5780",
+          active: ri!activeStep
+        ),
+        choose(
+          ri!activeStep,
+          #"d16c055e-690e-4930-a886-7261cd73c343"(
+            customerData: ri!customerData,
+            logo: ri!logo,
+            isCreate: ri!isCreate
+          ),
+          #"c6958a64-ddbf-474d-af38-f58d6c673267"(
+            customerData: ri!customerData
+          ),
+          #"ea51fea6-7d45-43d5-ad3a-3563e4587f84"(
+            customerData: ri!customerData,
+            isShippingBillingSame: ri!isShippingBillingSame
+          )
+        )
+      },
+      {
+        #"d16c055e-690e-4930-a886-7261cd73c343"(
+          customerData: ri!customerData,
+          logo: ri!logo,
+          isCreate: ri!isCreate
+        ),
+        #"c6958a64-ddbf-474d-af38-f58d6c673267"(
+          customerData: ri!customerData
+        ),
+        #"ea51fea6-7d45-43d5-ad3a-3563e4587f84"(
+          customerData: ri!customerData,
+          isShippingBillingSame: ri!isShippingBillingSame
+        )
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>customerData</name>
+            <type>
+                <name>CASE_APP_Customer</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>logo</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isCreate</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isShippingBillingSame</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>autoLaunchTasks</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>activeStep</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24702"/>
+    </history>
+</contentHaul>

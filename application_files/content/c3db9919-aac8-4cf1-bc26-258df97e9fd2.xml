@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24284</versionUuid>
+    <rule>
+        <name>CASE_APP_getPopularProductsInOrders</name>
+        <uuid>c3db9919-aac8-4cf1-bc26-258df97e9fd2</uuid>
+        <description>Gives the most bought products in the provided order lists. It also gives the option to filter out products from this list.</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5847</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_queryEntity"(
+  entity: #"_a-0000da89-b5e9-8000-9ba2-011c48011c48_3190",
+  query: #"SYSTEM_SYSRULES_query"(
+    aggregation: #"SYSTEM_SYSRULES_queryAggregation"(aggregationColumns: {
+      #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "productId", isGrouping: true),
+      #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "orderItemQty", aggregationFunction: "SUM")
+    }),
+    logicalExpression:#"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator:"AND",
+      filters: {
+        #"SYSTEM_SYSRULES_queryFilter"("orderId","in",ri!orderIds),
+        if(#"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1982"(ri!filteredProductIds),
+          {},
+          #"SYSTEM_SYSRULES_queryFilter"("productId","not in",ri!filteredProductIds)
+        )
+      }
+    ),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(ri!batchSize),5,ri!batchSize),
+      sort: #"SYSTEM_SYSRULES_sortInfo"(
+        field: "orderItemQty",
+        ascending: false
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>orderIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>filteredProductIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>batchSize</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24284"/>
+    </history>
+</contentHaul>

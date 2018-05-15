@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24315</versionUuid>
+    <rule>
+        <name>CASE_APP_ProductDashboardDetailsSection</name>
+        <uuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_4332</uuid>
+        <description>Details section of the CASE_APP Product summary dashboard, which can be re-used</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5845</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= {
+  #"SYSTEM_SYSRULES_sectionLayout"(
+    label: "Product Details",
+    firstColumnContents: {
+      if(#"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(ri!product.productImageDocId),
+        {},
+        #"SYSTEM_SYSRULES_imageField"(
+          images:#"SYSTEM_SYSRULES_documentImage"(document:todocument(ri!product.productImageDocId))
+        )
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Model Number",
+        labelPosition: "ADJACENT",
+        value: ri!product.modelNumber,
+        readOnly: true
+      ),         
+      #"SYSTEM_SYSRULES_textField"(
+        label: "SKU",
+        labelPosition: "ADJACENT",
+        value: ri!product.sku,
+        readOnly: true
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Category",
+        labelPosition: "ADJACENT",
+        value: ri!product.productCategory,
+        readOnly: true
+      )
+    },
+    secondColumnContents: {
+      #"SYSTEM_SYSRULES_paragraphField"(
+        label: "Description",
+        labelPosition: "ADJACENT",
+        value: ri!product.description,
+        readOnly: true
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Manufacturer",
+        labelPosition: "ADJACENT",
+        value: ri!product.manufacturer,
+        readOnly: true
+      ),  
+      #"SYSTEM_SYSRULES_dateField"(
+        label:"Release Date",
+	      labelPosition: "ADJACENT",
+        value: ri!product.releaseDate,
+        readOnly:true
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Price",
+        labelPosition: "ADJACENT",
+        value: dollar(ri!product.price),
+        readOnly: true
+      ),          
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Quantity",
+        labelPosition: "ADJACENT",
+        value: ri!product.quantity,
+        readOnly: true
+      ),
+      #"SYSTEM_SYSRULES_imageField"(
+        label: "Product Barcode",
+        labelPosition: "ADJACENT",
+        images: #"SYSTEM_SYSRULES_documentImage"(document: ri!product.barcodeDocId)
+      )
+    }
+  )
+}</definition>
+        <namedTypedValue>
+            <name>product</name>
+            <type>
+                <name>CASE_APP_Product</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24315"/>
+    </history>
+</contentHaul>

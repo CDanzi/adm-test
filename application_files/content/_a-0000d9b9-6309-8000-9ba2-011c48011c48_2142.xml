@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24471</versionUuid>
+    <rule>
+        <name>CASE_APP_CustomerDashboardContactSection</name>
+        <uuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2142</uuid>
+        <description>Contact Information section of the CASE_APP Customer summary dashboard</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5839</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>    #"SYSTEM_SYSRULES_sectionLayout" (
+        label: "Contact Information",
+        firstColumnContents: {
+        if(
+            #"_a-0000d9a9-eb56-8000-9e06-010000010000_751"(
+              ri!c.Email
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+            label: "Contact Name",
+            labelPosition: "ADJACENT",
+            value: ri!c.ContactName,
+            readOnly: true,
+            saveInto: ri!c.ContactName
+            ),
+            #"SYSTEM_SYSRULES_linkField"(
+              label: "Contact Name",
+              labelPosition: "ADJACENT",
+              links: {
+                #"SYSTEM_SYSRULES_safeLink"(
+                  label: ri!c.ContactName,
+                  uri: "mailto:" &amp; ri!c.Email
+                )
+              }
+            )
+          ),
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Email",
+            labelPosition: "ADJACENT",
+      validations:if(#"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1640"(ri!c.Email),null,
+      "Please enter a valid email address")
+      ,
+            value: ri!c.Email,
+            readOnly: true,
+            saveInto: ri!c.Email
+            )
+          },
+        secondColumnContents: {  
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Office Phone",
+            labelPosition: "ADJACENT",
+            required: false(),
+            value: ri!c.OfficePhone,
+            readOnly: true,
+            saveInto: ri!c.OfficePhone
+          ),
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Home Phone",
+            labelPosition: "ADJACENT",
+            value: ri!c.HomePhone,
+            readOnly: true,
+            saveInto: ri!c.HomePhone
+            ),
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Mobile Phone",
+            labelPosition: "ADJACENT",
+            value: ri!c.MobilePhone,
+            readOnly: true,
+            saveInto: ri!c.MobilePhone
+            )
+        }
+      )</definition>
+        <namedTypedValue>
+            <name>c</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24471"/>
+    </history>
+</contentHaul>

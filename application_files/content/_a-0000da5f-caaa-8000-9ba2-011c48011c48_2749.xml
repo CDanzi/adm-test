@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27204</versionUuid>
+    <rule>
+        <name>CASE_APP_SR_getCustomerForSrById</name>
+        <uuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2749</uuid>
+        <description>Retrieves only the required fields for the Service Request</description>
+        <parentUuid>_a-0000da5f-caaa-8000-9ba2-011c48011c48_2617</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition> #"SYSTEM_SYSRULES_queryEntity"(
+  entity: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2099",
+  query: #"SYSTEM_SYSRULES_query"(
+    selection: #"SYSTEM_SYSRULES_querySelection"(
+      columns: {
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "id"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Name"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "AccountOwner"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "ContactName"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Email"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "OfficePhone"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "HomePhone"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "MobilePhone"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Website"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Status"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "LogoID"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "Industry"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "StockTicker"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "CustomerSince"
+        ),
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "InactiveFlag"
+        )			
+      }
+    ),
+    filter: #"SYSTEM_SYSRULES_queryFilter"(
+      field: "id",
+      operator: "=",
+      value: ri!cid
+    ),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: 1
+    )
+  )
+).data[1]</definition>
+        <namedTypedValue>
+            <name>cid</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_27204"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26587</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiSectionNewInvestigationDetails</name>
+        <uuid>a5bd4533-a2a8-4ff9-a52e-ec3bed057fa9</uuid>
+        <description>Section used to capture investigation details</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!icmCategories: #"SYSTEM_SYSRULES_queryEntity"(
+    entity: #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2297",
+    query: #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"(columns: {
+        #"SYSTEM_SYSRULES_queryColumn"(field: "name"),
+        #"SYSTEM_SYSRULES_queryColumn"(field: "order"),
+      }),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,10,#"SYSTEM_SYSRULES_sortInfo"(field: "order", ascending:true))
+    )
+  ),
+  {
+    #"SYSTEM_SYSRULES_milestoneField"(
+      steps:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5461",
+      active:1
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout"(
+      label: "New Investigation Details",
+      firstColumnContents: {
+        #"SYSTEM_SYSRULES_textField"(
+          label: "Investigation Name",
+          value:ri!icmData.name,
+          saveInto:ri!icmData.name,
+          required:true
+        ),
+        #"SYSTEM_SYSRULES_paragraphField"(
+          label: "Description",
+          required: true,
+          value:ri!icmData.descriptionLong,
+          saveInto:ri!icmData.descriptionLong
+        )
+      },
+      secondColumnContents: {
+        #"SYSTEM_SYSRULES_dropdownField"(
+          label:"Investigation Category",
+          placeholderLabel:"---Select a category---",
+          choiceLabels:if(local!icmCategories.totalCount=0,
+            {"Other"},
+            append(local!icmCategories.data.name,"Other")
+          ),
+          choiceValues:if(local!icmCategories.totalCount=0,
+            {"Other"},
+            append(local!icmCategories.data.name,"Other")
+          ),
+          value:ri!icmData.category,
+          saveInto:{
+            ri!icmData.category,
+            a!save(target:ri!icmData.milestones, value:#"c50c1a45-d2e4-43d5-b673-4b991d9a130b"(save!value))
+          },
+          required:true
+        ),
+        if(ri!icmData.category="Other",
+          #"SYSTEM_SYSRULES_textField"(
+            label: "Desired Category",
+            value:ri!icmData.categoryOther,
+            saveInto:ri!icmData.categoryOther,
+            required:ri!icmData.category="Other"
+          ),
+          {}
+        ),
+        #"SYSTEM_SYSRULES_dropdownField"(
+          label:"Desired Initial Status",
+          placeholderLabel:"---Select a Status---",
+          choiceLabels:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908",
+          choiceValues:#"_a-0000d9c4-bcac-8000-9ba2-011c48011c48_2908",
+          value:ri!icmData.status,
+          saveInto:ri!icmData.status,
+          required:true
+        ),
+        #"SYSTEM_SYSRULES_textField"(
+          label:"Is Active",
+          value:"Yes",
+          readOnly:true
+        ),
+        #"SYSTEM_SYSRULES_dropdownField"(
+          label: "Priority",
+          labelPosition: "ABOVE",
+          placeholderLabel: "--- Select a Priority ---",
+          choiceLabels: #"_a-0000db86-d3ef-8000-0315-010000010000_3399",
+          choiceValues: #"_a-0000db86-d3ef-8000-0315-010000010000_3399",
+          value: ri!icmData.priority,
+          saveInto: ri!icmData.priority,
+          required: true,
+          validations: {}
+        )
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>icmData</name>
+            <type>
+                <name>CASE_APP_ICM_Data</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26587"/>
+    </history>
+</contentHaul>

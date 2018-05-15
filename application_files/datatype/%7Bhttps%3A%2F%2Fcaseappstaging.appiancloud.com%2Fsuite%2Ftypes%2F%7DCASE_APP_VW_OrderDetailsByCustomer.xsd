@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  targetNamespace="https://caseappstaging.appiancloud.com/suite/types/"
+  xmlns:tns="https://caseappstaging.appiancloud.com/suite/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CASE_APP_VW_OrderDetailsByCustomer">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+        @Table(name="CMF_OrdersByCust")
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[A view that facilitates CMF Order reporting.]]></xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0025e0b7-c0f0-8000-10c8-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0025e0b7-c0f0-8000-10c8-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(nullable=false) @Id</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerId" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="customerId")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="customerName")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="orderId" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="orderId")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="orderTaxRate" nillable="true" type="xsd:double">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="orderTaxRate")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="orderShippingCost" nillable="true" type="xsd:double">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="orderShippingCost")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="orderTotal" nillable="true" type="xsd:double">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="orderTotal")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="orderItemid" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="orderItemid")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="orderItemQty" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="orderItemQty")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="orderItemUnitPrice" nillable="true" type="xsd:double">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="orderItemUnitPrice")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="prodTotal" nillable="true" type="xsd:double">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="prodTotal")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="productId" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="productId")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="productName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="productName")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="productManufacturer" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="productManufacturer")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="productStock" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="productStock")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="productCategory" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

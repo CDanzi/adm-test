@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataStoreHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_23832</versionUuid>
+    <dataStore>
+        <uuid>_a-0000da5f-b0b8-8000-9ba2-011c48011c48_12642</uuid>
+        <name>CMF_Core_DS</name>
+        <description>Data store for all the main CMF Entities</description>
+        <dataSourceKey>jdbc/AppianAnywhere</dataSourceKey>
+        <adaptingExplicitSqlNames>false</adaptingExplicitSqlNames>
+        <autoUpdateSchema>true</autoUpdateSchema>
+        <entities>
+            <entity>
+                <uuid>0fd91800-d3d0-47eb-8355-2e65cf3c3d42</uuid>
+                <name>Customer</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_Customer</type>
+            </entity>
+            <entity>
+                <uuid>7e5e6f09-0639-4a8d-8785-40ac8d2c314a</uuid>
+                <name>Product</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_Product</type>
+            </entity>
+            <entity>
+                <uuid>48ed0d32-7b82-4690-8012-cb445ee4ab0f</uuid>
+                <name>Order</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_Order</type>
+            </entity>
+            <entity>
+                <uuid>fe9032f3-af5c-4b14-97fa-595373aa3232</uuid>
+                <name>OrderItem</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_OrderItem</type>
+            </entity>
+            <entity>
+                <uuid>8b251def-7581-4588-a020-e8a624ebe080</uuid>
+                <name>AddressType</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_AddressType</type>
+            </entity>
+            <entity>
+                <uuid>feb215bb-71ae-43b5-86ac-8bcf2d69124f</uuid>
+                <name>AdHocTask</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_AdHocTasking</type>
+            </entity>
+            <entity>
+                <uuid>c3197d28-21c7-4552-bd8c-4c19e135078c</uuid>
+                <name>AdhocAssignee</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_Assignee</type>
+            </entity>
+            <entity>
+                <uuid>82cb6cf9-bb31-4ead-8d25-a0564baa93d1</uuid>
+                <name>ServiceRequest</name>
+                <type>{urn:com:appian:types:CASE_APP}CASE_APP_ServiceRequest</type>
+            </entity>
+        </entities>
+    </dataStore>
+    <isPublished>true</isPublished>
+    <roleMap>
+        <role inherit="false" allowForAll="false" name="administrators">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9c4-bcae-8000-9aee-01075c01075c_17</groupUuid>
+            </groups>
+        </role>
+        <role inherit="false" allowForAll="false" name="authors">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000da5f-caa8-8000-9aee-01075c01075c_16</groupUuid>
+            </groups>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_23832"/>
+    </history>
+</dataStoreHaul>

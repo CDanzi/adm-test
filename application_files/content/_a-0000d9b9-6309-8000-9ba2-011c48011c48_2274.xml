@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26036</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiCategoriesItemRowEach</name>
+        <uuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2274</uuid>
+        <description>Creates an Investigation Category Row</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#"SYSTEM_SYSRULES_gridRowLayout"(
+  contents: {
+    #"SYSTEM_SYSRULES_textField"(
+      /* Labels in the row contents are for debugging purposes only */
+      label: "name " &amp; ri!index,
+      value: ri!items[ri!index].name,
+      saveInto: ri!items[ri!index].name,
+      required: true
+    ),
+    #"SYSTEM_SYSRULES_checkboxField"(
+      label: "isActive " &amp; ri!index,
+      choiceLabels:{""},
+      placeholderLabel: "Select an option",
+      choiceValues:{true},
+      value: ri!items[ri!index].isActive,
+      saveInto: ri!items[ri!index].isActive,
+      required:true
+    ),
+    #"SYSTEM_SYSRULES_linkField"(
+      label:"Setup Milestones " &amp; ri!index,
+      links: #"SYSTEM_SYSRULES_dynamicLink"(
+        label:"Setup",
+        value: ri!items[ri!index],
+        saveInto: {
+          a!save(target: ri!selectedCategory, value: cast(typeof('type!{urn:com:appian:types:CASE_APP}CASE_APP_ICM_Categories'()), save!value)),
+          a!save(target: ri!selectedCategoryIdx, value: ri!index)
+        }
+      )
+    ),
+    #"SYSTEM_SYSRULES_imageField"(
+      label:"MoveUp"&amp;ri!index,
+      images:#"SYSTEM_SYSRULES_documentImage"(
+        document:#"SYSTEM_SYSRULES_iconIndicator"(
+          if(ri!index=1,
+            "MOVE_UP_DISABLED",
+            "MOVE_UP"
+          )
+        ),
+        altText:"Move Up",
+        caption:"Move Up",
+        link:if(ri!index=1,
+          {},
+          #"SYSTEM_SYSRULES_dynamicLink"(
+            value:cast(1,ri!items[ri!index].order)-1,
+            saveInto:{
+              a!save(target:ri!items[ri!index-1].order, value:save!value+1),
+              a!save(target:ri!items[ri!index].order, value:save!value),
+              a!save(
+                target:ri!items,
+                value: todatasubset(ri!items,#"SYSTEM_SYSRULES_pagingInfo"(startIndex:1,batchSize:-1, sort:#"SYSTEM_SYSRULES_sortInfo"(field:"order",ascending:true))).data
+              )
+            }
+          )
+        )
+      ),
+      size:"ICON"
+    ),
+    #"SYSTEM_SYSRULES_imageField"(
+      label:"MoveDown"&amp;ri!index,
+      images:#"SYSTEM_SYSRULES_documentImage"(
+        document:#"SYSTEM_SYSRULES_iconIndicator"(
+          if(or(count(ri!items)=1,count(ri!items)=ri!index),
+            "MOVE_DOWN_DISABLED",
+            "MOVE_DOWN"
+          )
+        ),
+        altText:"Move Down",
+        caption:"Move Down",
+        link: if(or(count(ri!items)=1,count(ri!items)=ri!index),
+          {},
+          #"SYSTEM_SYSRULES_dynamicLink"(
+            value:cast(1,ri!items[ri!index].order)+1,
+            saveInto:{
+              a!save(target:ri!items[ri!index+1].order, value:save!value-1),
+              a!save(target:ri!items[ri!index].order, value:save!value),
+              a!save(
+                target:ri!items,
+                value: todatasubset(ri!items,#"SYSTEM_SYSRULES_pagingInfo"(startIndex:1,batchSize:-1, sort:#"SYSTEM_SYSRULES_sortInfo"(field:"order",ascending:true))).data
+              )
+            }
+          )
+        )
+      ),
+      size:"ICON"
+    ),
+    #"SYSTEM_SYSRULES_linkField"(
+      label: "delete " &amp; ri!index,
+      links: #"SYSTEM_SYSRULES_dynamicLink"(
+        label: char(10005),
+        value: ri!index,
+        saveInto: {
+          a!save(ri!deletedCategoryIds, append(ri!deletedCategoryIds, index(ri!items.id, save!value, null))),
+          a!save(ri!items, fn!remove(ri!items, save!value)),
+          a!save(ri!itemsToken, fn!remove(ri!itemsToken, save!value))
+        }
+      ),
+      align: "CENTER"
+    )
+  },
+  id: ri!index
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedCategory</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedCategoryIdx</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedCategoryIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_26036"/>
+    </history>
+</contentHaul>

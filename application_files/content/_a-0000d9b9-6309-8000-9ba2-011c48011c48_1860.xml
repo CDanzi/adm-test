@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24010</versionUuid>
+    <rule>
+        <name>CASE_APP_DocColumn</name>
+        <uuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_1860</uuid>
+        <description>Generates columns given the column type name.   Valid column names include
+
+"NAME", "DESCRIPTION", "EXTENSION", "DATECREATED", "LASTUSERTOMODIFY", "TOTALNUMBEROFVERSIONS", "SIZE", "IMAGE", </description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_1751</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=choose(wherecontains(upper(ri!columnType), #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1861"),
+  /*NAME*/
+  #"SYSTEM_SYSRULES_gridTextColumn"(
+    label: "Name",
+    field: "Name",
+    data: index(ri!datasubset.data, "name", {}),
+    alignment: "LEFT",
+    links:
+     if(ri!LinktoDoc, 
+        apply(#"SYSTEM_SYSRULES_documentDownloadLink"(document: _), index(ri!datasubset.data, "document", {})),
+        {})
+  ),
+  /*DESCRIPTION*/
+  #"SYSTEM_SYSRULES_gridTextColumn"(
+    label: "Description",
+    field: "Description",
+    data: index(ri!datasubset.data, "description", {}),
+    alignment: "LEFT",
+    links:
+     if(ri!LinktoDoc, 
+        apply(#"SYSTEM_SYSRULES_documentDownloadLink"(document: _), index(ri!datasubset.data, "document", {})),
+        {})
+  ),
+  /*EXTENSION*/
+  #"SYSTEM_SYSRULES_gridTextColumn"(
+    label: "Extension",
+    field: "Extension",
+    data: index(ri!datasubset.data, "extension", {}),
+    alignment: "LEFT",
+    links:
+     if(ri!LinktoDoc, 
+        apply(#"SYSTEM_SYSRULES_documentDownloadLink"(document: _), index(ri!datasubset.data, "document", {})),
+        {})
+  ),
+  /*DATECREATED*/
+  #"SYSTEM_SYSRULES_gridTextColumn"(
+    label: "Last Modified",
+    field: "Last Modified",
+    data: index(ri!datasubset.data, "dateCreated", {}),
+    alignment: "LEFT",
+    links:
+     if(ri!LinktoDoc, 
+        apply(#"SYSTEM_SYSRULES_documentDownloadLink"(document: _), index(ri!datasubset.data, "document", {})),
+        {})
+  ),
+  /*LASTUSERTOMODIFY*/
+  #"SYSTEM_SYSRULES_gridTextColumn"(
+    label: "Modified By",
+    field: "Modified By",
+    data: apply(#"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1983", index(ri!datasubset.data, "lastUserToModify", {})),
+    alignment: "LEFT",
+    links: apply(
+      #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_1876"(user: _),
+      index(ri!datasubset.data, "lastUserToModify", {})
+    )
+  ),
+  /*TOTALNUMBEROFVERSIONS*/
+  #"SYSTEM_SYSRULES_gridTextColumn"(
+    label: "Versions",
+    field: "Versions",
+    data: index(ri!datasubset.data, "totalNumberOfVersions", {}),
+    alignment: "LEFT",
+    links:
+     if(ri!LinktoDoc, 
+        apply(#"SYSTEM_SYSRULES_documentDownloadLink"(document: _), index(ri!datasubset.data, "document", {})),
+        {})
+  ),
+  /*SIZE*/
+  #"SYSTEM_SYSRULES_gridTextColumn"(
+    label: "Size",
+    field: "Size",
+    data: index(ri!datasubset.data, "size", {}),
+    alignment: "LEFT",
+    links:
+     if(ri!LinktoDoc, 
+        apply(#"SYSTEM_SYSRULES_documentDownloadLink"(document: _), index(ri!datasubset.data, "document", {})),
+        {})
+  ),
+  /*IMAGE*/
+  #"SYSTEM_SYSRULES_gridImageColumn"(
+    label: "Type",
+    field: "Images",
+    data: apply(
+      #"_a-0000da89-b5e9-8000-9ba2-011c48011c48_3514"(doc: _),
+      if(#"SYSTEM_SYSRULES_isNullOrEmpty"(ri!documents), {}, ri!documents)),
+    size: upper(ri!showDocImageType)
+  )
+)</definition>
+        <namedTypedValue>
+            <name>columnType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>datasubset</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>showDocImageType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documents</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>LinktoDoc</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24010"/>
+    </history>
+</contentHaul>

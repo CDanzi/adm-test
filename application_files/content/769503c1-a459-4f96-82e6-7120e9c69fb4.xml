@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24622</versionUuid>
+    <rule>
+        <name>CASE_APP_AddressSection</name>
+        <uuid>769503c1-a459-4f96-82e6-7120e9c69fb4</uuid>
+        <description>This is a reusable section for capturing or displaying an address</description>
+        <parentUuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_781</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>/*  A default country value must be provided for this form to work properly. &#xD;
+Input a value such as () to load the form. &#xD;
+Country names must match the list in cons!CASE_APP)_CountriesList&#xD;
+*/&#xD;
+= #"SYSTEM_SYSRULES_sectionLayout"(&#xD;
+  label: ri!sectionTitle,&#xD;
+  isCollapsible: ri!isCollapsible,&#xD;
+  firstColumnContents: {&#xD;
+    if(&#xD;
+      ri!readOnly,&#xD;
+      {&#xD;
+        #"SYSTEM_SYSRULES_textField"(&#xD;
+          label: "Country",&#xD;
+          labelPosition: ri!labelPosition,&#xD;
+          value: ri!addressData.country,&#xD;
+          readOnly: true()&#xD;
+        )&#xD;
+      },&#xD;
+      {&#xD;
+        #"SYSTEM_SYSRULES_dropdownField"(&#xD;
+          /*Dropdown for selecting a country */&#xD;
+          label: "Country",&#xD;
+          instructions: if(&#xD;
+            ri!readOnly,&#xD;
+            null,&#xD;
+            "Select the country"&#xD;
+          ),&#xD;
+          labelPosition: ri!labelPosition,&#xD;
+          required: true,&#xD;
+          disabled: ri!readOnly,&#xD;
+          choiceLabels: #"_a-0000d9b5-6c6c-8000-9e06-010000010000_756",&#xD;
+          choiceValues: #"_a-0000d9b5-6c6c-8000-9e06-010000010000_756",&#xD;
+          placeholderLabel: "--Select a country--",&#xD;
+          value: ri!addressData.country,&#xD;
+          saveInto: {&#xD;
+            ri!addressData.country,&#xD;
+            a!save(&#xD;
+              ri!addressData.state,&#xD;
+              null&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    #"SYSTEM_SYSRULES_paragraphField"(&#xD;
+      /*Text field capture for Address - paragraph is used to capture multi line Addresses */&#xD;
+      label: "Address",&#xD;
+      instructions: if(&#xD;
+        ri!readOnly,&#xD;
+        null,&#xD;
+        len(ri!addressData.Address) &amp; " of 100"&#xD;
+      ),&#xD;
+      height: "SHORT",&#xD;
+      labelPosition: ri!labelPosition,&#xD;
+      readOnly: ri!readOnly,&#xD;
+      value: ri!addressData.Address,&#xD;
+      saveInto: ri!addressData.Address,&#xD;
+      refreshAfter: "KEYPRESS",&#xD;
+      validations: {&#xD;
+        if(&#xD;
+          len(ri!addressData.Address) &gt; 100,&#xD;
+          "You may not exceed 100 characters",&#xD;
+          null&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  },&#xD;
+  secondColumnContents: {&#xD;
+    #"SYSTEM_SYSRULES_textField"(&#xD;
+      /*Simple City capture text field */&#xD;
+      label: "City",&#xD;
+      instructions: if(&#xD;
+        ri!readOnly,&#xD;
+        null,&#xD;
+        len(ri!addressData.City) &amp; " of 100"&#xD;
+      ),&#xD;
+      labelPosition: ri!labelPosition,&#xD;
+      readOnly: ri!readOnly,&#xD;
+      value: ri!addressData.City,&#xD;
+      saveInto: ri!addressData.City,&#xD;
+      refreshAfter: "KEYPRESS",&#xD;
+      validations: {&#xD;
+        if(&#xD;
+          len(ri!addressData.City) &gt; 100,&#xD;
+          "You may not exceed 100 characters",&#xD;
+          null&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    /* A limited number of countries require a State or Province to be specified in the address area.&#xD;
+     * The dropdown for State/Province selection only displays if the country name is in the list of&#xD;
+     * countries that requires that value.&#xD;
+     * Refer to the cons!CASE_APP_CountrieswithStates for a list of countries that requires this &#xD;
+     */&#xD;
+    if(&#xD;
+      #"_a-0000d9b9-57db-8000-9e06-010000010000_808"(&#xD;
+        if(&#xD;
+          isnull(ri!addressData.country),&#xD;
+          #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2093",&#xD;
+          ri!addressData.country&#xD;
+        )&#xD;
+      ),&#xD;
+      {&#xD;
+        if(&#xD;
+          ri!readOnly,&#xD;
+          {&#xD;
+            #"SYSTEM_SYSRULES_textField"(&#xD;
+              label: "State/Province",&#xD;
+              labelPosition: ri!labelPosition,&#xD;
+              value: ri!addressData.state,&#xD;
+              readOnly: true()&#xD;
+            )&#xD;
+          },&#xD;
+          {&#xD;
+            #"SYSTEM_SYSRULES_dropdownField"(&#xD;
+              label: "State/Province",&#xD;
+              labelPosition: ri!labelPosition,&#xD;
+              disabled: ri!readOnly,&#xD;
+              required: true,&#xD;
+              choiceLabels: #"_a-0000d9b9-57db-8000-9e06-010000010000_816"(&#xD;
+                if(&#xD;
+                  isnull(&#xD;
+                    ri!addressData.country&#xD;
+                  ),&#xD;
+                  #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2093",&#xD;
+                  ri!addressData.country&#xD;
+                )&#xD;
+              ),&#xD;
+              /* The rule simply checks if the country selected exists in cons!CASE_APP_CountrieswithStates */&#xD;
+              choiceValues: #"_a-0000d9b9-57db-8000-9e06-010000010000_816"(&#xD;
+                if(&#xD;
+                  isnull(&#xD;
+                    ri!addressData.country&#xD;
+                  ),&#xD;
+                  #"_a-0000d9b9-6309-8000-9ba2-011c48011c48_2093",&#xD;
+                  ri!addressData.country&#xD;
+                )&#xD;
+              ),&#xD;
+              placeholderLabel: "-- Select a State/Province --",&#xD;
+              value: ri!addressData.state,&#xD;
+              saveInto: ri!addressData.state&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      {}&#xD;
+    ),&#xD;
+    #"SYSTEM_SYSRULES_textField"(&#xD;
+      label: "Postal Code",&#xD;
+      instructions: if(&#xD;
+        ri!readOnly,&#xD;
+        null,&#xD;
+        len(ri!addressData.ZIP) &amp; " of 50"&#xD;
+      ),&#xD;
+      labelPosition: ri!labelPosition,&#xD;
+      readOnly: ri!readOnly,&#xD;
+      value: ri!addressData.ZIP,&#xD;
+      saveInto: ri!addressData.ZIP,&#xD;
+      refreshAfter: "KEYPRESS",&#xD;
+      validations: {&#xD;
+        if(&#xD;
+          len(ri!addressData.ZIP) &gt; 50,&#xD;
+          "You may not exceed 50 characters",&#xD;
+          null&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    &#xD;
+  }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>sectionTitle</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>readOnly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>labelPosition</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isCollapsible</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressData</name>
+            <type>
+                <name>CASE_APP_AddressType</name>
+                <namespace>urn:com:appian:types:CASE_APP</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>sectionTitle</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>readOnly</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>labelPosition</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>isCollapsible</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types:CASE_APP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:CASE_APP_AddressType"/>
+                    <a:nameRef>addressData</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24622"/>
+    </history>
+</contentHaul>

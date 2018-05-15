@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:CASE_APP"
+  xmlns:tns="urn:com:appian:types:CASE_APP" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ACASE_APP%7DCASE_APP_AddressType.xsd"/>
+  <xsd:complexType name="CASE_APP_Customer">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CMF_Customer")</xsd:appinfo>
+      <xsd:documentation><![CDATA[Represents a customer in the Appian CMF application]]></xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0016e0b7-c0f0-8000-10c8-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0016e0b7-c0f0-8000-10c8-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @GeneratedValue</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="GlobalID" nillable="true" type="xsd:string"/>
+      <xsd:element name="Name" nillable="true" type="xsd:string"/>
+      <xsd:element name="Description" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=2000)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="AccountOwner" nillable="true" type="xsd:string"/>
+      <xsd:element name="ContactName" nillable="true" type="xsd:string"/>
+      <xsd:element name="Email" nillable="true" type="xsd:string"/>
+      <xsd:element name="OfficePhone" nillable="true" type="xsd:string"/>
+      <xsd:element name="HomePhone" nillable="true" type="xsd:string"/>
+      <xsd:element name="MobilePhone" nillable="true" type="xsd:string"/>
+      <xsd:element name="Website" nillable="true" type="xsd:string"/>
+      <xsd:element name="Status" nillable="true" type="xsd:string"/>
+      <xsd:element name="ShippingAddress" nillable="true" type="tns:CASE_APP_AddressType"/>
+      <xsd:element name="BillingAddress" nillable="true" type="tns:CASE_APP_AddressType"/>
+      <xsd:element name="FolderID" nillable="true" type="xsd:int"/>
+      <xsd:element name="LogoID" nillable="true" type="xsd:int"/>
+      <xsd:element name="Industry" nillable="true" type="xsd:string"/>
+      <xsd:element name="StockTicker" nillable="true" type="xsd:string"/>
+      <xsd:element name="CustomerSince" nillable="true" type="xsd:date"/>
+      <xsd:element name="InactiveFlag" nillable="true" type="xsd:boolean"/>
+      <xsd:element name="CreatedOn" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="CreatedBy" nillable="true" type="xsd:string"/>
+      <xsd:element name="UpdatedOn" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="UpdatedBy" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

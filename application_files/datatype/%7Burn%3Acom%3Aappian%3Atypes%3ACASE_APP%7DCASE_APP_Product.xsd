@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:CASE_APP"
+  xmlns:tns="urn:com:appian:types:CASE_APP" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ACASE_APP%7DCASE_APP_ProductShippingDetails.xsd"/>
+  <xsd:complexType name="CASE_APP_Product">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CMF_Product")</xsd:appinfo>
+      <xsd:documentation><![CDATA[Defines a business object designed to allow custom extensions to any existing CDT.For CASE_APP product management use case]]></xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0014e0b7-c0f0-8000-10c8-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0014e0b7-c0f0-8000-10c8-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @GeneratedValue</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="name" nillable="true" type="xsd:string"/>
+      <xsd:element name="sku" nillable="true" type="xsd:string"/>
+      <xsd:element name="description" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=2000)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="category" nillable="true" type="xsd:int"/>
+      <xsd:element name="manufacturer" nillable="true" type="xsd:string"/>
+      <xsd:element name="modelNumber" nillable="true" type="xsd:string"/>
+      <xsd:element name="releaseDate" nillable="true" type="xsd:date"/>
+      <xsd:element name="isActive" nillable="true" type="xsd:boolean"/>
+      <xsd:element name="price" nillable="true" type="xsd:double"/>
+      <xsd:element name="quantity" nillable="true" type="xsd:int"/>
+      <xsd:element name="shippingDetails" nillable="true" type="tns:CASE_APP_ProductShippingDetails"/>
+      <xsd:element name="productImageDocId" nillable="true" type="xsd:int"/>
+      <xsd:element name="productCategory" nillable="true" type="xsd:string"/>
+      <xsd:element name="barcodeDocId" nillable="true" type="xsd:int"/>
+      <xsd:element name="createdOn" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="createdBy" nillable="true" type="xsd:string"/>
+      <xsd:element name="updatedOn" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="updatedBy" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

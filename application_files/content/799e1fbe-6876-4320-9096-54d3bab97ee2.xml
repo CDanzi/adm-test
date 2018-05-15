@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32572</versionUuid>
+    <rule>
+        <name>CASE_APP_VerifyOrderItem</name>
+        <uuid>799e1fbe-6876-4320-9096-54d3bab97ee2</uuid>
+        <description>Used in an applycomponents to generate a verification for each item and it's quantity</description>
+        <parentUuid>_a-0000d9c4-bcac-8000-9ba2-011c48011c48_5995</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!verified,
+  local!quantityVerified,
+#"SYSTEM_SYSRULES_sectionLayout"(
+  label: null,
+  
+  firstColumnContents:
+  {
+    #"SYSTEM_SYSRULES_checkboxField"(
+      label: "Verify Product - " &amp; ri!OrderItem.Product.name &amp; " SKU: " &amp; ri!OrderItem.Product.sku,
+      choiceLabels: {"Verified"},
+      choiceValues: {"Verified"},
+      value: local!verified,
+      saveInto: local!verified,
+      required: true(),
+      validations: if(isnull(local!verified), "You must verify each product SKU", null)
+  ),
+    #"SYSTEM_SYSRULES_checkboxField"(
+      label: "Verify Quantity - " &amp; ri!OrderItem.Quantity,
+      choiceLabels: {"Verified"},
+      choiceValues: {"Verified"},
+      value: local!quantityVerified,
+      saveInto: local!quantityVerified,
+      required: true(),
+      disabled: not(local!verified="Verified"),
+      validations: if(isnull(local!quantityVerified), "You must verify each product SKU", null)
+  )
+  }
+)
+)</definition>
+        <namedTypedValue>
+            <name>OrderItem</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>OrderItem</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_32572"/>
+    </history>
+</contentHaul>

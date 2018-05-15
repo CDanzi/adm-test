@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31824</versionUuid>
+    <rule>
+        <name>CASE_APP_ICM_uiMilestonesRowEach</name>
+        <uuid>804a1f16-1d44-4826-a9cc-b45de60a7c83</uuid>
+        <description>Defined a row in the Milestones Editable grid</description>
+        <parentUuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2261</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#"SYSTEM_SYSRULES_gridRowLayout"(&#xD;
+  contents: {&#xD;
+    #"SYSTEM_SYSRULES_textField"(&#xD;
+      label: "name " &amp; ri!index,&#xD;
+      value: ri!items[ri!index].name,&#xD;
+      saveInto: ri!items[ri!index].name,&#xD;
+      required: true&#xD;
+    ),&#xD;
+    #"SYSTEM_SYSRULES_textField"(&#xD;
+      label: "description " &amp; ri!index,&#xD;
+      value: ri!items[ri!index].description,&#xD;
+      saveInto: ri!items[ri!index].description,&#xD;
+      required: false&#xD;
+    ),&#xD;
+    #"SYSTEM_SYSRULES_dateField"(&#xD;
+      label:"dueDate "&amp; ri!index,&#xD;
+      value: ri!items[ri!index].dueDate,&#xD;
+      saveInto: ri!items[ri!index].dueDate,&#xD;
+      required: true,&#xD;
+      validations:if(ri!items[ri!index].dueDate&lt;today(),"You cannot enter dates in the past.",null)&#xD;
+    ),&#xD;
+    #"SYSTEM_SYSRULES_imageField"(&#xD;
+      label:"MoveUp"&amp;ri!index,&#xD;
+      images:#"SYSTEM_SYSRULES_documentImage"(&#xD;
+        document:#"SYSTEM_SYSRULES_iconIndicator"(&#xD;
+          if(ri!index=1,&#xD;
+            "MOVE_UP_DISABLED",&#xD;
+            "MOVE_UP"&#xD;
+          )&#xD;
+        ),&#xD;
+        altText:"Move Up",&#xD;
+        caption:"Move Up",&#xD;
+        link:if(ri!index=1,&#xD;
+          {},&#xD;
+          #"SYSTEM_SYSRULES_dynamicLink"(&#xD;
+            value:cast(1,ri!items[ri!index].order)-1,&#xD;
+            saveInto:{&#xD;
+              a!save(target:ri!items[ri!index-1].order, value:save!value+1),&#xD;
+              a!save(target:ri!items[ri!index].order, value:save!value),&#xD;
+              a!save(&#xD;
+                target:ri!items,&#xD;
+                value: todatasubset(ri!items,#"SYSTEM_SYSRULES_pagingInfo"(startIndex:1,batchSize:-1, sort:#"SYSTEM_SYSRULES_sortInfo"(field:"order",ascending:true))).data&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        )&#xD;
+      ),&#xD;
+      size:"ICON"&#xD;
+    ),&#xD;
+    #"SYSTEM_SYSRULES_imageField"(&#xD;
+      label:"MoveDown"&amp;ri!index,&#xD;
+      images:#"SYSTEM_SYSRULES_documentImage"(&#xD;
+        document:#"SYSTEM_SYSRULES_iconIndicator"(&#xD;
+          if(or(count(ri!items)=1,count(ri!items)=ri!index),&#xD;
+            "MOVE_DOWN_DISABLED",&#xD;
+            "MOVE_DOWN"&#xD;
+          )&#xD;
+        ),&#xD;
+        altText:"Move Down",&#xD;
+        caption:"Move Down",&#xD;
+        link: if(or(count(ri!items)=1,count(ri!items)=ri!index),&#xD;
+          {},&#xD;
+          #"SYSTEM_SYSRULES_dynamicLink"(&#xD;
+            value:cast(1,ri!items[ri!index].order)+1,&#xD;
+            saveInto:{&#xD;
+              a!save(target:ri!items[ri!index+1].order, value:save!value-1),&#xD;
+              a!save(target:ri!items[ri!index].order, value:save!value),&#xD;
+              a!save(&#xD;
+                target:ri!items,&#xD;
+                value: todatasubset(ri!items,#"SYSTEM_SYSRULES_pagingInfo"(startIndex:1,batchSize:-1, sort:#"SYSTEM_SYSRULES_sortInfo"(field:"order",ascending:true))).data&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        )&#xD;
+      ),&#xD;
+      size:"ICON"&#xD;
+    ),&#xD;
+    #"SYSTEM_SYSRULES_linkField"(&#xD;
+      label: "delete " &amp; ri!index,&#xD;
+      links: #"SYSTEM_SYSRULES_dynamicLink"(&#xD;
+        label: char(10005),&#xD;
+        value: ri!index,&#xD;
+        saveInto: {&#xD;
+          ri!items &lt;&lt; fn!remove(ri!items, _),&#xD;
+          ri!itemsToken &lt;&lt; fn!remove(ri!itemsToken, _)&#xD;
+        }&#xD;
+      ),&#xD;
+      align: "CENTER"&#xD;
+    )&#xD;
+  },&#xD;
+  id: ri!index&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_31824"/>
+    </history>
+</contentHaul>

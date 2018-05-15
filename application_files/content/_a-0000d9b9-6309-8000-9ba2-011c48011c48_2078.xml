@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24580</versionUuid>
+    <constant>
+        <name>CASE_APP_MexicoStates</name>
+        <uuid>_a-0000d9b9-6309-8000-9ba2-011c48011c48_2078</uuid>
+        <description>A list of states in Mexico</description>
+        <parentUuid>_a-0000d9b8-0d4a-8000-9e06-010000010000_781</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Aguascalientes</el>
+                <el>Baja California</el>
+                <el>Baja California Sur</el>
+                <el>Campeche</el>
+                <el>Chiapas</el>
+                <el>Chihuahua</el>
+                <el>Coahuila</el>
+                <el>Colima</el>
+                <el>Durango</el>
+                <el>Federal District</el>
+                <el>Guanajuato</el>
+                <el>Guerrero</el>
+                <el>Hidalgo</el>
+                <el>Jalisco</el>
+                <el>Michoacán</el>
+                <el>México</el>
+                <el>Morelos</el>
+                <el>Nayarit</el>
+                <el>Nuevo León</el>
+                <el>Oaxaca</el>
+                <el>Puebla</el>
+                <el>Querétaro</el>
+                <el>Quintana Roo</el>
+                <el>San Luis Potosí</el>
+                <el>Sinaloa</el>
+                <el>Sonora</el>
+                <el>Tabasco</el>
+                <el>Tamaulipas</el>
+                <el>Tlaxcala</el>
+                <el>Veracruz</el>
+                <el>Yucatán</el>
+                <el>Zacatecas</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e0b7-c14e-8000-10cb-01ef9001ef90_24580"/>
+    </history>
+</contentHaul>
