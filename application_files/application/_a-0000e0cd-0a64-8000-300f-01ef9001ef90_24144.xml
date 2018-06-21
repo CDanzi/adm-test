@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000e0da-2c86-8000-a829-01ef9001ef90_22200</versionUuid>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24158</versionUuid>
     <application>
-        <name>App1Test</name>
-        <uuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24123</uuid>
-        <description/>
+        <name>App2Test</name>
+        <uuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24144</uuid>
+        <description></description>
         <parentUuid>SYSTEM_APPLICATIONS_ROOT</parentUuid>
         <visibility>
             <advertise>false</advertise>
@@ -14,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <urlIdentifier>Lu902w</urlIdentifier>
+        <urlIdentifier>HUL69w</urlIdentifier>
         <published>false</published>
         <public>false</public>
         <associatedObjects>
@@ -42,8 +43,8 @@
                 <item>
                     <type>content</type>
                     <uuids>
-                        <uuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24127</uuid>
-                        <uuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24132</uuid>
+                        <uuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24148</uuid>
+                        <uuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24153</uuid>
                     </uuids>
                 </item>
                 <item>
@@ -217,37 +218,35 @@
     </application>
     <roleMap>
         <contentRoleMap public="true">
-            <role allowForAll="false" inherit="false" name="readers">
+            <role inherit="false" allowForAll="false" name="readers">
                 <users/>
                 <groups/>
             </role>
-            <role allowForAll="false" inherit="false" name="authors">
+            <role inherit="false" allowForAll="false" name="authors">
                 <users/>
                 <groups/>
             </role>
-            <role allowForAll="false" inherit="false" name="administrators">
+            <role inherit="false" allowForAll="false" name="administrators">
                 <users>
                     <userUuid>christine.danzi.s</userUuid>
                 </users>
                 <groups/>
             </role>
-            <role allowForAll="false" inherit="false" name="denyReaders">
+            <role inherit="false" allowForAll="false" name="denyReaders">
                 <users/>
                 <groups/>
             </role>
-            <role allowForAll="false" inherit="false" name="denyAuthors">
+            <role inherit="false" allowForAll="false" name="denyAuthors">
                 <users/>
                 <groups/>
             </role>
-            <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <role inherit="false" allowForAll="false" name="denyAdministrators">
                 <users/>
                 <groups/>
             </role>
         </contentRoleMap>
     </roleMap>
     <history>
-        <historyInfo versionUuid="_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24137"/>
-        <historyInfo versionUuid="_a-0000e0da-2c86-8000-a829-01ef9001ef90_22167"/>
-        <historyInfo versionUuid="_a-0000e0da-2c86-8000-a829-01ef9001ef90_22200"/>
+        <historyInfo versionUuid="_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24158"/>
     </history>
-</applicationHaul><!--updated on 2018-06-21T10:03:19.690-->
+</applicationHaul>
