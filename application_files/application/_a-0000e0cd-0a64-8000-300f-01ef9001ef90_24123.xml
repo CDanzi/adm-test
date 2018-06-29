@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
+<?xml version="1.0" encoding="UTF-8"?><applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
     <versionUuid>_a-0000e0da-2c86-8000-a829-01ef9001ef90_22200</versionUuid>
     <application>
         <name>App1Test</name>
         <uuid>_a-0000e0cd-0a64-8000-300f-01ef9001ef90_24123</uuid>
-        <description></description>
+        <description/>
         <parentUuid>SYSTEM_APPLICATIONS_ROOT</parentUuid>
         <visibility>
             <advertise>false</advertise>
@@ -218,29 +217,29 @@
     </application>
     <roleMap>
         <contentRoleMap public="true">
-            <role inherit="false" allowForAll="false" name="readers">
+            <role allowForAll="false" inherit="false" name="readers">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="authors">
+            <role allowForAll="false" inherit="false" name="authors">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="administrators">
+            <role allowForAll="false" inherit="false" name="administrators">
                 <users>
                     <userUuid>christine.danzi.s</userUuid>
                 </users>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyReaders">
+            <role allowForAll="false" inherit="false" name="denyReaders">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyAuthors">
+            <role allowForAll="false" inherit="false" name="denyAuthors">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <role allowForAll="false" inherit="false" name="denyAdministrators">
                 <users/>
                 <groups/>
             </role>
@@ -251,4 +250,4 @@
         <historyInfo versionUuid="_a-0000e0da-2c86-8000-a829-01ef9001ef90_22167"/>
         <historyInfo versionUuid="_a-0000e0da-2c86-8000-a829-01ef9001ef90_22200"/>
     </history>
-</applicationHaul>
+</applicationHaul><!--updated on 2018-06-29T09:00:23.461-->
