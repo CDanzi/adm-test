@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
+<?xml version="1.0" encoding="UTF-8"?><applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
     <versionUuid>_a-0000e0da-2c86-8000-a829-01ef9001ef90_23271</versionUuid>
     <application>
         <name>1 - ADM with CUST</name>
         <uuid>_a-0000e0da-2c86-8000-a829-01ef9001ef90_21554</uuid>
-        <description></description>
+        <description/>
         <parentUuid>SYSTEM_APPLICATIONS_ROOT</parentUuid>
         <visibility>
             <advertise>false</advertise>
@@ -228,27 +227,27 @@
     </application>
     <roleMap>
         <contentRoleMap public="true">
-            <role inherit="false" allowForAll="false" name="readers">
+            <role allowForAll="false" inherit="false" name="readers">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="authors">
+            <role allowForAll="false" inherit="false" name="authors">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="administrators">
+            <role allowForAll="false" inherit="false" name="administrators">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyReaders">
+            <role allowForAll="false" inherit="false" name="denyReaders">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyAuthors">
+            <role allowForAll="false" inherit="false" name="denyAuthors">
                 <users/>
                 <groups/>
             </role>
-            <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <role allowForAll="false" inherit="false" name="denyAdministrators">
                 <users/>
                 <groups/>
             </role>
@@ -259,4 +258,4 @@
         <historyInfo versionUuid="_a-0000e0da-2c86-8000-a829-01ef9001ef90_21997"/>
         <historyInfo versionUuid="_a-0000e0da-2c86-8000-a829-01ef9001ef90_23271"/>
     </history>
-</applicationHaul>
+</applicationHaul><!--updated on 2018-07-11T08:51:40.992-->
