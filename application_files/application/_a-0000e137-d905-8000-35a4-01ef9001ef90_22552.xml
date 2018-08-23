@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>54c6874c-afde-4247-8f03-dd4dac39c212</versionUuid>
+    <versionUuid>3b8596a0-5821-44e1-b1ac-448488d6db22</versionUuid>
     <application>
         <name>App with Space</name>
         <uuid>_a-0000e137-d905-8000-35a4-01ef9001ef90_22552</uuid>
@@ -248,5 +248,6 @@
         <historyInfo versionUuid="_a-0000e137-d905-8000-35a4-01ef9001ef90_22567"/>
         <historyInfo versionUuid="62a721ff-dfdc-4d0a-8a6c-815f961a0045"/>
         <historyInfo versionUuid="54c6874c-afde-4247-8f03-dd4dac39c212"/>
+        <historyInfo versionUuid="3b8596a0-5821-44e1-b1ac-448488d6db22"/>
     </history>
-</applicationHaul><!--updated on 2018-08-23T17:41:03.533-->
+</applicationHaul><!--updated on 2018-08-23T17:42:23.031-->
