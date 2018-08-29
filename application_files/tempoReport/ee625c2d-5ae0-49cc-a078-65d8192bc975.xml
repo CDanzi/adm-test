@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tempoReportHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>da985e9e-b28f-4888-a482-729a510dd8be</versionUuid>
+    <tempoReport a:uuid="ee625c2d-5ae0-49cc-a078-65d8192bc975" name="TC Report">
+        <a:description></a:description>
+        <a:uiExpr>=#"_a-0000e139-5043-8000-f5fc-01ef9001ef90_22200"()</a:uiExpr>
+        <a:urlStub>rj37Ag</a:urlStub>
+    </tempoReport>
+    <roleMap/>
+    <history>
+        <historyInfo versionUuid="da985e9e-b28f-4888-a482-729a510dd8be"/>
+    </history>
+</tempoReportHaul>
