@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<applicationHaul xmlns:a="http://www.appian.com/ae/types/2009">
     <versionUuid>_a-0000e141-fcd0-8000-c17a-01ef9001ef90_46453</versionUuid>
     <application>
         <name>App One Test</name>
@@ -246,4 +247,4 @@
     <history>
         <historyInfo versionUuid="_a-0000e141-fcd0-8000-c17a-01ef9001ef90_46453"/>
     </history>
-</applicationHaul>
+</applicationHaul><!--updated on 2018-09-04T15:01:44.875-->
