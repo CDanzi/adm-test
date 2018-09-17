@@ -1,3 +1,0 @@
-# adm-test
-
-Made changes
